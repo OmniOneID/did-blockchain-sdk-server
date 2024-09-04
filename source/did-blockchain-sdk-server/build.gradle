@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.omnione.did'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+    google()
+    maven { url 'https://maven.google.com/' }
+    maven { url 'https://mvnrepository.com/artifact/' }
+}
+
+dependencies {
+    implementation files('libs/did-data-model-server-1.0.0.jar')
+    implementation('org.hyperledger.fabric:fabric-gateway-java:2.2.9')
+    implementation('com.fasterxml.jackson.core:jackson-databind:2.15.2')
+    implementation('org.apache.commons:commons-pool2:2.12.0')
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation('org.junit.jupiter:junit-jupiter')
+    annotationProcessor('com.fasterxml.jackson.core:jackson-databind:2.15.2')
+    annotationProcessor('org.projectlombok:lombok:1.18.28')
+    compileOnly('org.projectlombok:lombok:1.18.28')
+}
+
+test {
+    useJUnitPlatform()
+}
