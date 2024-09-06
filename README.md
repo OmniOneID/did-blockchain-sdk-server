@@ -9,7 +9,6 @@ did-blockchain-sdk-server
 ├── CLA.md
 ├── CODE_OF_CONDUCT.md
 ├── LICENSE.dependencies.md
-├── LICENSE.txt
 ├── CONTRIBUTING.md
 ├── MAINTAINERS.md
 ├── README.md
@@ -41,7 +40,6 @@ did-blockchain-sdk-server
 | CODE_OF_CONDUCT.md         | Code of conduct for contributors                |
 | CONTRIBUTING.md            | Contribution guidelines and procedures          |
 | LICENSE.dependencies.md    | Licenses for the project’s dependency libraries |
-| LICENSE.txt                | License for the project                         |
 | MAINTAINERS.md             | General guidelines for maintaining              |
 | README.md                  | Overview and description of the project         |
 | RELEASE-PROCESS.md         | Release process                                 |
