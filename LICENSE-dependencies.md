@@ -10,8 +10,8 @@
 
 <br>
 
-**Jackson Databind: Apache License 2.0**
-`com.fasterxml.jackson.core:jackson-databind:2.15.2`
+**Jackson Databind: Apache License 2.0**  
+`com.fasterxml.jackson.core:jackson-databind:2.15.2`  
 (https://github.com/FasterXML/jackson-databind/blob/2.18/LICENSE)
 
 <br>
@@ -35,6 +35,6 @@
 
 <br>
 
-**Project Lombok: Apache License 2.0**
-`org.projectlombok:lombok:1.18.28`
+**Project Lombok: Apache License 2.0**  
+`org.projectlombok:lombok:1.18.28`  
 (https://github.com/projectlombok/lombok/blob/master/LICENSE)
