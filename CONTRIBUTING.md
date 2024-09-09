@@ -42,10 +42,10 @@ to do this once to work on any of OpenDID open source projects.
 Complete your CLA here: [Contributor License Agreement](CLA.md)
 
 ## Coding Style
-Our code style guidelines are based on the [OpenDID Coding Style](codingstyle).
+Our code style guidelines are based on the [OpenDID Coding Style](https://github.com/OmniOneID/did-doc-architecture/blob/main/docs/rules/coding_style.md).
 
 ## Commit Message Guidelines
-Our commit rule guidelines are based on the [OpenDID Commit Rule](commitrule).
+Our commit rule guidelines are based on the [OpenDID Commit Rule](https://github.com/OmniOneID/did-doc-architecture/blob/main/docs/rules/git_code_commit_rule.md).
 
 ## License
 Copyright 2024 Raonsecure
