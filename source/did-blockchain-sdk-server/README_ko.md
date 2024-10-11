@@ -4,10 +4,10 @@ Open DID에 필요한 DID Document(DID 문서), Verifiable Credential Meta(이�
 
 
 ## S/W 사양
-| 구분 | 내용                |
-|------|---------------------|
+| 구분 | 내용         |
+|------|------------|
 | Language      | Java 17    |
-| Build System  | Gradle 8.5 |
+| Build System  | Gradle 8.8 |
 
 <br>
 

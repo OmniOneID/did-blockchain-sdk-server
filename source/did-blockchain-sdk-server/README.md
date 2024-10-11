@@ -2,10 +2,10 @@
 This document serves as a guide for using the OpenDID Server Blockchain SDK. It provides functionality to invoke chaincode and generate transaction requests necessary to record DID Document and Verifiable Credential Metadata (VC Meta) information on the blockchain for OpenDID.
 
 ## S/W Specifications
-| Category       | Details            |
-|----------------|--------------------|
-| Language       | Java 17            |
-| Build System   | Gradle 8.5         |
+| Category       | Details    |
+|----------------|------------|
+| Language       | Java 17    |
+| Build System   | Gradle 8.8 |
 
 <br>
 
