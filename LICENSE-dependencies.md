@@ -22,19 +22,6 @@
 
 <br>
 
-**Junit Bom: Eclipse Public License 2.0**  
-`org.junit:junit-bom:5.10.0`  
-(https://github.com/junit-team/junit5/blob/main/LICENSE.md)
-
-<br>
-
-**Junit Jupiter: Eclipse Public License 2.0**  
-`org.junit.jupiter:junit-jupiter`  
-(https://github.com/junit-team/junit5/blob/main/LICENSE.md)
-
-
-<br>
-
 **Project Lombok: Apache License 2.0**  
 `org.projectlombok:lombok:1.18.28`  
 (https://github.com/projectlombok/lombok/blob/master/LICENSE)

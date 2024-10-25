@@ -8,6 +8,7 @@ did-blockchain-sdk-server
 ├── CHANGELOG.md
 ├── CLA.md
 ├── CODE_OF_CONDUCT.md
+├── LICENSE
 ├── LICENSE-dependencies.md
 ├── CONTRIBUTING.md
 ├── MAINTAINERS.md
@@ -21,15 +22,18 @@ did-blockchain-sdk-server
 │       ├── Blockchain_API_ko.md 
 │       └── BlockchainErrorCode.md 
 └── source
-    └── did-blockchain-sdk-server
-        ├── README.md
-        ├── README_ko.md
-        ├── build.gradle
-        ├── gradle
-        ├── gradlew
-        ├── gradlew.bat
-        ├── setting.gradle
-        └── src
+    ├── did-blockchain-sdk-server
+    │   ├── README.md
+    │   ├── README_ko.md
+    │   ├── build.gradle
+    │   ├── gradle
+    │   ├── libs
+    │   ├── gradlew
+    │   ├── gradlew.bat
+    │   ├── setting.gradle
+    │   └── src
+    └── release
+        └── did-blockchain-sdk-server-1.0.0.jar
 ```
 
 
@@ -39,6 +43,7 @@ did-blockchain-sdk-server
 | CLA.md                  | Contributor License Agreement                   |
 | CODE_OF_CONDUCT.md      | Code of conduct for contributors                |
 | CONTRIBUTING.md         | Contribution guidelines and procedures          |
+| LICENSE                 | Apache 2.0                                      |
 | LICENSE-dependencies.md | Licenses for the project’s dependency libraries |
 | MAINTAINERS.md          | General guidelines for maintaining              |
 | README.md               | Overview and description of the project         |
@@ -51,7 +56,9 @@ did-blockchain-sdk-server
 <br>
 
 ## Libraries
-Libraries can be found in the `release` folder.
+Libraries can be found in the [Releases](https://github.com/OmniOneID/did-blockchain-sdk-server/releases).
+
+## Blockchain SDK
 1. Copy the `did-datamodel-sdk-server-1.0.0.jar` file into the project's `libs` directory.
 2. Add the following dependencies to the project's `build.gradle` file:
 ```groovy
@@ -59,8 +66,6 @@ Libraries can be found in the `release` folder.
     implementation('org.hyperledger.fabric:fabric-gateway-java:2.2.9')
     implementation('com.fasterxml.jackson.core:jackson-databind:2.15.2')
     implementation('org.apache.commons:commons-pool2:2.12.0')
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation('org.junit.jupiter:junit-jupiter')
     annotationProcessor('com.fasterxml.jackson.core:jackson-databind:2.15.2')
     annotationProcessor('org.projectlombok:lombok:1.18.28')
     compileOnly('org.projectlombok:lombok:1.18.28')
@@ -69,11 +74,11 @@ Libraries can be found in the `release` folder.
 
 ## API Reference
 
-You can find the API reference [here](source/did-blockchain-sdk-server/README.md).
+You can find the API reference [here](docs/Blockchain_API.md).
 
 ## Contributing
 
 For detailed information on contributing and submitting pull requests, please refer to [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## License
-Copyright 2024 Raonsecure
+[Apache 2.0](LICENSE)

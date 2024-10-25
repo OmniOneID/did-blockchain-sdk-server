@@ -59,7 +59,7 @@ representative at an online or offline event.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported at [technical@omnione.net](mailto:technical@omnione.net).
+reported at [technology@omnione.net](mailto:technology@omnione.net).
 to the community leaders responsible for enforcement.
 
 All complaints will be reviewed and investigated promptly and fairly.

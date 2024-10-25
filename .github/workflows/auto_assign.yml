@@ -1,0 +1,47 @@
+name: PR assignment
+on:
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  auto-assign:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request Reviewers
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const author = context.payload.pull_request.user.login;
+            let reviewers = ['black-billed-magpie','jhkim5981'];
+            
+            if (reviewers.includes(author)) {
+              if(reviewers.length === 1)
+                  reviewers = reviewers.map(reviewer => reviewer === author ? 'mikyung-lee' : reviewer);
+              else {
+                  reviewers = reviewers.filter(reviewer => reviewer !== author);
+              }
+            }
+
+            await github.rest.pulls.requestReviewers({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              reviewers: reviewers
+            });
+      - name: Request Assignees
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const assignees = ['black-billed-magpie', 'mikyung-lee']; // assignees
+            
+            await github.rest.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              assignees: assignees
+            });
