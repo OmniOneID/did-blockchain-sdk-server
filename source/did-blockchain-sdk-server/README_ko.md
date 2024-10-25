@@ -12,6 +12,7 @@ Open DID에 필요한 DID Document(DID 문서), Verifiable Credential Meta(이�
 <br>
 
 ## 빌드 방법
+: 본 SDK 그래들 프로젝트이므로 그래들이 설치 되어 있어야 한다.
 1. 터미널을 열고 프로젝트 루트 디렉터리에서 `./gradlew clean build`를 실행합니다.
 2. 빌드가 완료되면 `build/libs` 디렉터리에 `did-blockchain-sdk-server-1.0.0.jar` 파일이 생성됩니다.
 
@@ -25,8 +26,6 @@ Open DID에 필요한 DID Document(DID 문서), Verifiable Credential Meta(이�
     implementation('org.hyperledger.fabric:fabric-gateway-java:2.2.9')
     implementation('com.fasterxml.jackson.core:jackson-databind:2.15.2')
     implementation('org.apache.commons:commons-pool2:2.12.0')
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation('org.junit.jupiter:junit-jupiter')
     annotationProcessor('com.fasterxml.jackson.core:jackson-databind:2.15.2')
     annotationProcessor('org.projectlombok:lombok:1.18.28')
     compileOnly('org.projectlombok:lombok:1.18.28')
@@ -36,10 +35,11 @@ Open DID에 필요한 DID Document(DID 문서), Verifiable Credential Meta(이�
 <br>
 
 ## API 규격서
-| 구분 | API 문서 Link |
-|------|----------------------------|
-| FabricContractApi  | [Blockchain SDK - FabricContracApi API](../../docs/api/Blockchain_API.md) |
-| ErrorCode          | [Error Code](../../docs/api/BlockchainErrorCode.md) |
+| 구분 | API 문서 Link                                                                  |
+|------|------------------------------------------------------------------------------|
+| FabricContractApi  | [Blockchain SDK - FabricContracApi API](../../docs/api/Blockchain_API_ko.md) |
+| ErrorCode          | [Error Code](../../docs/api/BlockchainErrorCode.md)                          |
+
 ### FabricContractApi
 FabricContractApi는 Blockchain Network 설정 정보를 기반으로 DID 문서 및 VC Meta와 관련된 트랜잭션을 생성하여 체인코드와 상호작용하는 기능을 제공합니다.<br>주요 기능은 다음과 같습니다:
 

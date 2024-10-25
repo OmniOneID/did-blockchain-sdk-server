@@ -93,4 +93,4 @@ Our commit messages follow the [OpenDID Commit Rule](https://github.com/OmniOneI
 Before we can accept your pull request, you must submit a CLA. This only needs to be done once. Complete your CLA here: [Contributor License Agreement](CLA.md)
 
 ## License
-Copyright 2024 Raonsecure
+[Apache 2.0](LICENSE)

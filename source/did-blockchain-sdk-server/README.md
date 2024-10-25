@@ -10,21 +10,20 @@ This document serves as a guide for using the OpenDID Server Blockchain SDK. It 
 <br>
 
 ## Build Method
+: Since this SDK is a Gradle project, Gradle must be installed
 1. Open a terminal and navigate to the project root directory, then run `./gradlew clean build`.
-2. Once the build is complete, the `did-blockchain-sdk-server-1.0.0.jar` file will be generated in the `build/libs` directory.
+2. Once the build is complete, the `did-blockchain-sdk-server-1.0.0.jar` file will be generated in the `{projectPath}/build/libs` directory.
 
 <br>
 
 ## SDK Application Method
-1. Copy the `did-datamodel-server-1.0.0.jar` file into the project's `libs` directory.
+1. Copy the `did-datamodel-server-1.0.0.jar` file into the project's `{projectPath}/libs` directory.
 2. Add the following dependencies to the project's `build.gradle` file:
 ```groovy
     implementation files('libs/did-datamodel-server-1.0.0.jar')
     implementation('org.hyperledger.fabric:fabric-gateway-java:2.2.9')
     implementation('com.fasterxml.jackson.core:jackson-databind:2.15.2')
     implementation('org.apache.commons:commons-pool2:2.12.0')
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation('org.junit.jupiter:junit-jupiter')
     annotationProcessor('com.fasterxml.jackson.core:jackson-databind:2.15.2')
     annotationProcessor('org.projectlombok:lombok:1.18.28')
     compileOnly('org.projectlombok:lombok:1.18.28')
