@@ -74,7 +74,7 @@ Libraries can be found in the [Releases](https://github.com/OmniOneID/did-blockc
 
 ## API Reference
 
-You can find the API reference [here](docs/Blockchain_API.md).
+You can find the API reference [here](docs/api/Blockchain_API.md).
 
 ## Contributing
 
