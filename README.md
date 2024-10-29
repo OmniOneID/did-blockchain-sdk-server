@@ -9,7 +9,7 @@ did-blockchain-sdk-server
 ├── CLA.md
 ├── CODE_OF_CONDUCT.md
 ├── LICENSE
-├── LICENSE-dependencies.md
+├── dependencies-license.md
 ├── CONTRIBUTING.md
 ├── MAINTAINERS.md
 ├── README.md
@@ -44,7 +44,7 @@ did-blockchain-sdk-server
 | CODE_OF_CONDUCT.md      | Code of conduct for contributors                |
 | CONTRIBUTING.md         | Contribution guidelines and procedures          |
 | LICENSE                 | Apache 2.0                                      |
-| LICENSE-dependencies.md | Licenses for the project’s dependency libraries |
+| dependencies-license.md | Licenses for the project’s dependency libraries |
 | MAINTAINERS.md          | General guidelines for maintaining              |
 | README.md               | Overview and description of the project         |
 | RELEASE-PROCESS.md      | Release process                                 |
