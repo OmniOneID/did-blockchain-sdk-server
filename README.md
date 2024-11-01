@@ -76,6 +76,14 @@ Libraries can be found in the [Releases](https://github.com/OmniOneID/did-blockc
 
 You can find the API reference [here](docs/api/Blockchain_API.md).
 
+## Change Log
+The Change Log provides a detailed record of version-specific changes and updates. You can find it here:
+- [Change Log](./CHANGELOG.md)
+
+## OpenDID Demonstration Videos <br>
+To watch our demonstration videos of the OpenDID system in action, please visit our [Demo Repository](https://github.com/OmniOneID/did-demo-server). <br>
+These videos showcase key features including user registration, VC issuance, and VP submission processes.
+
 ## Contributing
 
 For detailed information on contributing and submitting pull requests, please refer to [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
