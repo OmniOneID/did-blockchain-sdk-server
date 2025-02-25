@@ -99,17 +99,26 @@ public class FabricServerInformation extends ServerInformation {
   }
 
   /**
-   * Loads properties from the specified resource file.
+   * Loads properties from the specified resource.
    *
-   * @param resource the name of the properties file to load
+   * This method supports both absolute file paths and classpath resources.
+   * If the given resource is an absolute path, it loads the properties file directly from the file system.
+   * Otherwise, it attempts to load the properties from the classpath.
+   *
+   * @param resource the absolute file path or classpath resource name of the properties file
    * @return a {@code Properties} object containing the configuration
-   * @throws IOException if there is an error loading the properties file
+   * @throws IOException if the properties file is not found or cannot be loaded
    */
+
   private Properties loadProperties(String resource) throws IOException {
     Properties properties = new Properties();
-    try (InputStream inputStream = FabricServerInformation.class.getClassLoader().getResourceAsStream(resource)) {
+
+    try (InputStream inputStream = Paths.get(resource).isAbsolute()
+          ? Files.newInputStream(Paths.get(resource))
+            : FabricServerInformation.class.getClassLoader().getResourceAsStream(resource)) {
       properties.load(inputStream);
     }
+
     return properties;
   }
 
