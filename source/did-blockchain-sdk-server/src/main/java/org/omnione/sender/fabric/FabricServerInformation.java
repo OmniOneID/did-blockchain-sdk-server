@@ -16,11 +16,7 @@
 
 package org.omnione.sender.fabric;
 
-import org.omnione.exception.BlockChainException;
-import org.omnione.exception.BlockchainErrorCode;
-import org.omnione.sender.ServerInformation;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.InvalidKeyException;
@@ -35,19 +31,20 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.hyperledger.fabric.gateway.Gateway;
 import org.hyperledger.fabric.gateway.Identities;
 import org.hyperledger.fabric.gateway.X509Identity;
+import org.omnione.exception.BlockChainException;
+import org.omnione.exception.BlockchainErrorCode;
+import org.omnione.sender.ServerInformation;
 
 /**
- * The {@code FabricServerInformation} class extends {@link ServerInformation} and manages the configuration
- * and gateway pool for connecting to a Hyperledger Fabric network.
+ * The {@code FabricServerInformation} class extends {@link ServerInformation} and manages the
+ * configuration and gateway pool for connecting to a Hyperledger Fabric network.
  *
- * <p>This class is responsible for loading server configuration from a properties file, initializing
- * the identity and gateway pool, and managing the lifecycle of gateway connections.</p>
+ * <p>This class is responsible for loading server configuration from a properties file,
+ * initializing the identity and gateway pool, and managing the lifecycle of gateway
+ * connections.</p>
  */
 @Getter
 public class FabricServerInformation extends ServerInformation {
-
-  private GenericObjectPool<Gateway> gatewayPool;
-  private X509Identity identity;
 
   private final String mspId;
   private final String configFilePath;
@@ -55,17 +52,20 @@ public class FabricServerInformation extends ServerInformation {
   private final String certificateFilePath;
   private final String networkName;
   private final String chaincodeName;
+  private GenericObjectPool<Gateway> gatewayPool;
+  private X509Identity identity;
 
   /**
-   * Constructs a {@code FabricServerInformation} object by loading configuration properties from the specified
-   * resource file and initializing the identity and gateway pool.
+   * Constructs a {@code FabricServerInformation} object by loading configuration properties from
+   * the specified resource file and initializing the identity and gateway pool.
    *
    * @param resource the name of the properties file to load the configuration from
    * @throws CertificateException if there is an error reading the X.509 certificate
-   * @throws InvalidKeyException if there is an error reading the private key
-   * @throws IOException if there is an error loading the properties file
+   * @throws InvalidKeyException  if there is an error reading the private key
+   * @throws IOException          if there is an error loading the properties file
    */
-  public FabricServerInformation(String resource) throws CertificateException, InvalidKeyException, IOException {
+  public FabricServerInformation(String resource)
+      throws CertificateException, InvalidKeyException, IOException {
     super();
 
     Properties properties = loadProperties(resource);
@@ -76,7 +76,6 @@ public class FabricServerInformation extends ServerInformation {
     this.certificateFilePath = properties.getProperty("fabric.certificateFilePath");
     this.networkName = properties.getProperty("fabric.networkName");
     this.chaincodeName = properties.getProperty("fabric.chaincodeName");
-
 
     initializeIdentity();
     initializeGatewayPool();
@@ -93,42 +92,18 @@ public class FabricServerInformation extends ServerInformation {
     StringBuilder stringBuilder = new StringBuilder();
 
     Stream<String> stream = Files.lines(Paths.get(path));
-    stream.forEach(s -> stringBuilder.append(s).append('\n'));
+    stream.forEach(s -> stringBuilder.append(s)
+        .append('\n'));
 
     return stringBuilder.toString();
   }
 
   /**
-   * Loads properties from the specified resource.
-   *
-   * This method supports both absolute file paths and classpath resources.
-   * If the given resource is an absolute path, it loads the properties file directly from the file system.
-   * Otherwise, it attempts to load the properties from the classpath.
-   *
-   * @param resource the absolute file path or classpath resource name of the properties file
-   * @return a {@code Properties} object containing the configuration
-   * @throws IOException if the properties file is not found or cannot be loaded
-   */
-
-  private Properties loadProperties(String resource) throws IOException {
-    Properties properties = new Properties();
-
-    try (InputStream inputStream = Paths.get(resource).isAbsolute()
-            ? Files.newInputStream(Paths.get(resource))
-            : FabricServerInformation.class.getClassLoader().getResourceAsStream(resource)) {
-      properties.load(inputStream);
-    }
-
-    return properties;
-  }
-
-
-
-  /**
-   * Initializes the X.509 identity using the certificate and private key files specified in the properties.
+   * Initializes the X.509 identity using the certificate and private key files specified in the
+   * properties.
    *
    * @throws CertificateException if there is an error reading the X.509 certificate
-   * @throws InvalidKeyException if there is an error reading the private key
+   * @throws InvalidKeyException  if there is an error reading the private key
    */
   private void initializeIdentity() throws CertificateException, InvalidKeyException, IOException {
     String certificateFile = getFileContent(certificateFilePath);

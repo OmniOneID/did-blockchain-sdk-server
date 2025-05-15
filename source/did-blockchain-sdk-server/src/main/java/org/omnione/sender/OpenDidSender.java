@@ -19,8 +19,8 @@ package org.omnione.sender;
 /**
  * Interface for sending transactions to a blockchain network.
  * <p>
- * This interface defines the contract for sending transactions to a blockchain network, using the provided
- * {@code ServerInformation} and {@code ContractData}.
+ * This interface defines the contract for sending transactions to a blockchain network, using the
+ * provided {@code ServerInformation} and {@code ContractData}.
  * </p>
  */
 public interface OpenDidSender {

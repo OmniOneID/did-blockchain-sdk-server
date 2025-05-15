@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,17 +16,18 @@
 
 package org.omnione.did;
 
-import org.omnione.did.fabric.FabricContractApi;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.cert.CertificateException;
+import org.omnione.did.ethereum.EvmContractApi;
+import org.omnione.did.fabric.FabricContractApi;
 
 /**
- * Enum {@code ContractFactory} provides a way to create {@code ContractApi} instances based on different
- * implementations.
+ * Enum {@code ContractFactory} provides a way to create {@code ContractApi} instances based on
+ * different implementations.
  * <p>
- * This enum defines different implementations of {@code ContractApi} that can be created by specifying a property path.
- * The current implementation includes support for Hyperledger Fabric.
+ * This enum defines different implementations of {@code ContractApi} that can be created by
+ * specifying a property path. The current implementation includes support for Hyperledger Fabric.
  * </p>
  */
 public enum ContractFactory {
@@ -42,10 +43,20 @@ public enum ContractFactory {
         throw new RuntimeException(e);
       }
     }
+  },
+  EVM {
+    protected ContractApi getContractApi(String propertyPath) {
+      try {
+        return new EvmContractApi(propertyPath);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    }
   };
 
   /**
-   * Factory method for creating an instance of {@code ContractApi} using the specified property path.
+   * Factory method for creating an instance of {@code ContractApi} using the specified property
+   * path.
    *
    * @param propertyPath the path to the resource files required for the blockchain network
    * @return an instance of ContractApi

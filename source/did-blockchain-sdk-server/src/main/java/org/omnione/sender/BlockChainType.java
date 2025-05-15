@@ -33,7 +33,8 @@ public enum BlockChainType {
   /**
    * Represents the Hyperledger Fabric blockchain type.
    */
-  HYPER_LEDGER_FABRIC("fabric");
+  HYPER_LEDGER_FABRIC("fabric"),
+  EVM("evm");
 
   private final String blockChainType;
 }

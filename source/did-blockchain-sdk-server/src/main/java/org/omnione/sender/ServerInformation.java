@@ -16,6 +16,8 @@
 
 package org.omnione.sender;
 
+import java.io.IOException;
+import java.util.Properties;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -30,4 +32,19 @@ public abstract class ServerInformation {
 
   private String host;
   private int port;
+
+  /**
+   * Loads properties from the specified resource.
+   * <p>
+   * This method supports both absolute file paths and classpath resources. If the given resource is
+   * an absolute path, it loads the properties file directly from the file system. Otherwise, it
+   * attempts to load the properties from the classpath.
+   *
+   * @param resource the absolute file path or classpath resource name of the properties file
+   * @return a {@code Properties} object containing the configuration
+   * @throws IOException if the properties file is not found or cannot be loaded
+   */
+  protected Properties loadProperties(String resource) throws IOException {
+    return SenderUtils.loadProperties(resource);
+  }
 }
