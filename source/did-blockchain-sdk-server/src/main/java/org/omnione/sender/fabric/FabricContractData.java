@@ -16,16 +16,17 @@
 
 package org.omnione.sender.fabric;
 
-import org.omnione.sender.ContractData;
 import java.util.List;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.omnione.sender.ContractData;
 
 /**
  * Represents the data required to execute a contract function in Hyperledger Fabric.
  * <p>
- * This class encapsulates the function name, arguments, and query flag needed to invoke or query a smart contract in a
- * Hyperledger Fabric network. It provides static factory methods to create instances for queries and invocations.
+ * This class encapsulates the function name, arguments, and query flag needed to invoke or query a
+ * smart contract in a Hyperledger Fabric network. It provides static factory methods to create
+ * instances for queries and invocations.
  * </p>
  */
 @Getter

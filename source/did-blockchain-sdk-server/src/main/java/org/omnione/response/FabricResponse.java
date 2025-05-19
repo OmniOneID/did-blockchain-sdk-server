@@ -24,13 +24,13 @@ import lombok.Setter;
 import org.omnione.did.data.model.util.json.GsonWrapper;
 
 /**
- * The {@code FabricResponse} class represents a response from a Fabric network operation.
- * It encapsulates the status, message, and payload returned by the operation.
+ * The {@code FabricResponse} class represents a response from a Fabric network operation. It
+ * encapsulates the status, message, and payload returned by the operation.
  */
 @Getter
 @Setter
 @NoArgsConstructor
-public class FabricResponse {
+public class FabricResponse extends OmnioneResponse {
 
   @Expose
   @SerializedName("status")
@@ -45,16 +45,20 @@ public class FabricResponse {
   private String payload;
 
   /**
-   * Populates the fields of this {@code FabricResponse} instance by deserializing the provided JSON string.
+   * Populates the fields of this {@code FabricResponse} instance by deserializing the provided JSON
+   * string.
    *
-   * <p>This method uses a custom Gson wrapper to convert the JSON string into a {@code FabricResponse} object,
-   * and then copies the data into the current instance.</p>
+   * <p>This method uses a custom Gson wrapper to convert the JSON string into a
+   * {@code FabricResponse} object, and then copies the data into the current instance.</p>
    *
    * @param val the JSON string representing a {@code FabricResponse} object
    */
   public void fromJson(String val) {
     GsonWrapper gson = new GsonWrapper();
-    FabricResponse data = gson.fromJson(val, FabricResponse.class);
+    FabricResponse data = gson.fromJson(
+        val,
+        FabricResponse.class
+    );
     status = data.status;
     message = data.message;
     payload = data.payload;

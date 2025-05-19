@@ -1,9 +1,11 @@
 # Server Blockchain SDK
+
 Welcome to the Server Blockchain SDK Repository.
 This repository provides an SDK for interacting with Blockchain networks and invoking Smart Contracts.
 
 ## Folder Structure
-```
+
+```plaintext
 did-blockchain-sdk-server
 ├── CHANGELOG.md
 ├── CLA.md
@@ -36,7 +38,6 @@ did-blockchain-sdk-server
         └── did-blockchain-sdk-server-1.0.0.jar
 ```
 
-
 | Name                    |              Description                        |
 |-------------------------| ------------------------------------------------|
 | CHANGELOG.md            | Version-specific changes in the project         |
@@ -56,31 +57,42 @@ did-blockchain-sdk-server
 <br>
 
 ## Libraries
+
 Libraries can be found in the [Releases](https://github.com/OmniOneID/did-blockchain-sdk-server/releases).
 
 ## Blockchain SDK
-1. Copy the `did-datamodel-sdk-server-1.0.0.jar` file into the project's `libs` directory.
+
+1. Copy the `did-datamodel-sdk-server-1.0.1.jar` file into the project's `libs` directory.
+
 2. Add the following dependencies to the project's `build.gradle` file:
+
 ```groovy
     implementation files('libs/did-datamodel-sdk-server-1.0.0.jar')
     implementation('org.hyperledger.fabric:fabric-gateway-java:2.2.9')
+    implementation("org.web3j:core:4.13.0")
     implementation('com.fasterxml.jackson.core:jackson-databind:2.15.2')
     implementation('org.apache.commons:commons-pool2:2.12.0')
+    implementation ('org.hibernate.validator:hibernate-validator:8.0.0.Final')
+    implementation ('jakarta.validation:jakarta.validation-api:3.1.1')
     annotationProcessor('com.fasterxml.jackson.core:jackson-databind:2.15.2')
     annotationProcessor('org.projectlombok:lombok:1.18.28')
     compileOnly('org.projectlombok:lombok:1.18.28')
 ```
-3. Synchronize `Gradle` to ensure that the dependencies are correctly added.
+
+1. Synchronize `Gradle` to ensure that the dependencies are correctly added.
 
 ## API Reference
 
 You can find the API reference [here](docs/api/Blockchain_API.md).
 
 ## Change Log
+
 The Change Log provides a detailed record of version-specific changes and updates. You can find it here:
+
 - [Change Log](./CHANGELOG.md)
 
 ## OpenDID Demonstration Videos <br>
+
 To watch our demonstration videos of the OpenDID system in action, please visit our [Demo Repository](https://github.com/OmniOneID/did-demo-server). <br>
 These videos showcase key features including user registration, VC issuance, and VP submission processes.
 
@@ -89,4 +101,5 @@ These videos showcase key features including user registration, VC issuance, and
 For detailed information on contributing and submitting pull requests, please refer to [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## License
+
 [Apache 2.0](LICENSE)
