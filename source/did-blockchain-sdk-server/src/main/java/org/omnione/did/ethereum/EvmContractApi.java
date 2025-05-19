@@ -1,5 +1,6 @@
 package org.omnione.did.ethereum;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -676,9 +677,9 @@ public class EvmContractApi implements ContractApi {
     executeContract(
         contract -> {
           try {
-            String value = zkpCredentialDefinition.getValue()
-                .getPrimary()
-                .toString();
+            ObjectMapper objectMapper = new ObjectMapper();
+            String value = objectMapper.writeValueAsString(zkpCredentialDefinition.getValue()
+                .getPrimary());
             CredentialDefinition credentialDefinition = new CredentialDefinition(
                 zkpCredentialDefinition.getId(),
                 zkpCredentialDefinition.getSchemaId(),
