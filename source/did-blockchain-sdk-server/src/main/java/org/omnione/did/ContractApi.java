@@ -25,6 +25,8 @@ import org.omnione.did.data.model.schema.VcSchema;
 import org.omnione.did.data.model.vc.VcMeta;
 import org.omnione.did.data.model.zkp.ZKPCredentialDefinition;
 import org.omnione.did.data.model.zkp.ZKPCredentialSchema;
+import org.omnione.did.zkp.datamodel.definition.CredentialDefinition;
+import org.omnione.did.zkp.datamodel.schema.CredentialSchema;
 import org.omnione.exception.BlockChainException;
 
 
@@ -107,11 +109,11 @@ public interface ContractApi {
 
   Object getVcSchema(String schemaId) throws BlockChainException;
 
-  void registZKPCredential(ZKPCredentialSchema credentialSchema) throws BlockChainException;
+  void registZKPCredential(CredentialSchema credentialSchema) throws BlockChainException;
 
   Object getZKPCredential(String schemaId) throws BlockChainException;
 
-  void registZKPCredentialDefinition(ZKPCredentialDefinition credentialDefinition)
+  void registZKPCredentialDefinition(CredentialDefinition credentialDefinition)
       throws BlockChainException;
 
   Object getZKPCredentialDefinition(String definitionId) throws BlockChainException;

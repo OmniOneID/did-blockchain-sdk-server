@@ -21,8 +21,7 @@ import org.omnione.did.data.model.schema.Namespace;
 import org.omnione.did.data.model.schema.SchemaClaims;
 import org.omnione.did.data.model.schema.VcSchema;
 import org.omnione.did.data.model.vc.VcMeta;
-import org.omnione.did.data.model.zkp.ZKPCredentialDefinition;
-import org.omnione.did.data.model.zkp.ZKPCredentialSchema;
+import org.omnione.did.zkp.datamodel.schema.CredentialSchema;
 import org.omnione.exception.BlockChainException;
 import org.omnione.exception.BlockchainErrorCode;
 import org.omnione.generated.OpenDID;
@@ -585,7 +584,7 @@ public class EvmContractApi implements ContractApi {
   }
 
   @Override
-  public void registZKPCredential(ZKPCredentialSchema credentialSchema) throws BlockChainException {
+  public void registZKPCredential(CredentialSchema credentialSchema) throws BlockChainException {
 
     try (Web3j web3j = Web3j.build(new HttpService(serverInformation.getNetworkURL()))) {
       Credentials credentials = Credentials.create(contractData.getPrivateKey());
@@ -669,20 +668,23 @@ public class EvmContractApi implements ContractApi {
   }
 
   @Override
-  public void registZKPCredentialDefinition(ZKPCredentialDefinition zkpCredentialDefinition)
-      throws BlockChainException {
+  public void registZKPCredentialDefinition(
+      org.omnione.did.zkp.datamodel.definition.CredentialDefinition zkpCredentialDefinition
+  ) throws BlockChainException {
     logger.info("Registering ZKP Credential Definition: " + zkpCredentialDefinition.getId());
 
     executeContract(
         contract -> {
           try {
-            String value = zkpCredentialDefinition.getPrimary()
-                .toJson();
+            String value = zkpCredentialDefinition.getValue()
+                .getPrimary()
+                .toString();
             CredentialDefinition credentialDefinition = new CredentialDefinition(
                 zkpCredentialDefinition.getId(),
                 zkpCredentialDefinition.getSchemaId(),
                 zkpCredentialDefinition.getVer(),
-                zkpCredentialDefinition.getType(),
+                Integer.toString(zkpCredentialDefinition.getType()
+                    .getValue()),
                 value,
                 zkpCredentialDefinition.getTag()
             );

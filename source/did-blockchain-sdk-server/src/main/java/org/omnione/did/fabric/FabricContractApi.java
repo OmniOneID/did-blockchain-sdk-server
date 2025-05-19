@@ -30,8 +30,8 @@ import org.omnione.did.data.model.enums.vc.RoleType;
 import org.omnione.did.data.model.enums.vc.VcStatus;
 import org.omnione.did.data.model.schema.VcSchema;
 import org.omnione.did.data.model.vc.VcMeta;
-import org.omnione.did.data.model.zkp.ZKPCredentialDefinition;
-import org.omnione.did.data.model.zkp.ZKPCredentialSchema;
+import org.omnione.did.zkp.datamodel.definition.CredentialDefinition;
+import org.omnione.did.zkp.datamodel.schema.CredentialSchema;
 import org.omnione.exception.BlockChainException;
 import org.omnione.response.FabricResponse;
 import org.omnione.sender.BlockChainType;
@@ -64,8 +64,8 @@ public class FabricContractApi implements ContractApi {
    * @throws IOException          if there's an error reading the configuration file
    * @throws InvalidKeyException  if the key is invalid
    */
-  public FabricContractApi(String resourcePath) throws CertificateException, IOException,
-      InvalidKeyException {
+  public FabricContractApi(String resourcePath)
+      throws CertificateException, IOException, InvalidKeyException {
     this.serverInformation = new FabricServerInformation(resourcePath);
   }
 
@@ -80,7 +80,9 @@ public class FabricContractApi implements ContractApi {
   public void registDidDoc(InvokedDidDoc invokedDidDoc, RoleType roleType)
       throws BlockChainException {
     FabricContractData contractData = FabricContractData.Invoke(
-        FunctionName.CREATE_DID_DOC, invokedDidDoc.toJson(), roleType.getRawValue()
+        FunctionName.CREATE_DID_DOC,
+        invokedDidDoc.toJson(),
+        roleType.getRawValue()
     );
     send(contractData);
   }
@@ -96,7 +98,9 @@ public class FabricContractApi implements ContractApi {
   public DidDocAndStatus getDidDoc(String didKeyUrl) throws BlockChainException {
     DidKeyUrlParser parser = new DidKeyUrlParser(didKeyUrl);
     FabricContractData contractData = FabricContractData.Query(
-        FunctionName.GET_DID_DOCUMENT, parser.getDid(), parser.getVersionId()
+        FunctionName.GET_DID_DOCUMENT,
+        parser.getDid(),
+        parser.getVersionId()
     );
     FabricResponse response = send(contractData);
     String payload = decodeBase64(response.getPayload());
@@ -123,14 +127,17 @@ public class FabricContractApi implements ContractApi {
     }
     DidKeyUrlParser parser = new DidKeyUrlParser(didKeyUrl);
 
-    FabricContractData contractData = didDocStatus != DidDocStatus.REVOKED
-        ? FabricContractData.Invoke(
-            FunctionName.UPDATE_DID_DOC_STATUS_IN_SERVICE, parser.getDid(), didDocStatus
-                .getRawValue(), parser.getVersionId()
-        )
-        : FabricContractData.Invoke(
-            FunctionName.UPDATE_DID_DOC_STATUS_REVOCATION, parser.getDid(), didDocStatus
-                .getRawValue(), ""
+    FabricContractData contractData =
+        didDocStatus != DidDocStatus.REVOKED ? FabricContractData.Invoke(
+            FunctionName.UPDATE_DID_DOC_STATUS_IN_SERVICE,
+            parser.getDid(),
+            didDocStatus.getRawValue(),
+            parser.getVersionId()
+        ) : FabricContractData.Invoke(
+            FunctionName.UPDATE_DID_DOC_STATUS_REVOCATION,
+            parser.getDid(),
+            didDocStatus.getRawValue(),
+            ""
         );
     FabricResponse response = send(contractData);
     String payload = decodeBase64(response.getPayload());
@@ -151,15 +158,17 @@ public class FabricContractApi implements ContractApi {
    * @throws IllegalArgumentException if the status is not TERMINATED
    */
   @Override
-  public DidDocument updateDidDocStatus(
-      String didKeyUrl, DidDocStatus didDocStatus, LocalDateTime terminatedTime
+  public DidDocument updateDidDocStatus(String didKeyUrl, DidDocStatus didDocStatus,
+                                        LocalDateTime terminatedTime
   ) throws BlockChainException {
     if (didDocStatus != DidDocStatus.TERMINATED) {
       throw new IllegalArgumentException("Only TERMINATED status changes are allowed.");
     }
     DidKeyUrlParser parser = new DidKeyUrlParser(didKeyUrl);
     FabricContractData contractData = FabricContractData.Invoke(
-        FunctionName.UPDATE_DID_DOC_STATUS_REVOCATION, parser.getDid(), didDocStatus.getRawValue(),
+        FunctionName.UPDATE_DID_DOC_STATUS_REVOCATION,
+        parser.getDid(),
+        didDocStatus.getRawValue(),
         terminatedTime.toString()
     );
     FabricResponse response = send(contractData);
@@ -179,7 +188,8 @@ public class FabricContractApi implements ContractApi {
   @Override
   public void registVcMetadata(VcMeta vcMeta) throws BlockChainException {
     FabricContractData contractData = FabricContractData.Invoke(
-        FunctionName.CREATE_VC_METADATA, vcMeta.toJson()
+        FunctionName.CREATE_VC_METADATA,
+        vcMeta.toJson()
     );
     send(contractData);
   }
@@ -194,7 +204,9 @@ public class FabricContractApi implements ContractApi {
   @Override
   public void updateVcStatus(String vcId, VcStatus vcStatus) throws BlockChainException {
     FabricContractData contractData = FabricContractData.Invoke(
-        FunctionName.UPDATE_VC_STATUS, vcId, vcStatus.getRawValue()
+        FunctionName.UPDATE_VC_STATUS,
+        vcId,
+        vcStatus.getRawValue()
     );
     send(contractData);
   }
@@ -210,7 +222,7 @@ public class FabricContractApi implements ContractApi {
   }
 
   @Override
-  public void registZKPCredential(ZKPCredentialSchema credentialSchema) throws BlockChainException {
+  public void registZKPCredential(CredentialSchema credentialSchema) throws BlockChainException {
     throw new UnsupportedOperationException("Not implemented yet.");
   }
 
@@ -220,7 +232,7 @@ public class FabricContractApi implements ContractApi {
   }
 
   @Override
-  public void registZKPCredentialDefinition(ZKPCredentialDefinition credentialDefinition)
+  public void registZKPCredentialDefinition(CredentialDefinition credentialDefinition)
       throws BlockChainException {
     throw new UnsupportedOperationException("Not implemented yet.");
   }
@@ -239,7 +251,10 @@ public class FabricContractApi implements ContractApi {
    */
   @Override
   public VcMeta getVcMetadata(String vcId) throws BlockChainException {
-    FabricContractData contractData = FabricContractData.Query(FunctionName.GET_VC_METADATA, vcId);
+    FabricContractData contractData = FabricContractData.Query(
+        FunctionName.GET_VC_METADATA,
+        vcId
+    );
     FabricResponse response = send(contractData);
     String payload = decodeBase64(response.getPayload());
 
@@ -258,7 +273,10 @@ public class FabricContractApi implements ContractApi {
    * @throws BlockChainException if an error occurs during the transaction
    */
   public FabricResponse removeIndex(String index) throws BlockChainException {
-    FabricContractData contractData = FabricContractData.Invoke(FunctionName.REMOVE_INDEX, index);
+    FabricContractData contractData = FabricContractData.Invoke(
+        FunctionName.REMOVE_INDEX,
+        index
+    );
     FabricResponse response = send(contractData);
     return response;
   }
@@ -285,10 +303,12 @@ public class FabricContractApi implements ContractApi {
    * @throws BlockChainException if an error occurs while sending the transaction
    */
   private FabricResponse send(FabricContractData contractData) throws BlockChainException {
-    FabricSender sender = (FabricSender) SenderFactory.getSender(
-        BlockChainType.HYPER_LEDGER_FABRIC
+    FabricSender sender =
+        (FabricSender) SenderFactory.getSender(BlockChainType.HYPER_LEDGER_FABRIC);
+    byte[] result = sender.sendTransaction(
+        this.serverInformation,
+        contractData
     );
-    byte[] result = sender.sendTransaction(this.serverInformation, contractData);
     FabricResponse response = new FabricResponse();
     response.fromJson(new String(result));
     return response;
@@ -301,9 +321,7 @@ public class FabricContractApi implements ContractApi {
    * @return the decoded string
    */
   private String decodeBase64(Object encodedObj) {
-    return new String(
-        Base64.getDecoder()
-            .decode(encodedObj.toString())
-    );
+    return new String(Base64.getDecoder()
+        .decode(encodedObj.toString()));
   }
 }
