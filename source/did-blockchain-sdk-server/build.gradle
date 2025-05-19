@@ -31,7 +31,8 @@ ext {
 }
 
 dependencies {
-    implementation files("libs/did-datamodel-sdk-server-1.0.1.jar")
+    implementation files("libs/did-datamodel-sdk-server-1.0.0.jar")
+    implementation files("libs/did-zkp-sdk-server-1.0.0.jar")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.hyperledger.fabric:fabric-gateway-java:${fabricGatewayVersion}")
     implementation("org.web3j:core:${web3jCoreVersion}")
