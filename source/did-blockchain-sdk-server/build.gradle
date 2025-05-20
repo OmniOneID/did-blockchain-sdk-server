@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.8.0'
     id 'org.web3j' version '4.13.0'
-    id 'groovy'
 }
 
 group = 'org.omnione.did'
@@ -31,7 +30,8 @@ ext {
 }
 
 dependencies {
-    implementation files("libs/did-datamodel-sdk-server-1.0.1.jar")
+    implementation files("libs/did-datamodel-sdk-server-1.0.0.jar")
+    implementation files("libs/did-zkp-sdk-server-1.0.0.jar")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.hyperledger.fabric:fabric-gateway-java:${fabricGatewayVersion}")
     implementation("org.web3j:core:${web3jCoreVersion}")
@@ -41,8 +41,6 @@ dependencies {
     implementation 'org.apache.groovy:groovy'
     implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
     implementation 'jakarta.validation:jakarta.validation-api:3.1.1'
-    testImplementation platform("org.spockframework:spock-bom:2.3-groovy-4.0")
-    testImplementation("org.spockframework:spock-core")
     testImplementation("org.web3j:web3j-unit:4.12.3")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.0")

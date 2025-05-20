@@ -23,8 +23,8 @@ import org.omnione.did.data.model.enums.vc.RoleType;
 import org.omnione.did.data.model.enums.vc.VcStatus;
 import org.omnione.did.data.model.schema.VcSchema;
 import org.omnione.did.data.model.vc.VcMeta;
-import org.omnione.did.data.model.zkp.ZKPCredentialDefinition;
-import org.omnione.did.data.model.zkp.ZKPCredentialSchema;
+import org.omnione.did.zkp.datamodel.definition.CredentialDefinition;
+import org.omnione.did.zkp.datamodel.schema.CredentialSchema;
 import org.omnione.exception.BlockChainException;
 
 
@@ -73,8 +73,8 @@ public interface ContractApi {
    * @return the updated DID Document
    * @throws BlockChainException if an error occurs during the update process
    */
-  Object updateDidDocStatus(
-      String didKeyUrl, DidDocStatus didDocStatus, LocalDateTime terminatedTime
+  Object updateDidDocStatus(String didKeyUrl, DidDocStatus didDocStatus,
+                            LocalDateTime terminatedTime
   ) throws BlockChainException;
 
   /**
@@ -107,11 +107,11 @@ public interface ContractApi {
 
   Object getVcSchema(String schemaId) throws BlockChainException;
 
-  void registZKPCredential(ZKPCredentialSchema credentialSchema) throws BlockChainException;
+  void registZKPCredential(CredentialSchema credentialSchema) throws BlockChainException;
 
   Object getZKPCredential(String schemaId) throws BlockChainException;
 
-  void registZKPCredentialDefinition(ZKPCredentialDefinition credentialDefinition)
+  void registZKPCredentialDefinition(CredentialDefinition credentialDefinition)
       throws BlockChainException;
 
   Object getZKPCredentialDefinition(String definitionId) throws BlockChainException;
