@@ -1,6 +1,5 @@
 package org.omnione.did.ethereum;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -30,7 +29,6 @@ import org.omnione.generated.OpenDID.ClaimNamespace;
 import org.omnione.generated.OpenDID.CredentialDefinition;
 import org.omnione.generated.OpenDID.CredentialSubject;
 import org.omnione.generated.OpenDID.SchemaClaimItem;
-import org.omnione.generated.OpenDID.ZKPLibrary_CredentialSchema;
 import org.omnione.response.EvmResponse;
 import org.omnione.sender.ethereum.EvmContractData;
 import org.omnione.sender.ethereum.EvmServerInformation;
@@ -181,9 +179,14 @@ public class EvmContractApi implements ContractApi {
     executeContract(
         contract -> {
           try {
-            var document = convertJsonToDocument(invokedDidDoc.getDidDoc());
+            DidDocument didDocument = new DidDocument();
+            didDocument.fromJson(invokedDidDoc.getDidDoc());
+            var document = EvmDataConverter.convertToContractObject(didDocument);
             logger.debug("Converted DID Document: " + document.id);
-            contract.registDidDoc(document)
+            contract.registDidDoc(
+                    document,
+                    roleType.getRawValue()
+                )
                 .send();
             logger.info("DID Document registered successfully.");
             return null;
@@ -197,55 +200,6 @@ public class EvmContractApi implements ContractApi {
           }
         },
         false
-    );
-  }
-
-  /**
-   * Converts a JSON string to an OpenDID.Document object.
-   *
-   * @param json JSON string representing the DID Document.
-   * @return OpenDID.Document object.
-   */
-  private OpenDID.Document convertJsonToDocument(String json) {
-    logger.debug("Converting JSON to OpenDID.Document.");
-    DidDocument didDocument = new DidDocument();
-    didDocument.fromJson(json);
-
-    var verificationMethodList = didDocument.getVerificationMethod()
-        .stream()
-        .map(value -> new OpenDID.VerificationMethod(
-            value.getId(),
-            new BigInteger(value.getType()),
-            value.getController(),
-            value.getPublicKeyMultibase(),
-            new BigInteger(String.valueOf(value.getAuthType()))
-        ))
-        .toList();
-    var servicesList = didDocument.getService()
-        .stream()
-        .map(value -> new OpenDID.Service(
-            value.getId(),
-            value.getType(),
-            value.getServiceEndpoint()
-        ))
-        .toList();
-
-    logger.debug("Converted OpenDID.Document successfully.");
-    return new OpenDID.Document(
-        didDocument.getContext(),
-        didDocument.getId(),
-        didDocument.getController(),
-        didDocument.getCreated(),
-        didDocument.getUpdated(),
-        didDocument.getVersionId(),
-        didDocument.getDeactivated(),
-        verificationMethodList,
-        didDocument.getAssertionMethod(),
-        didDocument.getAuthentication(),
-        didDocument.getKeyAgreement(),
-        didDocument.getCapabilityInvocation(),
-        didDocument.getCapabilityDelegation(),
-        servicesList
     );
   }
 
@@ -605,14 +559,7 @@ public class EvmContractApi implements ContractApi {
           gasProvider
       );
 
-      var zkpCredentialSchema = new ZKPLibrary_CredentialSchema(
-          credentialSchema.getId(),
-          credentialSchema.getName(),
-          credentialSchema.getVersion(),
-          credentialSchema.getAttrNames(),
-          credentialSchema.getTag()
-      );
-
+      var zkpCredentialSchema = EvmDataConverter.convertToContractObject(credentialSchema);
       var transactionReceipt = contract.registZKPCredential(zkpCredentialSchema)
           .send();
 
@@ -652,9 +599,10 @@ public class EvmContractApi implements ContractApi {
           )
       );
 
-      return contract.getZKPCredential(schemaId)
+      OpenDID.ZKPLibrary_CredentialSchema credentialSchema = contract.getZKPCredential(schemaId)
           .send();
 
+      return EvmDataConverter.convertToJavaObject(credentialSchema);
     } catch (ContractCallException e) {
       throw new BlockChainException(
           BlockchainErrorCode.TRANSACTION_ERROR,
@@ -677,18 +625,8 @@ public class EvmContractApi implements ContractApi {
     executeContract(
         contract -> {
           try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            String value = objectMapper.writeValueAsString(zkpCredentialDefinition.getValue()
-                .getPrimary());
-            CredentialDefinition credentialDefinition = new CredentialDefinition(
-                zkpCredentialDefinition.getId(),
-                zkpCredentialDefinition.getSchemaId(),
-                zkpCredentialDefinition.getVer(),
-                Integer.toString(zkpCredentialDefinition.getType()
-                    .getValue()),
-                value,
-                zkpCredentialDefinition.getTag()
-            );
+            CredentialDefinition credentialDefinition =
+                EvmDataConverter.convertToContractObject(zkpCredentialDefinition);
 
             var transactionReceipt = contract.registZKPCredentialDefinition(credentialDefinition)
                 .send();
@@ -713,9 +651,10 @@ public class EvmContractApi implements ContractApi {
     return executeContract(
         contract -> {
           try {
-            return contract.getZKPCredentialDefinition(definitionId)
+            OpenDID.CredentialDefinition result = contract.getZKPCredentialDefinition(definitionId)
                 .send();
 
+            return EvmDataConverter.convertToJavaObject(result);
           } catch (Exception e) {
             throw new RuntimeException(e);
           }
