@@ -35,18 +35,15 @@ import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.ContractGasProvider;
 
 /**
- * <p>
- * Auto generated code.
- * <p>
- * <strong>Do not modify!</strong>
- * <p>
- * Please use the <a href="https://docs.web3j.io/command_line.html">web3j command line tools</a>, or
- * the org.web3j.codegen.SolidityFunctionWrapperGenerator in the
+ * <p>Auto generated code.
+ * <p><strong>Do not modify!</strong>
+ * <p>Please use the <a href="https://docs.web3j.io/command_line.html">web3j command line
+ * tools</a>,
+ * or the org.web3j.codegen.SolidityFunctionWrapperGenerator in the
  * <a href="https://github.com/hyperledger-web3j/web3j/tree/main/codegen">codegen module</a> to
  * update.
  *
- * <p>
- * Generated with web3j version 1.6.3.
+ * <p>Generated with web3j version 1.6.3.
  */
 @SuppressWarnings("rawtypes")
 public class OpenDID extends Contract {
@@ -81,251 +78,467 @@ public class OpenDID extends Contract {
   public static final String FUNC_UPDATEDIDDOCSTATUSREVOCATION = "updateDidDocStatusRevocation";
   public static final String FUNC_UPDATEVCSTATS = "updateVcStats";
   public static final String FUNC_UPGRADETOANDCALL = "upgradeToAndCall";
-  public static final Event DIDCREATED_EVENT =
-      new Event("DIDCreated", Arrays.<TypeReference<?>>asList(new TypeReference<Utf8String>() {},
-          new TypeReference<Address>() {}));
-  public static final Event DIDDEACTIVATED_EVENT =
-      new Event("DIDDeactivated", Arrays.<TypeReference<?>>asList(
-          new TypeReference<Utf8String>() {}, new TypeReference<Address>() {}));;
-  public static final Event DIDUPDATED_EVENT =
-      new Event("DIDUpdated", Arrays.<TypeReference<?>>asList(new TypeReference<Utf8String>() {},
-          new TypeReference<Address>() {}));;
-  public static final Event INITIALIZED_EVENT =
-      new Event("Initialized", Arrays.<TypeReference<?>>asList(new TypeReference<Uint64>() {}));;
-  public static final Event ROLEADMINCHANGED_EVENT = new Event("RoleAdminChanged",
-      Arrays.<TypeReference<?>>asList(new TypeReference<Bytes32>(true) {},
-          new TypeReference<Bytes32>(true) {}, new TypeReference<Bytes32>(true) {}));;
-  public static final Event ROLEGRANTED_EVENT =
-      new Event("RoleGranted", Arrays.<TypeReference<?>>asList(new TypeReference<Bytes32>(true) {},
-          new TypeReference<Address>(true) {}, new TypeReference<Address>(true) {}));;
-  public static final Event ROLEREVOKED_EVENT =
-      new Event("RoleRevoked", Arrays.<TypeReference<?>>asList(new TypeReference<Bytes32>(true) {},
-          new TypeReference<Address>(true) {}, new TypeReference<Address>(true) {}));;
-  public static final Event SETUP_EVENT = new Event("Setup", Arrays.<TypeReference<?>>asList());;
-  public static final Event UPGRADED_EVENT =
-      new Event("Upgraded", Arrays.<TypeReference<?>>asList(new TypeReference<Address>(true) {}));;
-  public static final Event VCISSUED_EVENT =
-      new Event("VCIssued", Arrays.<TypeReference<?>>asList(new TypeReference<Utf8String>() {},
-          new TypeReference<Address>() {}, new TypeReference<Utf8String>() {}));;
-  public static final Event VCSCHEMACREATED_EVENT =
-      new Event("VCSchemaCreated", Arrays.<TypeReference<?>>asList(
-          new TypeReference<Utf8String>() {}, new TypeReference<Address>() {}));;
-  public static final Event VCSTATUS_EVENT =
-      new Event("VCStatus", Arrays.<TypeReference<?>>asList(new TypeReference<Utf8String>() {},
-          new TypeReference<Address>() {}, new TypeReference<Utf8String>() {}));;
-  private static String librariesLinkedBinary;;
+  public static final Event DIDCREATED_EVENT = new Event(
+      "DIDCreated",
+      Arrays.<TypeReference<?>>asList(
+          new TypeReference<Utf8String>() {
+          },
+          new TypeReference<Address>() {
+          }
+      )
+  );
+  public static final Event DIDDEACTIVATED_EVENT = new Event(
+      "DIDDeactivated",
+      Arrays.<TypeReference<?>>asList(
+          new TypeReference<Utf8String>() {
+          },
+          new TypeReference<Address>() {
+          }
+      )
+  );
+  ;
+  public static final Event DIDUPDATED_EVENT = new Event(
+      "DIDUpdated",
+      Arrays.<TypeReference<?>>asList(
+          new TypeReference<Utf8String>() {
+          },
+          new TypeReference<Address>() {
+          }
+      )
+  );
+  ;
+  public static final Event INITIALIZED_EVENT = new Event(
+      "Initialized",
+      Arrays.<TypeReference<?>>asList(new TypeReference<Uint64>() {
+      })
+  );
+  ;
+  public static final Event ROLEADMINCHANGED_EVENT = new Event(
+      "RoleAdminChanged",
+      Arrays.<TypeReference<?>>asList(
+          new TypeReference<Bytes32>(true) {
+          },
+          new TypeReference<Bytes32>(true) {
+          },
+          new TypeReference<Bytes32>(true) {
+          }
+      )
+  );
+  ;
+  public static final Event ROLEGRANTED_EVENT = new Event(
+      "RoleGranted",
+      Arrays.<TypeReference<?>>asList(
+          new TypeReference<Bytes32>(true) {
+          },
+          new TypeReference<Address>(true) {
+          },
+          new TypeReference<Address>(true) {
+          }
+      )
+  );
+  ;
+  public static final Event ROLEREVOKED_EVENT = new Event(
+      "RoleRevoked",
+      Arrays.<TypeReference<?>>asList(
+          new TypeReference<Bytes32>(true) {
+          },
+          new TypeReference<Address>(true) {
+          },
+          new TypeReference<Address>(true) {
+          }
+      )
+  );
+  ;
+  public static final Event SETUP_EVENT = new Event(
+      "Setup",
+      Arrays.<TypeReference<?>>asList()
+  );
+  ;
+  public static final Event UPGRADED_EVENT = new Event(
+      "Upgraded",
+      Arrays.<TypeReference<?>>asList(new TypeReference<Address>(true) {
+      })
+  );
+  ;
+  public static final Event VCISSUED_EVENT = new Event(
+      "VCIssued",
+      Arrays.<TypeReference<?>>asList(
+          new TypeReference<Utf8String>() {
+          },
+          new TypeReference<Address>() {
+          },
+          new TypeReference<Utf8String>() {
+          }
+      )
+  );
+  ;
+  public static final Event VCSCHEMACREATED_EVENT = new Event(
+      "VCSchemaCreated",
+      Arrays.<TypeReference<?>>asList(
+          new TypeReference<Utf8String>() {
+          },
+          new TypeReference<Address>() {
+          }
+      )
+  );
+  ;
+  public static final Event VCSTATUS_EVENT = new Event(
+      "VCStatus",
+      Arrays.<TypeReference<?>>asList(
+          new TypeReference<Utf8String>() {
+          },
+          new TypeReference<Address>() {
+          },
+          new TypeReference<Utf8String>() {
+          }
+      )
+  );
+  ;
+  private static String librariesLinkedBinary;
+  ;
 
   @Deprecated
   protected OpenDID(String contractAddress, Web3j web3j, Credentials credentials,
-      BigInteger gasPrice, BigInteger gasLimit) {
-    super(BINARY, contractAddress, web3j, credentials, gasPrice, gasLimit);
+                    BigInteger gasPrice, BigInteger gasLimit
+  ) {
+    super(
+        BINARY,
+        contractAddress,
+        web3j,
+        credentials,
+        gasPrice,
+        gasLimit
+    );
   }
 
   protected OpenDID(String contractAddress, Web3j web3j, Credentials credentials,
-      ContractGasProvider contractGasProvider) {
-    super(BINARY, contractAddress, web3j, credentials, contractGasProvider);
+                    ContractGasProvider contractGasProvider
+  ) {
+    super(
+        BINARY,
+        contractAddress,
+        web3j,
+        credentials,
+        contractGasProvider
+    );
   }
 
   @Deprecated
   protected OpenDID(String contractAddress, Web3j web3j, TransactionManager transactionManager,
-      BigInteger gasPrice, BigInteger gasLimit) {
-    super(BINARY, contractAddress, web3j, transactionManager, gasPrice, gasLimit);
+                    BigInteger gasPrice, BigInteger gasLimit
+  ) {
+    super(
+        BINARY,
+        contractAddress,
+        web3j,
+        transactionManager,
+        gasPrice,
+        gasLimit
+    );
   }
 
   protected OpenDID(String contractAddress, Web3j web3j, TransactionManager transactionManager,
-      ContractGasProvider contractGasProvider) {
-    super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
+                    ContractGasProvider contractGasProvider
+  ) {
+    super(
+        BINARY,
+        contractAddress,
+        web3j,
+        transactionManager,
+        contractGasProvider
+    );
   }
 
   public static List<DIDCreatedEventResponse> getDIDCreatedEvents(
-      TransactionReceipt transactionReceipt) {
-    List<Contract.EventValuesWithLog> valueList =
-        staticExtractEventParametersWithLog(DIDCREATED_EVENT, transactionReceipt);
+      TransactionReceipt transactionReceipt
+  ) {
+    List<Contract.EventValuesWithLog> valueList = staticExtractEventParametersWithLog(
+        DIDCREATED_EVENT,
+        transactionReceipt
+    );
     ArrayList<DIDCreatedEventResponse> responses =
         new ArrayList<DIDCreatedEventResponse>(valueList.size());
     for (Contract.EventValuesWithLog eventValues : valueList) {
       DIDCreatedEventResponse typedResponse = new DIDCreatedEventResponse();
       typedResponse.log = eventValues.getLog();
-      typedResponse.did = (String) eventValues.getNonIndexedValues().get(0).getValue();
-      typedResponse.controller = (String) eventValues.getNonIndexedValues().get(1).getValue();
+      typedResponse.did = (String) eventValues.getNonIndexedValues()
+          .get(0)
+          .getValue();
+      typedResponse.controller = (String) eventValues.getNonIndexedValues()
+          .get(1)
+          .getValue();
       responses.add(typedResponse);
     }
     return responses;
   }
 
   public static DIDCreatedEventResponse getDIDCreatedEventFromLog(Log log) {
-    Contract.EventValuesWithLog eventValues =
-        staticExtractEventParametersWithLog(DIDCREATED_EVENT, log);
+    Contract.EventValuesWithLog eventValues = staticExtractEventParametersWithLog(
+        DIDCREATED_EVENT,
+        log
+    );
     DIDCreatedEventResponse typedResponse = new DIDCreatedEventResponse();
     typedResponse.log = log;
-    typedResponse.did = (String) eventValues.getNonIndexedValues().get(0).getValue();
-    typedResponse.controller = (String) eventValues.getNonIndexedValues().get(1).getValue();
+    typedResponse.did = (String) eventValues.getNonIndexedValues()
+        .get(0)
+        .getValue();
+    typedResponse.controller = (String) eventValues.getNonIndexedValues()
+        .get(1)
+        .getValue();
     return typedResponse;
   }
 
   public static List<DIDDeactivatedEventResponse> getDIDDeactivatedEvents(
-      TransactionReceipt transactionReceipt) {
-    List<Contract.EventValuesWithLog> valueList =
-        staticExtractEventParametersWithLog(DIDDEACTIVATED_EVENT, transactionReceipt);
+      TransactionReceipt transactionReceipt
+  ) {
+    List<Contract.EventValuesWithLog> valueList = staticExtractEventParametersWithLog(
+        DIDDEACTIVATED_EVENT,
+        transactionReceipt
+    );
     ArrayList<DIDDeactivatedEventResponse> responses =
         new ArrayList<DIDDeactivatedEventResponse>(valueList.size());
     for (Contract.EventValuesWithLog eventValues : valueList) {
       DIDDeactivatedEventResponse typedResponse = new DIDDeactivatedEventResponse();
       typedResponse.log = eventValues.getLog();
-      typedResponse.did = (String) eventValues.getNonIndexedValues().get(0).getValue();
-      typedResponse.controller = (String) eventValues.getNonIndexedValues().get(1).getValue();
+      typedResponse.did = (String) eventValues.getNonIndexedValues()
+          .get(0)
+          .getValue();
+      typedResponse.controller = (String) eventValues.getNonIndexedValues()
+          .get(1)
+          .getValue();
       responses.add(typedResponse);
     }
     return responses;
   }
 
   public static DIDDeactivatedEventResponse getDIDDeactivatedEventFromLog(Log log) {
-    Contract.EventValuesWithLog eventValues =
-        staticExtractEventParametersWithLog(DIDDEACTIVATED_EVENT, log);
+    Contract.EventValuesWithLog eventValues = staticExtractEventParametersWithLog(
+        DIDDEACTIVATED_EVENT,
+        log
+    );
     DIDDeactivatedEventResponse typedResponse = new DIDDeactivatedEventResponse();
     typedResponse.log = log;
-    typedResponse.did = (String) eventValues.getNonIndexedValues().get(0).getValue();
-    typedResponse.controller = (String) eventValues.getNonIndexedValues().get(1).getValue();
+    typedResponse.did = (String) eventValues.getNonIndexedValues()
+        .get(0)
+        .getValue();
+    typedResponse.controller = (String) eventValues.getNonIndexedValues()
+        .get(1)
+        .getValue();
     return typedResponse;
   }
 
   public static List<DIDUpdatedEventResponse> getDIDUpdatedEvents(
-      TransactionReceipt transactionReceipt) {
-    List<Contract.EventValuesWithLog> valueList =
-        staticExtractEventParametersWithLog(DIDUPDATED_EVENT, transactionReceipt);
+      TransactionReceipt transactionReceipt
+  ) {
+    List<Contract.EventValuesWithLog> valueList = staticExtractEventParametersWithLog(
+        DIDUPDATED_EVENT,
+        transactionReceipt
+    );
     ArrayList<DIDUpdatedEventResponse> responses =
         new ArrayList<DIDUpdatedEventResponse>(valueList.size());
     for (Contract.EventValuesWithLog eventValues : valueList) {
       DIDUpdatedEventResponse typedResponse = new DIDUpdatedEventResponse();
       typedResponse.log = eventValues.getLog();
-      typedResponse.did = (String) eventValues.getNonIndexedValues().get(0).getValue();
-      typedResponse.controller = (String) eventValues.getNonIndexedValues().get(1).getValue();
+      typedResponse.did = (String) eventValues.getNonIndexedValues()
+          .get(0)
+          .getValue();
+      typedResponse.controller = (String) eventValues.getNonIndexedValues()
+          .get(1)
+          .getValue();
       responses.add(typedResponse);
     }
     return responses;
   }
 
   public static DIDUpdatedEventResponse getDIDUpdatedEventFromLog(Log log) {
-    Contract.EventValuesWithLog eventValues =
-        staticExtractEventParametersWithLog(DIDUPDATED_EVENT, log);
+    Contract.EventValuesWithLog eventValues = staticExtractEventParametersWithLog(
+        DIDUPDATED_EVENT,
+        log
+    );
     DIDUpdatedEventResponse typedResponse = new DIDUpdatedEventResponse();
     typedResponse.log = log;
-    typedResponse.did = (String) eventValues.getNonIndexedValues().get(0).getValue();
-    typedResponse.controller = (String) eventValues.getNonIndexedValues().get(1).getValue();
+    typedResponse.did = (String) eventValues.getNonIndexedValues()
+        .get(0)
+        .getValue();
+    typedResponse.controller = (String) eventValues.getNonIndexedValues()
+        .get(1)
+        .getValue();
     return typedResponse;
   }
 
   public static List<InitializedEventResponse> getInitializedEvents(
-      TransactionReceipt transactionReceipt) {
-    List<Contract.EventValuesWithLog> valueList =
-        staticExtractEventParametersWithLog(INITIALIZED_EVENT, transactionReceipt);
+      TransactionReceipt transactionReceipt
+  ) {
+    List<Contract.EventValuesWithLog> valueList = staticExtractEventParametersWithLog(
+        INITIALIZED_EVENT,
+        transactionReceipt
+    );
     ArrayList<InitializedEventResponse> responses =
         new ArrayList<InitializedEventResponse>(valueList.size());
     for (Contract.EventValuesWithLog eventValues : valueList) {
       InitializedEventResponse typedResponse = new InitializedEventResponse();
       typedResponse.log = eventValues.getLog();
-      typedResponse.version = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
+      typedResponse.version = (BigInteger) eventValues.getNonIndexedValues()
+          .get(0)
+          .getValue();
       responses.add(typedResponse);
     }
     return responses;
   }
 
   public static InitializedEventResponse getInitializedEventFromLog(Log log) {
-    Contract.EventValuesWithLog eventValues =
-        staticExtractEventParametersWithLog(INITIALIZED_EVENT, log);
+    Contract.EventValuesWithLog eventValues = staticExtractEventParametersWithLog(
+        INITIALIZED_EVENT,
+        log
+    );
     InitializedEventResponse typedResponse = new InitializedEventResponse();
     typedResponse.log = log;
-    typedResponse.version = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
+    typedResponse.version = (BigInteger) eventValues.getNonIndexedValues()
+        .get(0)
+        .getValue();
     return typedResponse;
   }
 
   public static List<RoleAdminChangedEventResponse> getRoleAdminChangedEvents(
-      TransactionReceipt transactionReceipt) {
-    List<Contract.EventValuesWithLog> valueList =
-        staticExtractEventParametersWithLog(ROLEADMINCHANGED_EVENT, transactionReceipt);
+      TransactionReceipt transactionReceipt
+  ) {
+    List<Contract.EventValuesWithLog> valueList = staticExtractEventParametersWithLog(
+        ROLEADMINCHANGED_EVENT,
+        transactionReceipt
+    );
     ArrayList<RoleAdminChangedEventResponse> responses =
         new ArrayList<RoleAdminChangedEventResponse>(valueList.size());
     for (Contract.EventValuesWithLog eventValues : valueList) {
       RoleAdminChangedEventResponse typedResponse = new RoleAdminChangedEventResponse();
       typedResponse.log = eventValues.getLog();
-      typedResponse.role = (byte[]) eventValues.getIndexedValues().get(0).getValue();
-      typedResponse.previousAdminRole = (byte[]) eventValues.getIndexedValues().get(1).getValue();
-      typedResponse.newAdminRole = (byte[]) eventValues.getIndexedValues().get(2).getValue();
+      typedResponse.role = (byte[]) eventValues.getIndexedValues()
+          .get(0)
+          .getValue();
+      typedResponse.previousAdminRole = (byte[]) eventValues.getIndexedValues()
+          .get(1)
+          .getValue();
+      typedResponse.newAdminRole = (byte[]) eventValues.getIndexedValues()
+          .get(2)
+          .getValue();
       responses.add(typedResponse);
     }
     return responses;
   }
 
   public static RoleAdminChangedEventResponse getRoleAdminChangedEventFromLog(Log log) {
-    Contract.EventValuesWithLog eventValues =
-        staticExtractEventParametersWithLog(ROLEADMINCHANGED_EVENT, log);
+    Contract.EventValuesWithLog eventValues = staticExtractEventParametersWithLog(
+        ROLEADMINCHANGED_EVENT,
+        log
+    );
     RoleAdminChangedEventResponse typedResponse = new RoleAdminChangedEventResponse();
     typedResponse.log = log;
-    typedResponse.role = (byte[]) eventValues.getIndexedValues().get(0).getValue();
-    typedResponse.previousAdminRole = (byte[]) eventValues.getIndexedValues().get(1).getValue();
-    typedResponse.newAdminRole = (byte[]) eventValues.getIndexedValues().get(2).getValue();
+    typedResponse.role = (byte[]) eventValues.getIndexedValues()
+        .get(0)
+        .getValue();
+    typedResponse.previousAdminRole = (byte[]) eventValues.getIndexedValues()
+        .get(1)
+        .getValue();
+    typedResponse.newAdminRole = (byte[]) eventValues.getIndexedValues()
+        .get(2)
+        .getValue();
     return typedResponse;
   }
 
   public static List<RoleGrantedEventResponse> getRoleGrantedEvents(
-      TransactionReceipt transactionReceipt) {
-    List<Contract.EventValuesWithLog> valueList =
-        staticExtractEventParametersWithLog(ROLEGRANTED_EVENT, transactionReceipt);
+      TransactionReceipt transactionReceipt
+  ) {
+    List<Contract.EventValuesWithLog> valueList = staticExtractEventParametersWithLog(
+        ROLEGRANTED_EVENT,
+        transactionReceipt
+    );
     ArrayList<RoleGrantedEventResponse> responses =
         new ArrayList<RoleGrantedEventResponse>(valueList.size());
     for (Contract.EventValuesWithLog eventValues : valueList) {
       RoleGrantedEventResponse typedResponse = new RoleGrantedEventResponse();
       typedResponse.log = eventValues.getLog();
-      typedResponse.role = (byte[]) eventValues.getIndexedValues().get(0).getValue();
-      typedResponse.account = (String) eventValues.getIndexedValues().get(1).getValue();
-      typedResponse.sender = (String) eventValues.getIndexedValues().get(2).getValue();
+      typedResponse.role = (byte[]) eventValues.getIndexedValues()
+          .get(0)
+          .getValue();
+      typedResponse.account = (String) eventValues.getIndexedValues()
+          .get(1)
+          .getValue();
+      typedResponse.sender = (String) eventValues.getIndexedValues()
+          .get(2)
+          .getValue();
       responses.add(typedResponse);
     }
     return responses;
   }
 
   public static RoleGrantedEventResponse getRoleGrantedEventFromLog(Log log) {
-    Contract.EventValuesWithLog eventValues =
-        staticExtractEventParametersWithLog(ROLEGRANTED_EVENT, log);
+    Contract.EventValuesWithLog eventValues = staticExtractEventParametersWithLog(
+        ROLEGRANTED_EVENT,
+        log
+    );
     RoleGrantedEventResponse typedResponse = new RoleGrantedEventResponse();
     typedResponse.log = log;
-    typedResponse.role = (byte[]) eventValues.getIndexedValues().get(0).getValue();
-    typedResponse.account = (String) eventValues.getIndexedValues().get(1).getValue();
-    typedResponse.sender = (String) eventValues.getIndexedValues().get(2).getValue();
+    typedResponse.role = (byte[]) eventValues.getIndexedValues()
+        .get(0)
+        .getValue();
+    typedResponse.account = (String) eventValues.getIndexedValues()
+        .get(1)
+        .getValue();
+    typedResponse.sender = (String) eventValues.getIndexedValues()
+        .get(2)
+        .getValue();
     return typedResponse;
   }
 
   public static List<RoleRevokedEventResponse> getRoleRevokedEvents(
-      TransactionReceipt transactionReceipt) {
-    List<Contract.EventValuesWithLog> valueList =
-        staticExtractEventParametersWithLog(ROLEREVOKED_EVENT, transactionReceipt);
+      TransactionReceipt transactionReceipt
+  ) {
+    List<Contract.EventValuesWithLog> valueList = staticExtractEventParametersWithLog(
+        ROLEREVOKED_EVENT,
+        transactionReceipt
+    );
     ArrayList<RoleRevokedEventResponse> responses =
         new ArrayList<RoleRevokedEventResponse>(valueList.size());
     for (Contract.EventValuesWithLog eventValues : valueList) {
       RoleRevokedEventResponse typedResponse = new RoleRevokedEventResponse();
       typedResponse.log = eventValues.getLog();
-      typedResponse.role = (byte[]) eventValues.getIndexedValues().get(0).getValue();
-      typedResponse.account = (String) eventValues.getIndexedValues().get(1).getValue();
-      typedResponse.sender = (String) eventValues.getIndexedValues().get(2).getValue();
+      typedResponse.role = (byte[]) eventValues.getIndexedValues()
+          .get(0)
+          .getValue();
+      typedResponse.account = (String) eventValues.getIndexedValues()
+          .get(1)
+          .getValue();
+      typedResponse.sender = (String) eventValues.getIndexedValues()
+          .get(2)
+          .getValue();
       responses.add(typedResponse);
     }
     return responses;
   }
 
   public static RoleRevokedEventResponse getRoleRevokedEventFromLog(Log log) {
-    Contract.EventValuesWithLog eventValues =
-        staticExtractEventParametersWithLog(ROLEREVOKED_EVENT, log);
+    Contract.EventValuesWithLog eventValues = staticExtractEventParametersWithLog(
+        ROLEREVOKED_EVENT,
+        log
+    );
     RoleRevokedEventResponse typedResponse = new RoleRevokedEventResponse();
     typedResponse.log = log;
-    typedResponse.role = (byte[]) eventValues.getIndexedValues().get(0).getValue();
-    typedResponse.account = (String) eventValues.getIndexedValues().get(1).getValue();
-    typedResponse.sender = (String) eventValues.getIndexedValues().get(2).getValue();
+    typedResponse.role = (byte[]) eventValues.getIndexedValues()
+        .get(0)
+        .getValue();
+    typedResponse.account = (String) eventValues.getIndexedValues()
+        .get(1)
+        .getValue();
+    typedResponse.sender = (String) eventValues.getIndexedValues()
+        .get(2)
+        .getValue();
     return typedResponse;
   }
 
   public static List<SetupEventResponse> getSetupEvents(TransactionReceipt transactionReceipt) {
-    List<Contract.EventValuesWithLog> valueList =
-        staticExtractEventParametersWithLog(SETUP_EVENT, transactionReceipt);
+    List<Contract.EventValuesWithLog> valueList = staticExtractEventParametersWithLog(
+        SETUP_EVENT,
+        transactionReceipt
+    );
     ArrayList<SetupEventResponse> responses = new ArrayList<SetupEventResponse>(valueList.size());
     for (Contract.EventValuesWithLog eventValues : valueList) {
       SetupEventResponse typedResponse = new SetupEventResponse();
@@ -336,168 +549,285 @@ public class OpenDID extends Contract {
   }
 
   public static SetupEventResponse getSetupEventFromLog(Log log) {
-    Contract.EventValuesWithLog eventValues = staticExtractEventParametersWithLog(SETUP_EVENT, log);
+    Contract.EventValuesWithLog eventValues = staticExtractEventParametersWithLog(
+        SETUP_EVENT,
+        log
+    );
     SetupEventResponse typedResponse = new SetupEventResponse();
     typedResponse.log = log;
     return typedResponse;
   }
 
-  public static List<UpgradedEventResponse> getUpgradedEvents(
-      TransactionReceipt transactionReceipt) {
-    List<Contract.EventValuesWithLog> valueList =
-        staticExtractEventParametersWithLog(UPGRADED_EVENT, transactionReceipt);
+  public static List<UpgradedEventResponse> getUpgradedEvents(TransactionReceipt transactionReceipt
+  ) {
+    List<Contract.EventValuesWithLog> valueList = staticExtractEventParametersWithLog(
+        UPGRADED_EVENT,
+        transactionReceipt
+    );
     ArrayList<UpgradedEventResponse> responses =
         new ArrayList<UpgradedEventResponse>(valueList.size());
     for (Contract.EventValuesWithLog eventValues : valueList) {
       UpgradedEventResponse typedResponse = new UpgradedEventResponse();
       typedResponse.log = eventValues.getLog();
-      typedResponse.implementation = (String) eventValues.getIndexedValues().get(0).getValue();
+      typedResponse.implementation = (String) eventValues.getIndexedValues()
+          .get(0)
+          .getValue();
       responses.add(typedResponse);
     }
     return responses;
   }
 
   public static UpgradedEventResponse getUpgradedEventFromLog(Log log) {
-    Contract.EventValuesWithLog eventValues =
-        staticExtractEventParametersWithLog(UPGRADED_EVENT, log);
+    Contract.EventValuesWithLog eventValues = staticExtractEventParametersWithLog(
+        UPGRADED_EVENT,
+        log
+    );
     UpgradedEventResponse typedResponse = new UpgradedEventResponse();
     typedResponse.log = log;
-    typedResponse.implementation = (String) eventValues.getIndexedValues().get(0).getValue();
+    typedResponse.implementation = (String) eventValues.getIndexedValues()
+        .get(0)
+        .getValue();
     return typedResponse;
   }
 
-  public static List<VCIssuedEventResponse> getVCIssuedEvents(
-      TransactionReceipt transactionReceipt) {
-    List<Contract.EventValuesWithLog> valueList =
-        staticExtractEventParametersWithLog(VCISSUED_EVENT, transactionReceipt);
+  public static List<VCIssuedEventResponse> getVCIssuedEvents(TransactionReceipt transactionReceipt
+  ) {
+    List<Contract.EventValuesWithLog> valueList = staticExtractEventParametersWithLog(
+        VCISSUED_EVENT,
+        transactionReceipt
+    );
     ArrayList<VCIssuedEventResponse> responses =
         new ArrayList<VCIssuedEventResponse>(valueList.size());
     for (Contract.EventValuesWithLog eventValues : valueList) {
       VCIssuedEventResponse typedResponse = new VCIssuedEventResponse();
       typedResponse.log = eventValues.getLog();
-      typedResponse.vcId = (String) eventValues.getNonIndexedValues().get(0).getValue();
-      typedResponse.issuer = (String) eventValues.getNonIndexedValues().get(1).getValue();
-      typedResponse.did = (String) eventValues.getNonIndexedValues().get(2).getValue();
+      typedResponse.vcId = (String) eventValues.getNonIndexedValues()
+          .get(0)
+          .getValue();
+      typedResponse.issuer = (String) eventValues.getNonIndexedValues()
+          .get(1)
+          .getValue();
+      typedResponse.did = (String) eventValues.getNonIndexedValues()
+          .get(2)
+          .getValue();
       responses.add(typedResponse);
     }
     return responses;
   }
 
   public static VCIssuedEventResponse getVCIssuedEventFromLog(Log log) {
-    Contract.EventValuesWithLog eventValues =
-        staticExtractEventParametersWithLog(VCISSUED_EVENT, log);
+    Contract.EventValuesWithLog eventValues = staticExtractEventParametersWithLog(
+        VCISSUED_EVENT,
+        log
+    );
     VCIssuedEventResponse typedResponse = new VCIssuedEventResponse();
     typedResponse.log = log;
-    typedResponse.vcId = (String) eventValues.getNonIndexedValues().get(0).getValue();
-    typedResponse.issuer = (String) eventValues.getNonIndexedValues().get(1).getValue();
-    typedResponse.did = (String) eventValues.getNonIndexedValues().get(2).getValue();
+    typedResponse.vcId = (String) eventValues.getNonIndexedValues()
+        .get(0)
+        .getValue();
+    typedResponse.issuer = (String) eventValues.getNonIndexedValues()
+        .get(1)
+        .getValue();
+    typedResponse.did = (String) eventValues.getNonIndexedValues()
+        .get(2)
+        .getValue();
     return typedResponse;
   }
 
   public static List<VCSchemaCreatedEventResponse> getVCSchemaCreatedEvents(
-      TransactionReceipt transactionReceipt) {
-    List<Contract.EventValuesWithLog> valueList =
-        staticExtractEventParametersWithLog(VCSCHEMACREATED_EVENT, transactionReceipt);
+      TransactionReceipt transactionReceipt
+  ) {
+    List<Contract.EventValuesWithLog> valueList = staticExtractEventParametersWithLog(
+        VCSCHEMACREATED_EVENT,
+        transactionReceipt
+    );
     ArrayList<VCSchemaCreatedEventResponse> responses =
         new ArrayList<VCSchemaCreatedEventResponse>(valueList.size());
     for (Contract.EventValuesWithLog eventValues : valueList) {
       VCSchemaCreatedEventResponse typedResponse = new VCSchemaCreatedEventResponse();
       typedResponse.log = eventValues.getLog();
-      typedResponse.schemaId = (String) eventValues.getNonIndexedValues().get(0).getValue();
-      typedResponse.issuer = (String) eventValues.getNonIndexedValues().get(1).getValue();
+      typedResponse.schemaId = (String) eventValues.getNonIndexedValues()
+          .get(0)
+          .getValue();
+      typedResponse.issuer = (String) eventValues.getNonIndexedValues()
+          .get(1)
+          .getValue();
       responses.add(typedResponse);
     }
     return responses;
   }
 
   public static VCSchemaCreatedEventResponse getVCSchemaCreatedEventFromLog(Log log) {
-    Contract.EventValuesWithLog eventValues =
-        staticExtractEventParametersWithLog(VCSCHEMACREATED_EVENT, log);
+    Contract.EventValuesWithLog eventValues = staticExtractEventParametersWithLog(
+        VCSCHEMACREATED_EVENT,
+        log
+    );
     VCSchemaCreatedEventResponse typedResponse = new VCSchemaCreatedEventResponse();
     typedResponse.log = log;
-    typedResponse.schemaId = (String) eventValues.getNonIndexedValues().get(0).getValue();
-    typedResponse.issuer = (String) eventValues.getNonIndexedValues().get(1).getValue();
+    typedResponse.schemaId = (String) eventValues.getNonIndexedValues()
+        .get(0)
+        .getValue();
+    typedResponse.issuer = (String) eventValues.getNonIndexedValues()
+        .get(1)
+        .getValue();
     return typedResponse;
   }
 
-  public static List<VCStatusEventResponse> getVCStatusEvents(
-      TransactionReceipt transactionReceipt) {
-    List<Contract.EventValuesWithLog> valueList =
-        staticExtractEventParametersWithLog(VCSTATUS_EVENT, transactionReceipt);
+  public static List<VCStatusEventResponse> getVCStatusEvents(TransactionReceipt transactionReceipt
+  ) {
+    List<Contract.EventValuesWithLog> valueList = staticExtractEventParametersWithLog(
+        VCSTATUS_EVENT,
+        transactionReceipt
+    );
     ArrayList<VCStatusEventResponse> responses =
         new ArrayList<VCStatusEventResponse>(valueList.size());
     for (Contract.EventValuesWithLog eventValues : valueList) {
       VCStatusEventResponse typedResponse = new VCStatusEventResponse();
       typedResponse.log = eventValues.getLog();
-      typedResponse.vcId = (String) eventValues.getNonIndexedValues().get(0).getValue();
-      typedResponse.player = (String) eventValues.getNonIndexedValues().get(1).getValue();
-      typedResponse.status = (String) eventValues.getNonIndexedValues().get(2).getValue();
+      typedResponse.vcId = (String) eventValues.getNonIndexedValues()
+          .get(0)
+          .getValue();
+      typedResponse.player = (String) eventValues.getNonIndexedValues()
+          .get(1)
+          .getValue();
+      typedResponse.status = (String) eventValues.getNonIndexedValues()
+          .get(2)
+          .getValue();
       responses.add(typedResponse);
     }
     return responses;
   }
 
   public static VCStatusEventResponse getVCStatusEventFromLog(Log log) {
-    Contract.EventValuesWithLog eventValues =
-        staticExtractEventParametersWithLog(VCSTATUS_EVENT, log);
+    Contract.EventValuesWithLog eventValues = staticExtractEventParametersWithLog(
+        VCSTATUS_EVENT,
+        log
+    );
     VCStatusEventResponse typedResponse = new VCStatusEventResponse();
     typedResponse.log = log;
-    typedResponse.vcId = (String) eventValues.getNonIndexedValues().get(0).getValue();
-    typedResponse.player = (String) eventValues.getNonIndexedValues().get(1).getValue();
-    typedResponse.status = (String) eventValues.getNonIndexedValues().get(2).getValue();
+    typedResponse.vcId = (String) eventValues.getNonIndexedValues()
+        .get(0)
+        .getValue();
+    typedResponse.player = (String) eventValues.getNonIndexedValues()
+        .get(1)
+        .getValue();
+    typedResponse.status = (String) eventValues.getNonIndexedValues()
+        .get(2)
+        .getValue();
     return typedResponse;
   }
 
   @Deprecated
   public static OpenDID load(String contractAddress, Web3j web3j, Credentials credentials,
-      BigInteger gasPrice, BigInteger gasLimit) {
-    return new OpenDID(contractAddress, web3j, credentials, gasPrice, gasLimit);
+                             BigInteger gasPrice, BigInteger gasLimit
+  ) {
+    return new OpenDID(
+        contractAddress,
+        web3j,
+        credentials,
+        gasPrice,
+        gasLimit
+    );
   }
 
   @Deprecated
   public static OpenDID load(String contractAddress, Web3j web3j,
-      TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
-    return new OpenDID(contractAddress, web3j, transactionManager, gasPrice, gasLimit);
+                             TransactionManager transactionManager, BigInteger gasPrice,
+                             BigInteger gasLimit
+  ) {
+    return new OpenDID(
+        contractAddress,
+        web3j,
+        transactionManager,
+        gasPrice,
+        gasLimit
+    );
   }
 
   public static OpenDID load(String contractAddress, Web3j web3j, Credentials credentials,
-      ContractGasProvider contractGasProvider) {
-    return new OpenDID(contractAddress, web3j, credentials, contractGasProvider);
+                             ContractGasProvider contractGasProvider
+  ) {
+    return new OpenDID(
+        contractAddress,
+        web3j,
+        credentials,
+        contractGasProvider
+    );
   }
 
   public static OpenDID load(String contractAddress, Web3j web3j,
-      TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    return new OpenDID(contractAddress, web3j, transactionManager, contractGasProvider);
+                             TransactionManager transactionManager,
+                             ContractGasProvider contractGasProvider
+  ) {
+    return new OpenDID(
+        contractAddress,
+        web3j,
+        transactionManager,
+        contractGasProvider
+    );
   }
 
   public static RemoteCall<OpenDID> deploy(Web3j web3j, Credentials credentials,
-      ContractGasProvider contractGasProvider) {
-    return deployRemoteCall(OpenDID.class, web3j, credentials, contractGasProvider,
-        getDeploymentBinary(), "");
+                                           ContractGasProvider contractGasProvider
+  ) {
+    return deployRemoteCall(
+        OpenDID.class,
+        web3j,
+        credentials,
+        contractGasProvider,
+        getDeploymentBinary(),
+        ""
+    );
   }
 
   @Deprecated
   public static RemoteCall<OpenDID> deploy(Web3j web3j, Credentials credentials,
-      BigInteger gasPrice, BigInteger gasLimit) {
-    return deployRemoteCall(OpenDID.class, web3j, credentials, gasPrice, gasLimit,
-        getDeploymentBinary(), "");
+                                           BigInteger gasPrice, BigInteger gasLimit
+  ) {
+    return deployRemoteCall(
+        OpenDID.class,
+        web3j,
+        credentials,
+        gasPrice,
+        gasLimit,
+        getDeploymentBinary(),
+        ""
+    );
   }
 
   public static RemoteCall<OpenDID> deploy(Web3j web3j, TransactionManager transactionManager,
-      ContractGasProvider contractGasProvider) {
-    return deployRemoteCall(OpenDID.class, web3j, transactionManager, contractGasProvider,
-        getDeploymentBinary(), "");
+                                           ContractGasProvider contractGasProvider
+  ) {
+    return deployRemoteCall(
+        OpenDID.class,
+        web3j,
+        transactionManager,
+        contractGasProvider,
+        getDeploymentBinary(),
+        ""
+    );
   }
 
   @Deprecated
   public static RemoteCall<OpenDID> deploy(Web3j web3j, TransactionManager transactionManager,
-      BigInteger gasPrice, BigInteger gasLimit) {
-    return deployRemoteCall(OpenDID.class, web3j, transactionManager, gasPrice, gasLimit,
-        getDeploymentBinary(), "");
+                                           BigInteger gasPrice, BigInteger gasLimit
+  ) {
+    return deployRemoteCall(
+        OpenDID.class,
+        web3j,
+        transactionManager,
+        gasPrice,
+        gasLimit,
+        getDeploymentBinary(),
+        ""
+    );
   }
 
   public static void linkLibraries(List<Contract.LinkReference> references) {
-    librariesLinkedBinary = linkBinaryWithReferences(BINARY, references);
+    librariesLinkedBinary = linkBinaryWithReferences(
+        BINARY,
+        references
+    );
   }
 
   private static String getDeploymentBinary() {
@@ -509,218 +839,365 @@ public class OpenDID extends Contract {
   }
 
   public Flowable<DIDCreatedEventResponse> dIDCreatedEventFlowable(EthFilter filter) {
-    return web3j.ethLogFlowable(filter).map(log -> getDIDCreatedEventFromLog(log));
+    return web3j.ethLogFlowable(filter)
+        .map(log -> getDIDCreatedEventFromLog(log));
   }
 
   public Flowable<DIDCreatedEventResponse> dIDCreatedEventFlowable(DefaultBlockParameter startBlock,
-      DefaultBlockParameter endBlock) {
-    EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+                                                                   DefaultBlockParameter endBlock
+  ) {
+    EthFilter filter = new EthFilter(
+        startBlock,
+        endBlock,
+        getContractAddress()
+    );
     filter.addSingleTopic(EventEncoder.encode(DIDCREATED_EVENT));
     return dIDCreatedEventFlowable(filter);
   }
 
   public Flowable<DIDDeactivatedEventResponse> dIDDeactivatedEventFlowable(EthFilter filter) {
-    return web3j.ethLogFlowable(filter).map(log -> getDIDDeactivatedEventFromLog(log));
+    return web3j.ethLogFlowable(filter)
+        .map(log -> getDIDDeactivatedEventFromLog(log));
   }
 
   public Flowable<DIDDeactivatedEventResponse> dIDDeactivatedEventFlowable(
       DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-    EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+    EthFilter filter = new EthFilter(
+        startBlock,
+        endBlock,
+        getContractAddress()
+    );
     filter.addSingleTopic(EventEncoder.encode(DIDDEACTIVATED_EVENT));
     return dIDDeactivatedEventFlowable(filter);
   }
 
   public Flowable<DIDUpdatedEventResponse> dIDUpdatedEventFlowable(EthFilter filter) {
-    return web3j.ethLogFlowable(filter).map(log -> getDIDUpdatedEventFromLog(log));
+    return web3j.ethLogFlowable(filter)
+        .map(log -> getDIDUpdatedEventFromLog(log));
   }
 
   public Flowable<DIDUpdatedEventResponse> dIDUpdatedEventFlowable(DefaultBlockParameter startBlock,
-      DefaultBlockParameter endBlock) {
-    EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+                                                                   DefaultBlockParameter endBlock
+  ) {
+    EthFilter filter = new EthFilter(
+        startBlock,
+        endBlock,
+        getContractAddress()
+    );
     filter.addSingleTopic(EventEncoder.encode(DIDUPDATED_EVENT));
     return dIDUpdatedEventFlowable(filter);
   }
 
   public Flowable<InitializedEventResponse> initializedEventFlowable(EthFilter filter) {
-    return web3j.ethLogFlowable(filter).map(log -> getInitializedEventFromLog(log));
+    return web3j.ethLogFlowable(filter)
+        .map(log -> getInitializedEventFromLog(log));
   }
 
   public Flowable<InitializedEventResponse> initializedEventFlowable(
       DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-    EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+    EthFilter filter = new EthFilter(
+        startBlock,
+        endBlock,
+        getContractAddress()
+    );
     filter.addSingleTopic(EventEncoder.encode(INITIALIZED_EVENT));
     return initializedEventFlowable(filter);
   }
 
   public Flowable<RoleAdminChangedEventResponse> roleAdminChangedEventFlowable(EthFilter filter) {
-    return web3j.ethLogFlowable(filter).map(log -> getRoleAdminChangedEventFromLog(log));
+    return web3j.ethLogFlowable(filter)
+        .map(log -> getRoleAdminChangedEventFromLog(log));
   }
 
   public Flowable<RoleAdminChangedEventResponse> roleAdminChangedEventFlowable(
       DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-    EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+    EthFilter filter = new EthFilter(
+        startBlock,
+        endBlock,
+        getContractAddress()
+    );
     filter.addSingleTopic(EventEncoder.encode(ROLEADMINCHANGED_EVENT));
     return roleAdminChangedEventFlowable(filter);
   }
 
   public Flowable<RoleGrantedEventResponse> roleGrantedEventFlowable(EthFilter filter) {
-    return web3j.ethLogFlowable(filter).map(log -> getRoleGrantedEventFromLog(log));
+    return web3j.ethLogFlowable(filter)
+        .map(log -> getRoleGrantedEventFromLog(log));
   }
 
   public Flowable<RoleGrantedEventResponse> roleGrantedEventFlowable(
       DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-    EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+    EthFilter filter = new EthFilter(
+        startBlock,
+        endBlock,
+        getContractAddress()
+    );
     filter.addSingleTopic(EventEncoder.encode(ROLEGRANTED_EVENT));
     return roleGrantedEventFlowable(filter);
   }
 
   public Flowable<RoleRevokedEventResponse> roleRevokedEventFlowable(EthFilter filter) {
-    return web3j.ethLogFlowable(filter).map(log -> getRoleRevokedEventFromLog(log));
+    return web3j.ethLogFlowable(filter)
+        .map(log -> getRoleRevokedEventFromLog(log));
   }
 
   public Flowable<RoleRevokedEventResponse> roleRevokedEventFlowable(
       DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-    EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+    EthFilter filter = new EthFilter(
+        startBlock,
+        endBlock,
+        getContractAddress()
+    );
     filter.addSingleTopic(EventEncoder.encode(ROLEREVOKED_EVENT));
     return roleRevokedEventFlowable(filter);
   }
 
   public Flowable<SetupEventResponse> setupEventFlowable(EthFilter filter) {
-    return web3j.ethLogFlowable(filter).map(log -> getSetupEventFromLog(log));
+    return web3j.ethLogFlowable(filter)
+        .map(log -> getSetupEventFromLog(log));
   }
 
   public Flowable<SetupEventResponse> setupEventFlowable(DefaultBlockParameter startBlock,
-      DefaultBlockParameter endBlock) {
-    EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+                                                         DefaultBlockParameter endBlock
+  ) {
+    EthFilter filter = new EthFilter(
+        startBlock,
+        endBlock,
+        getContractAddress()
+    );
     filter.addSingleTopic(EventEncoder.encode(SETUP_EVENT));
     return setupEventFlowable(filter);
   }
 
   public Flowable<UpgradedEventResponse> upgradedEventFlowable(EthFilter filter) {
-    return web3j.ethLogFlowable(filter).map(log -> getUpgradedEventFromLog(log));
+    return web3j.ethLogFlowable(filter)
+        .map(log -> getUpgradedEventFromLog(log));
   }
 
   public Flowable<UpgradedEventResponse> upgradedEventFlowable(DefaultBlockParameter startBlock,
-      DefaultBlockParameter endBlock) {
-    EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+                                                               DefaultBlockParameter endBlock
+  ) {
+    EthFilter filter = new EthFilter(
+        startBlock,
+        endBlock,
+        getContractAddress()
+    );
     filter.addSingleTopic(EventEncoder.encode(UPGRADED_EVENT));
     return upgradedEventFlowable(filter);
   }
 
   public Flowable<VCIssuedEventResponse> vCIssuedEventFlowable(EthFilter filter) {
-    return web3j.ethLogFlowable(filter).map(log -> getVCIssuedEventFromLog(log));
+    return web3j.ethLogFlowable(filter)
+        .map(log -> getVCIssuedEventFromLog(log));
   }
 
   public Flowable<VCIssuedEventResponse> vCIssuedEventFlowable(DefaultBlockParameter startBlock,
-      DefaultBlockParameter endBlock) {
-    EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+                                                               DefaultBlockParameter endBlock
+  ) {
+    EthFilter filter = new EthFilter(
+        startBlock,
+        endBlock,
+        getContractAddress()
+    );
     filter.addSingleTopic(EventEncoder.encode(VCISSUED_EVENT));
     return vCIssuedEventFlowable(filter);
   }
 
   public Flowable<VCSchemaCreatedEventResponse> vCSchemaCreatedEventFlowable(EthFilter filter) {
-    return web3j.ethLogFlowable(filter).map(log -> getVCSchemaCreatedEventFromLog(log));
+    return web3j.ethLogFlowable(filter)
+        .map(log -> getVCSchemaCreatedEventFromLog(log));
   }
 
   public Flowable<VCSchemaCreatedEventResponse> vCSchemaCreatedEventFlowable(
       DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-    EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+    EthFilter filter = new EthFilter(
+        startBlock,
+        endBlock,
+        getContractAddress()
+    );
     filter.addSingleTopic(EventEncoder.encode(VCSCHEMACREATED_EVENT));
     return vCSchemaCreatedEventFlowable(filter);
   }
 
   public Flowable<VCStatusEventResponse> vCStatusEventFlowable(EthFilter filter) {
-    return web3j.ethLogFlowable(filter).map(log -> getVCStatusEventFromLog(log));
+    return web3j.ethLogFlowable(filter)
+        .map(log -> getVCStatusEventFromLog(log));
   }
 
   public Flowable<VCStatusEventResponse> vCStatusEventFlowable(DefaultBlockParameter startBlock,
-      DefaultBlockParameter endBlock) {
-    EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+                                                               DefaultBlockParameter endBlock
+  ) {
+    EthFilter filter = new EthFilter(
+        startBlock,
+        endBlock,
+        getContractAddress()
+    );
     filter.addSingleTopic(EventEncoder.encode(VCSTATUS_EVENT));
     return vCStatusEventFlowable(filter);
   }
 
   public RemoteFunctionCall<byte[]> DEFAULT_ADMIN_ROLE() {
-    final Function function = new Function(FUNC_DEFAULT_ADMIN_ROLE, Arrays.<Type>asList(),
-        Arrays.<TypeReference<?>>asList(new TypeReference<Bytes32>() {}));
-    return executeRemoteCallSingleValueReturn(function, byte[].class);
+    final Function function = new Function(
+        FUNC_DEFAULT_ADMIN_ROLE,
+        Arrays.<Type>asList(),
+        Arrays.<TypeReference<?>>asList(new TypeReference<Bytes32>() {
+        })
+    );
+    return executeRemoteCallSingleValueReturn(
+        function,
+        byte[].class
+    );
   }
 
   public RemoteFunctionCall<String> UPGRADE_INTERFACE_VERSION() {
-    final Function function = new Function(FUNC_UPGRADE_INTERFACE_VERSION, Arrays.<Type>asList(),
-        Arrays.<TypeReference<?>>asList(new TypeReference<Utf8String>() {}));
-    return executeRemoteCallSingleValueReturn(function, String.class);
+    final Function function = new Function(
+        FUNC_UPGRADE_INTERFACE_VERSION,
+        Arrays.<Type>asList(),
+        Arrays.<TypeReference<?>>asList(new TypeReference<Utf8String>() {
+        })
+    );
+    return executeRemoteCallSingleValueReturn(
+        function,
+        String.class
+    );
   }
 
   public RemoteFunctionCall<DocumentAndStatus> getDidDoc(String _did) {
-    final Function function = new Function(FUNC_GETDIDDOC,
+    final Function function = new Function(
+        FUNC_GETDIDDOC,
         Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(_did)),
-        Arrays.<TypeReference<?>>asList(new TypeReference<DocumentAndStatus>() {}));
-    return executeRemoteCallSingleValueReturn(function, DocumentAndStatus.class);
+        Arrays.<TypeReference<?>>asList(new TypeReference<DocumentAndStatus>() {
+        })
+    );
+    return executeRemoteCallSingleValueReturn(
+        function,
+        DocumentAndStatus.class
+    );
   }
 
   public RemoteFunctionCall<DocumentStatus> getDidDocStatus(String _did) {
-    final Function function = new Function(FUNC_GETDIDDOCSTATUS,
+    final Function function = new Function(
+        FUNC_GETDIDDOCSTATUS,
         Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(_did)),
-        Arrays.<TypeReference<?>>asList(new TypeReference<DocumentStatus>() {}));
-    return executeRemoteCallSingleValueReturn(function, DocumentStatus.class);
+        Arrays.<TypeReference<?>>asList(new TypeReference<DocumentStatus>() {
+        })
+    );
+    return executeRemoteCallSingleValueReturn(
+        function,
+        DocumentStatus.class
+    );
   }
 
   public RemoteFunctionCall<byte[]> getRoleAdmin(byte[] role) {
-    final Function function = new Function(FUNC_GETROLEADMIN,
+    final Function function = new Function(
+        FUNC_GETROLEADMIN,
         Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Bytes32(role)),
-        Arrays.<TypeReference<?>>asList(new TypeReference<Bytes32>() {}));
-    return executeRemoteCallSingleValueReturn(function, byte[].class);
+        Arrays.<TypeReference<?>>asList(new TypeReference<Bytes32>() {
+        })
+    );
+    return executeRemoteCallSingleValueReturn(
+        function,
+        byte[].class
+    );
   }
 
   public RemoteFunctionCall<VcSchema> getVcSchema(String _id) {
-    final Function function = new Function(FUNC_GETVCSCHEMA,
+    final Function function = new Function(
+        FUNC_GETVCSCHEMA,
         Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(_id)),
-        Arrays.<TypeReference<?>>asList(new TypeReference<VcSchema>() {}));
-    return executeRemoteCallSingleValueReturn(function, VcSchema.class);
+        Arrays.<TypeReference<?>>asList(new TypeReference<VcSchema>() {
+        })
+    );
+    return executeRemoteCallSingleValueReturn(
+        function,
+        VcSchema.class
+    );
   }
 
   public RemoteFunctionCall<VcMeta> getVcmetaData(String _id) {
-    final Function function = new Function(FUNC_GETVCMETADATA,
+    final Function function = new Function(
+        FUNC_GETVCMETADATA,
         Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(_id)),
-        Arrays.<TypeReference<?>>asList(new TypeReference<VcMeta>() {}));
-    return executeRemoteCallSingleValueReturn(function, VcMeta.class);
+        Arrays.<TypeReference<?>>asList(new TypeReference<VcMeta>() {
+        })
+    );
+    return executeRemoteCallSingleValueReturn(
+        function,
+        VcMeta.class
+    );
   }
 
   public RemoteFunctionCall<ZKPLibrary_CredentialSchema> getZKPCredential(String _id) {
-    final Function function = new Function(FUNC_GETZKPCREDENTIAL,
+    final Function function = new Function(
+        FUNC_GETZKPCREDENTIAL,
         Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(_id)),
-        Arrays.<TypeReference<?>>asList(new TypeReference<ZKPLibrary_CredentialSchema>() {}));
-    return executeRemoteCallSingleValueReturn(function, ZKPLibrary_CredentialSchema.class);
+        Arrays.<TypeReference<?>>asList(new TypeReference<ZKPLibrary_CredentialSchema>() {
+        })
+    );
+    return executeRemoteCallSingleValueReturn(
+        function,
+        ZKPLibrary_CredentialSchema.class
+    );
   }
 
   public RemoteFunctionCall<CredentialDefinition> getZKPCredentialDefinition(String _id) {
-    final Function function = new Function(FUNC_GETZKPCREDENTIALDEFINITION,
+    final Function function = new Function(
+        FUNC_GETZKPCREDENTIALDEFINITION,
         Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(_id)),
-        Arrays.<TypeReference<?>>asList(new TypeReference<CredentialDefinition>() {}));
-    return executeRemoteCallSingleValueReturn(function, CredentialDefinition.class);
+        Arrays.<TypeReference<?>>asList(new TypeReference<CredentialDefinition>() {
+        })
+    );
+    return executeRemoteCallSingleValueReturn(
+        function,
+        CredentialDefinition.class
+    );
   }
 
   public RemoteFunctionCall<TransactionReceipt> grantRole(byte[] role, String account) {
-    final Function function = new Function(FUNC_GRANTROLE,
-        Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Bytes32(role),
-            new org.web3j.abi.datatypes.Address(160, account)),
-        Collections.<TypeReference<?>>emptyList());
+    final Function function = new Function(
+        FUNC_GRANTROLE,
+        Arrays.<Type>asList(
+            new org.web3j.abi.datatypes.generated.Bytes32(role),
+            new org.web3j.abi.datatypes.Address(
+                160,
+                account
+            )
+        ),
+        Collections.<TypeReference<?>>emptyList()
+    );
     return executeRemoteCallTransaction(function);
   }
 
   public RemoteFunctionCall<Boolean> hasInitialized() {
-    final Function function = new Function(FUNC_HASINITIALIZED, Arrays.<Type>asList(),
-        Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {}));
-    return executeRemoteCallSingleValueReturn(function, Boolean.class);
+    final Function function = new Function(
+        FUNC_HASINITIALIZED,
+        Arrays.<Type>asList(),
+        Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {
+        })
+    );
+    return executeRemoteCallSingleValueReturn(
+        function,
+        Boolean.class
+    );
   }
 
   public RemoteFunctionCall<Boolean> hasRole(byte[] role, String account) {
-    final Function function = new Function(FUNC_HASROLE,
-        Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Bytes32(role),
-            new org.web3j.abi.datatypes.Address(160, account)),
-        Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {}));
-    return executeRemoteCallSingleValueReturn(function, Boolean.class);
+    final Function function = new Function(
+        FUNC_HASROLE,
+        Arrays.<Type>asList(
+            new org.web3j.abi.datatypes.generated.Bytes32(role),
+            new org.web3j.abi.datatypes.Address(
+                160,
+                account
+            )
+        ),
+        Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {
+        })
+    );
+    return executeRemoteCallSingleValueReturn(
+        function,
+        Boolean.class
+    );
   }
 
   public RemoteFunctionCall<TransactionReceipt> initialize(String _documentStorage,
@@ -745,131 +1222,224 @@ public class OpenDID extends Contract {
             ),
             new org.web3j.abi.datatypes.Address(
                 160,
+                _multibaseContract
             )
         ),
+        Collections.<TypeReference<?>>emptyList()
+    );
     return executeRemoteCallTransaction(function);
   }
 
   public RemoteFunctionCall<byte[]> proxiableUUID() {
-    final Function function = new Function(FUNC_PROXIABLEUUID, Arrays.<Type>asList(),
-        Arrays.<TypeReference<?>>asList(new TypeReference<Bytes32>() {}));
-    return executeRemoteCallSingleValueReturn(function, byte[].class);
+    final Function function = new Function(
+        FUNC_PROXIABLEUUID,
+        Arrays.<Type>asList(),
+        Arrays.<TypeReference<?>>asList(new TypeReference<Bytes32>() {
+        })
+    );
+    return executeRemoteCallSingleValueReturn(
+        function,
+        byte[].class
+    );
   }
 
   public RemoteFunctionCall<TransactionReceipt> registDidDoc(Document _invokedDidDoc,
-      String roleType) {
-    final Function function = new Function(FUNC_REGISTDIDDOC,
-        Arrays.<Type>asList(_invokedDidDoc, new org.web3j.abi.datatypes.Utf8String(roleType)),
-        Collections.<TypeReference<?>>emptyList());
+                                                             String roleType
+  ) {
+    final Function function = new Function(
+        FUNC_REGISTDIDDOC,
+        Arrays.<Type>asList(
+            _invokedDidDoc,
+            new org.web3j.abi.datatypes.Utf8String(roleType)
+        ),
+        Collections.<TypeReference<?>>emptyList()
+    );
     return executeRemoteCallTransaction(function);
   }
 
   public RemoteFunctionCall<TransactionReceipt> registVcMetaData(VcMeta _vcMeta) {
-    final Function function = new Function(FUNC_REGISTVCMETADATA, Arrays.<Type>asList(_vcMeta),
-        Collections.<TypeReference<?>>emptyList());
+    final Function function = new Function(
+        FUNC_REGISTVCMETADATA,
+        Arrays.<Type>asList(_vcMeta),
+        Collections.<TypeReference<?>>emptyList()
+    );
     return executeRemoteCallTransaction(function);
   }
 
   public RemoteFunctionCall<TransactionReceipt> registVcSchema(VcSchema _vcSchema) {
-    final Function function = new Function(FUNC_REGISTVCSCHEMA, Arrays.<Type>asList(_vcSchema),
-        Collections.<TypeReference<?>>emptyList());
+    final Function function = new Function(
+        FUNC_REGISTVCSCHEMA,
+        Arrays.<Type>asList(_vcSchema),
+        Collections.<TypeReference<?>>emptyList()
+    );
     return executeRemoteCallTransaction(function);
   }
 
   public RemoteFunctionCall<TransactionReceipt> registZKPCredential(
-      ZKPLibrary_CredentialSchema _credentialSchema) {
-    final Function function = new Function(FUNC_REGISTZKPCREDENTIAL,
-        Arrays.<Type>asList(_credentialSchema), Collections.<TypeReference<?>>emptyList());
+      ZKPLibrary_CredentialSchema _credentialSchema
+  ) {
+    final Function function = new Function(
+        FUNC_REGISTZKPCREDENTIAL,
+        Arrays.<Type>asList(_credentialSchema),
+        Collections.<TypeReference<?>>emptyList()
+    );
     return executeRemoteCallTransaction(function);
   }
 
   public RemoteFunctionCall<TransactionReceipt> registZKPCredentialDefinition(
-      CredentialDefinition _credentialDefinition) {
-    final Function function = new Function(FUNC_REGISTZKPCREDENTIALDEFINITION,
-        Arrays.<Type>asList(_credentialDefinition), Collections.<TypeReference<?>>emptyList());
+      CredentialDefinition _credentialDefinition
+  ) {
+    final Function function = new Function(
+        FUNC_REGISTZKPCREDENTIALDEFINITION,
+        Arrays.<Type>asList(_credentialDefinition),
+        Collections.<TypeReference<?>>emptyList()
+    );
     return executeRemoteCallTransaction(function);
   }
 
   public RemoteFunctionCall<TransactionReceipt> renounceRole(byte[] role,
-      String callerConfirmation) {
-    final Function function = new Function(FUNC_RENOUNCEROLE,
-        Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Bytes32(role),
-            new org.web3j.abi.datatypes.Address(160, callerConfirmation)),
-        Collections.<TypeReference<?>>emptyList());
+                                                             String callerConfirmation
+  ) {
+    final Function function = new Function(
+        FUNC_RENOUNCEROLE,
+        Arrays.<Type>asList(
+            new org.web3j.abi.datatypes.generated.Bytes32(role),
+            new org.web3j.abi.datatypes.Address(
+                160,
+                callerConfirmation
+            )
+        ),
+        Collections.<TypeReference<?>>emptyList()
+    );
     return executeRemoteCallTransaction(function);
   }
 
   public RemoteFunctionCall<TransactionReceipt> revokeRole(byte[] role, String account) {
-    final Function function = new Function(FUNC_REVOKEROLE,
-        Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Bytes32(role),
-            new org.web3j.abi.datatypes.Address(160, account)),
-        Collections.<TypeReference<?>>emptyList());
+    final Function function = new Function(
+        FUNC_REVOKEROLE,
+        Arrays.<Type>asList(
+            new org.web3j.abi.datatypes.generated.Bytes32(role),
+            new org.web3j.abi.datatypes.Address(
+                160,
+                account
+            )
+        ),
+        Collections.<TypeReference<?>>emptyList()
+    );
     return executeRemoteCallTransaction(function);
   }
 
   public RemoteFunctionCall<TransactionReceipt> setDocumentStorage(String _documentStorage) {
-    final Function function = new Function(FUNC_SETDOCUMENTSTORAGE,
-        Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, _documentStorage)),
-        Collections.<TypeReference<?>>emptyList());
+    final Function function = new Function(
+        FUNC_SETDOCUMENTSTORAGE,
+        Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(
+            160,
+            _documentStorage
+        )),
+        Collections.<TypeReference<?>>emptyList()
+    );
     return executeRemoteCallTransaction(function);
   }
 
   public RemoteFunctionCall<TransactionReceipt> setVcMetaStorage(String _vcMetaStorage) {
-    final Function function = new Function(FUNC_SETVCMETASTORAGE,
-        Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, _vcMetaStorage)),
-        Collections.<TypeReference<?>>emptyList());
+    final Function function = new Function(
+        FUNC_SETVCMETASTORAGE,
+        Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(
+            160,
+            _vcMetaStorage
+        )),
+        Collections.<TypeReference<?>>emptyList()
+    );
     return executeRemoteCallTransaction(function);
   }
 
   public RemoteFunctionCall<TransactionReceipt> setZKPStorage(String _zkpStorage) {
-    final Function function = new Function(FUNC_SETZKPSTORAGE,
-        Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, _zkpStorage)),
-        Collections.<TypeReference<?>>emptyList());
+    final Function function = new Function(
+        FUNC_SETZKPSTORAGE,
+        Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(
+            160,
+            _zkpStorage
+        )),
+        Collections.<TypeReference<?>>emptyList()
+    );
     return executeRemoteCallTransaction(function);
   }
 
   public RemoteFunctionCall<Boolean> supportsInterface(byte[] interfaceId) {
-    final Function function = new Function(FUNC_SUPPORTSINTERFACE,
+    final Function function = new Function(
+        FUNC_SUPPORTSINTERFACE,
         Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Bytes4(interfaceId)),
-        Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {}));
-    return executeRemoteCallSingleValueReturn(function, Boolean.class);
+        Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {
+        })
+    );
+    return executeRemoteCallSingleValueReturn(
+        function,
+        Boolean.class
+    );
   }
 
   public RemoteFunctionCall<TransactionReceipt> updateDidDocStatusInService(String _did,
-      String _status, String _versionId) {
-    final Function function = new Function(FUNC_UPDATEDIDDOCSTATUSINSERVICE,
-        Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(_did),
+                                                                            String _status,
+                                                                            String _versionId
+  ) {
+    final Function function = new Function(
+        FUNC_UPDATEDIDDOCSTATUSINSERVICE,
+        Arrays.<Type>asList(
+            new org.web3j.abi.datatypes.Utf8String(_did),
             new org.web3j.abi.datatypes.Utf8String(_status),
-            new org.web3j.abi.datatypes.Utf8String(_versionId)),
-        Collections.<TypeReference<?>>emptyList());
+            new org.web3j.abi.datatypes.Utf8String(_versionId)
+        ),
+        Collections.<TypeReference<?>>emptyList()
+    );
     return executeRemoteCallTransaction(function);
   }
 
   public RemoteFunctionCall<TransactionReceipt> updateDidDocStatusRevocation(String _did,
-      String _status, String _terminatedTime) {
-    final Function function = new Function(FUNC_UPDATEDIDDOCSTATUSREVOCATION,
-        Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(_did),
+                                                                             String _status,
+                                                                             String _terminatedTime
+  ) {
+    final Function function = new Function(
+        FUNC_UPDATEDIDDOCSTATUSREVOCATION,
+        Arrays.<Type>asList(
+            new org.web3j.abi.datatypes.Utf8String(_did),
             new org.web3j.abi.datatypes.Utf8String(_status),
-            new org.web3j.abi.datatypes.Utf8String(_terminatedTime)),
-        Collections.<TypeReference<?>>emptyList());
+            new org.web3j.abi.datatypes.Utf8String(_terminatedTime)
+        ),
+        Collections.<TypeReference<?>>emptyList()
+    );
     return executeRemoteCallTransaction(function);
   }
 
   public RemoteFunctionCall<TransactionReceipt> updateVcStats(String _vcId, String _status) {
-    final Function function = new Function(FUNC_UPDATEVCSTATS,
-        Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(_vcId),
-            new org.web3j.abi.datatypes.Utf8String(_status)),
-        Collections.<TypeReference<?>>emptyList());
+    final Function function = new Function(
+        FUNC_UPDATEVCSTATS,
+        Arrays.<Type>asList(
+            new org.web3j.abi.datatypes.Utf8String(_vcId),
+            new org.web3j.abi.datatypes.Utf8String(_status)
+        ),
+        Collections.<TypeReference<?>>emptyList()
+    );
     return executeRemoteCallTransaction(function);
   }
 
   public RemoteFunctionCall<TransactionReceipt> upgradeToAndCall(String newImplementation,
-      byte[] data, BigInteger weiValue) {
-    final Function function = new Function(FUNC_UPGRADETOANDCALL,
-        Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, newImplementation),
-            new org.web3j.abi.datatypes.DynamicBytes(data)),
-        Collections.<TypeReference<?>>emptyList());
-    return executeRemoteCallTransaction(function, weiValue);
+                                                                 byte[] data, BigInteger weiValue
+  ) {
+    final Function function = new Function(
+        FUNC_UPGRADETOANDCALL,
+        Arrays.<Type>asList(
+            new org.web3j.abi.datatypes.Address(
+                160,
+                newImplementation
+            ),
+            new org.web3j.abi.datatypes.DynamicBytes(data)
+        ),
+        Collections.<TypeReference<?>>emptyList()
+    );
+    return executeRemoteCallTransaction(
+        function,
+        weiValue
+    );
   }
 
 
@@ -885,12 +1455,15 @@ public class OpenDID extends Contract {
     public BigInteger authType;
 
     public VerificationMethod(String id, BigInteger keyType, String controller,
-        String publicKeyMultibase, BigInteger authType) {
-      super(new org.web3j.abi.datatypes.Utf8String(id),
+                              String publicKeyMultibase, BigInteger authType
+    ) {
+      super(
+          new org.web3j.abi.datatypes.Utf8String(id),
           new org.web3j.abi.datatypes.generated.Uint8(keyType),
           new org.web3j.abi.datatypes.Utf8String(controller),
           new org.web3j.abi.datatypes.Utf8String(publicKeyMultibase),
-          new org.web3j.abi.datatypes.generated.Uint8(authType));
+          new org.web3j.abi.datatypes.generated.Uint8(authType)
+      );
       this.id = id;
       this.keyType = keyType;
       this.controller = controller;
@@ -899,8 +1472,15 @@ public class OpenDID extends Contract {
     }
 
     public VerificationMethod(Utf8String id, Uint8 keyType, Utf8String controller,
-        Utf8String publicKeyMultibase, Uint8 authType) {
-      super(id, keyType, controller, publicKeyMultibase, authType);
+                              Utf8String publicKeyMultibase, Uint8 authType
+    ) {
+      super(
+          id,
+          keyType,
+          controller,
+          publicKeyMultibase,
+          authType
+      );
       this.id = id.getValue();
       this.keyType = keyType.getValue();
       this.controller = controller.getValue();
@@ -918,23 +1498,36 @@ public class OpenDID extends Contract {
     public List<String> serviceType;
 
     public Service(String id, String serviceEndpoint, List<String> serviceType) {
-      super(new org.web3j.abi.datatypes.Utf8String(id),
+      super(
+          new org.web3j.abi.datatypes.Utf8String(id),
           new org.web3j.abi.datatypes.Utf8String(serviceEndpoint),
           new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Utf8String>(
               org.web3j.abi.datatypes.Utf8String.class,
-              org.web3j.abi.Utils.typeMap(serviceType, org.web3j.abi.datatypes.Utf8String.class)));
+              org.web3j.abi.Utils.typeMap(
+                  serviceType,
+                  org.web3j.abi.datatypes.Utf8String.class
+              )
+          )
+      );
       this.id = id;
       this.serviceEndpoint = serviceEndpoint;
       this.serviceType = serviceType;
     }
 
     public Service(Utf8String id, Utf8String serviceEndpoint,
-        @Parameterized(type = Utf8String.class) DynamicArray<Utf8String> serviceType) {
-      super(id, serviceEndpoint, serviceType);
+                   @Parameterized(type = Utf8String.class) DynamicArray<Utf8String> serviceType
+    ) {
+      super(
+          id,
+          serviceEndpoint,
+          serviceType
+      );
       this.id = id.getValue();
       this.serviceEndpoint = serviceEndpoint.getValue();
-      this.serviceType =
-          serviceType.getValue().stream().map(v -> v.getValue()).collect(Collectors.toList());
+      this.serviceType = serviceType.getValue()
+          .stream()
+          .map(v -> v.getValue())
+          .collect(Collectors.toList());
     }
   }
 
@@ -951,12 +1544,15 @@ public class OpenDID extends Contract {
     public String terminatedTime;
 
     public DocumentStatus(String id, BigInteger status, String version, String roleType,
-        String terminatedTime) {
-      super(new org.web3j.abi.datatypes.Utf8String(id),
+                          String terminatedTime
+    ) {
+      super(
+          new org.web3j.abi.datatypes.Utf8String(id),
           new org.web3j.abi.datatypes.generated.Uint8(status),
           new org.web3j.abi.datatypes.Utf8String(version),
           new org.web3j.abi.datatypes.Utf8String(roleType),
-          new org.web3j.abi.datatypes.Utf8String(terminatedTime));
+          new org.web3j.abi.datatypes.Utf8String(terminatedTime)
+      );
       this.id = id;
       this.status = status;
       this.version = version;
@@ -965,8 +1561,15 @@ public class OpenDID extends Contract {
     }
 
     public DocumentStatus(Utf8String id, Uint8 status, Utf8String version, Utf8String roleType,
-        Utf8String terminatedTime) {
-      super(id, status, version, roleType, terminatedTime);
+                          Utf8String terminatedTime
+    ) {
+      super(
+          id,
+          status,
+          version,
+          roleType,
+          terminatedTime
+      );
       this.id = id.getValue();
       this.status = status.getValue();
       this.version = version.getValue();
@@ -982,14 +1585,19 @@ public class OpenDID extends Contract {
     public String language;
 
     public MetaData(String formatVersion, String language) {
-      super(new org.web3j.abi.datatypes.Utf8String(formatVersion),
-          new org.web3j.abi.datatypes.Utf8String(language));
+      super(
+          new org.web3j.abi.datatypes.Utf8String(formatVersion),
+          new org.web3j.abi.datatypes.Utf8String(language)
+      );
       this.formatVersion = formatVersion;
       this.language = language;
     }
 
     public MetaData(Utf8String formatVersion, Utf8String language) {
-      super(formatVersion, language);
+      super(
+          formatVersion,
+          language
+      );
       this.formatVersion = formatVersion.getValue();
       this.language = language.getValue();
     }
@@ -1008,11 +1616,15 @@ public class OpenDID extends Contract {
     public String _type;
 
     public SchemaClaimItem(String caption, String format, Boolean hideValue, String id,
-        String _type) {
-      super(new org.web3j.abi.datatypes.Utf8String(caption),
+                           String _type
+    ) {
+      super(
+          new org.web3j.abi.datatypes.Utf8String(caption),
           new org.web3j.abi.datatypes.Utf8String(format),
-          new org.web3j.abi.datatypes.Bool(hideValue), new org.web3j.abi.datatypes.Utf8String(id),
-          new org.web3j.abi.datatypes.Utf8String(_type));
+          new org.web3j.abi.datatypes.Bool(hideValue),
+          new org.web3j.abi.datatypes.Utf8String(id),
+          new org.web3j.abi.datatypes.Utf8String(_type)
+      );
       this.caption = caption;
       this.format = format;
       this.hideValue = hideValue;
@@ -1021,8 +1633,15 @@ public class OpenDID extends Contract {
     }
 
     public SchemaClaimItem(Utf8String caption, Utf8String format, Bool hideValue, Utf8String id,
-        Utf8String _type) {
-      super(caption, format, hideValue, id, _type);
+                           Utf8String _type
+    ) {
+      super(
+          caption,
+          format,
+          hideValue,
+          id,
+          _type
+      );
       this.caption = caption.getValue();
       this.format = format.getValue();
       this.hideValue = hideValue.getValue();
@@ -1040,16 +1659,22 @@ public class OpenDID extends Contract {
     public String ref;
 
     public ClaimNamespace(String id, String name, String ref) {
-      super(new org.web3j.abi.datatypes.Utf8String(id),
+      super(
+          new org.web3j.abi.datatypes.Utf8String(id),
           new org.web3j.abi.datatypes.Utf8String(name),
-          new org.web3j.abi.datatypes.Utf8String(ref));
+          new org.web3j.abi.datatypes.Utf8String(ref)
+      );
       this.id = id;
       this.name = name;
       this.ref = ref;
     }
 
     public ClaimNamespace(Utf8String id, Utf8String name, Utf8String ref) {
-      super(id, name, ref);
+      super(
+          id,
+          name,
+          ref
+      );
       this.id = id.getValue();
       this.name = name.getValue();
       this.ref = ref.getValue();
@@ -1063,14 +1688,19 @@ public class OpenDID extends Contract {
     public String certVcReference;
 
     public Provider(String did, String certVcReference) {
-      super(new org.web3j.abi.datatypes.Utf8String(did),
-          new org.web3j.abi.datatypes.Utf8String(certVcReference));
+      super(
+          new org.web3j.abi.datatypes.Utf8String(did),
+          new org.web3j.abi.datatypes.Utf8String(certVcReference)
+      );
       this.did = did;
       this.certVcReference = certVcReference;
     }
 
     public Provider(Utf8String did, Utf8String certVcReference) {
-      super(did, certVcReference);
+      super(
+          did,
+          certVcReference
+      );
       this.did = did.getValue();
       this.certVcReference = certVcReference.getValue();
     }
@@ -1083,15 +1713,21 @@ public class OpenDID extends Contract {
     public String credentialSchemaType;
 
     public CredentialSchemaLibrary_CredentialSchema(String id, String credentialSchemaType) {
-      super(new org.web3j.abi.datatypes.Utf8String(id),
-          new org.web3j.abi.datatypes.Utf8String(credentialSchemaType));
+      super(
+          new org.web3j.abi.datatypes.Utf8String(id),
+          new org.web3j.abi.datatypes.Utf8String(credentialSchemaType)
+      );
       this.id = id;
       this.credentialSchemaType = credentialSchemaType;
     }
 
     public CredentialSchemaLibrary_CredentialSchema(Utf8String id,
-        Utf8String credentialSchemaType) {
-      super(id, credentialSchemaType);
+                                                    Utf8String credentialSchemaType
+    ) {
+      super(
+          id,
+          credentialSchemaType
+      );
       this.id = id.getValue();
       this.credentialSchemaType = credentialSchemaType.getValue();
     }
@@ -1104,14 +1740,19 @@ public class OpenDID extends Contract {
     public String ref;
 
     public AttributeNamespace(String id, String ref) {
-      super(new org.web3j.abi.datatypes.Utf8String(id),
-          new org.web3j.abi.datatypes.Utf8String(ref));
+      super(
+          new org.web3j.abi.datatypes.Utf8String(id),
+          new org.web3j.abi.datatypes.Utf8String(ref)
+      );
       this.id = id;
       this.ref = ref;
     }
 
     public AttributeNamespace(Utf8String id, Utf8String ref) {
-      super(id, ref);
+      super(
+          id,
+          ref
+      );
       this.id = id.getValue();
       this.ref = ref.getValue();
     }
@@ -1124,14 +1765,19 @@ public class OpenDID extends Contract {
     public String value;
 
     public Internationalization(String languageType, String value) {
-      super(new org.web3j.abi.datatypes.Utf8String(languageType),
-          new org.web3j.abi.datatypes.Utf8String(value));
+      super(
+          new org.web3j.abi.datatypes.Utf8String(languageType),
+          new org.web3j.abi.datatypes.Utf8String(value)
+      );
       this.languageType = languageType;
       this.value = value;
     }
 
     public Internationalization(Utf8String languageType, Utf8String value) {
-      super(languageType, value);
+      super(
+          languageType,
+          value
+      );
       this.languageType = languageType.getValue();
       this.value = value.getValue();
     }
@@ -1152,13 +1798,16 @@ public class OpenDID extends Contract {
     public String tag;
 
     public CredentialDefinition(String id, String schemaId, String ver, String _type, String value,
-        String tag) {
-      super(new org.web3j.abi.datatypes.Utf8String(id),
+                                String tag
+    ) {
+      super(
+          new org.web3j.abi.datatypes.Utf8String(id),
           new org.web3j.abi.datatypes.Utf8String(schemaId),
           new org.web3j.abi.datatypes.Utf8String(ver),
           new org.web3j.abi.datatypes.Utf8String(_type),
           new org.web3j.abi.datatypes.Utf8String(value),
-          new org.web3j.abi.datatypes.Utf8String(tag));
+          new org.web3j.abi.datatypes.Utf8String(tag)
+      );
       this.id = id;
       this.schemaId = schemaId;
       this.ver = ver;
@@ -1168,8 +1817,16 @@ public class OpenDID extends Contract {
     }
 
     public CredentialDefinition(Utf8String id, Utf8String schemaId, Utf8String ver,
-        Utf8String _type, Utf8String value, Utf8String tag) {
-      super(id, schemaId, ver, _type, value, tag);
+                                Utf8String _type, Utf8String value, Utf8String tag
+    ) {
+      super(
+          id,
+          schemaId,
+          ver,
+          _type,
+          value,
+          tag
+      );
       this.id = id.getValue();
       this.schemaId = schemaId.getValue();
       this.ver = ver.getValue();
@@ -1210,42 +1867,70 @@ public class OpenDID extends Contract {
     public List<Service> services;
 
     public Document(List<String> context, String id, String controller, String created,
-        String updated, String versionId, Boolean deactivated,
-        List<VerificationMethod> verificationMethod, List<String> assertionsMethod,
-        List<String> authentication, List<String> keyAgreement, List<String> capabilityInvocation,
-        List<String> capabilityDelegation, List<Service> services) {
+                    String updated, String versionId, Boolean deactivated,
+                    List<VerificationMethod> verificationMethod, List<String> assertionsMethod,
+                    List<String> authentication, List<String> keyAgreement,
+                    List<String> capabilityInvocation, List<String> capabilityDelegation,
+                    List<Service> services
+    ) {
       super(
           new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Utf8String>(
               org.web3j.abi.datatypes.Utf8String.class,
-              org.web3j.abi.Utils.typeMap(context, org.web3j.abi.datatypes.Utf8String.class)),
+              org.web3j.abi.Utils.typeMap(
+                  context,
+                  org.web3j.abi.datatypes.Utf8String.class
+              )
+          ),
           new org.web3j.abi.datatypes.Utf8String(id),
           new org.web3j.abi.datatypes.Utf8String(controller),
           new org.web3j.abi.datatypes.Utf8String(created),
           new org.web3j.abi.datatypes.Utf8String(updated),
           new org.web3j.abi.datatypes.Utf8String(versionId),
           new org.web3j.abi.datatypes.Bool(deactivated),
-          new org.web3j.abi.datatypes.DynamicArray<VerificationMethod>(VerificationMethod.class,
-              verificationMethod),
+          new org.web3j.abi.datatypes.DynamicArray<VerificationMethod>(
+              VerificationMethod.class,
+              verificationMethod
+          ),
           new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Utf8String>(
               org.web3j.abi.datatypes.Utf8String.class,
-              org.web3j.abi.Utils.typeMap(assertionsMethod,
-                  org.web3j.abi.datatypes.Utf8String.class)),
+              org.web3j.abi.Utils.typeMap(
+                  assertionsMethod,
+                  org.web3j.abi.datatypes.Utf8String.class
+              )
+          ),
           new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Utf8String>(
               org.web3j.abi.datatypes.Utf8String.class,
-              org.web3j.abi.Utils.typeMap(authentication,
-                  org.web3j.abi.datatypes.Utf8String.class)),
+              org.web3j.abi.Utils.typeMap(
+                  authentication,
+                  org.web3j.abi.datatypes.Utf8String.class
+              )
+          ),
           new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Utf8String>(
               org.web3j.abi.datatypes.Utf8String.class,
-              org.web3j.abi.Utils.typeMap(keyAgreement, org.web3j.abi.datatypes.Utf8String.class)),
+              org.web3j.abi.Utils.typeMap(
+                  keyAgreement,
+                  org.web3j.abi.datatypes.Utf8String.class
+              )
+          ),
           new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Utf8String>(
               org.web3j.abi.datatypes.Utf8String.class,
-              org.web3j.abi.Utils.typeMap(capabilityInvocation,
-                  org.web3j.abi.datatypes.Utf8String.class)),
+              org.web3j.abi.Utils.typeMap(
+                  capabilityInvocation,
+                  org.web3j.abi.datatypes.Utf8String.class
+              )
+          ),
           new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Utf8String>(
               org.web3j.abi.datatypes.Utf8String.class,
-              org.web3j.abi.Utils.typeMap(capabilityDelegation,
-                  org.web3j.abi.datatypes.Utf8String.class)),
-          new org.web3j.abi.datatypes.DynamicArray<Service>(Service.class, services));
+              org.web3j.abi.Utils.typeMap(
+                  capabilityDelegation,
+                  org.web3j.abi.datatypes.Utf8String.class
+              )
+          ),
+          new org.web3j.abi.datatypes.DynamicArray<Service>(
+              Service.class,
+              services
+          )
+      );
       this.context = context;
       this.id = id;
       this.controller = controller;
@@ -1263,21 +1948,40 @@ public class OpenDID extends Contract {
     }
 
     public Document(@Parameterized(type = Utf8String.class) DynamicArray<Utf8String> context,
-        Utf8String id, Utf8String controller, Utf8String created, Utf8String updated,
-        Utf8String versionId, Bool deactivated,
-        @Parameterized(
-            type = VerificationMethod.class) DynamicArray<VerificationMethod> verificationMethod,
-        @Parameterized(type = Utf8String.class) DynamicArray<Utf8String> assertionsMethod,
-        @Parameterized(type = Utf8String.class) DynamicArray<Utf8String> authentication,
-        @Parameterized(type = Utf8String.class) DynamicArray<Utf8String> keyAgreement,
-        @Parameterized(type = Utf8String.class) DynamicArray<Utf8String> capabilityInvocation,
-        @Parameterized(type = Utf8String.class) DynamicArray<Utf8String> capabilityDelegation,
-        @Parameterized(type = Service.class) DynamicArray<Service> services) {
-      super(context, id, controller, created, updated, versionId, deactivated, verificationMethod,
-          assertionsMethod, authentication, keyAgreement, capabilityInvocation,
-          capabilityDelegation, services);
-      this.context =
-          context.getValue().stream().map(v -> v.getValue()).collect(Collectors.toList());
+                    Utf8String id, Utf8String controller, Utf8String created, Utf8String updated,
+                    Utf8String versionId, Bool deactivated,
+                    @Parameterized(type = VerificationMethod.class)
+                    DynamicArray<VerificationMethod> verificationMethod,
+                    @Parameterized(type = Utf8String.class)
+                    DynamicArray<Utf8String> assertionsMethod,
+                    @Parameterized(type = Utf8String.class) DynamicArray<Utf8String> authentication,
+                    @Parameterized(type = Utf8String.class) DynamicArray<Utf8String> keyAgreement,
+                    @Parameterized(type = Utf8String.class)
+                    DynamicArray<Utf8String> capabilityInvocation,
+                    @Parameterized(type = Utf8String.class)
+                    DynamicArray<Utf8String> capabilityDelegation,
+                    @Parameterized(type = Service.class) DynamicArray<Service> services
+    ) {
+      super(
+          context,
+          id,
+          controller,
+          created,
+          updated,
+          versionId,
+          deactivated,
+          verificationMethod,
+          assertionsMethod,
+          authentication,
+          keyAgreement,
+          capabilityInvocation,
+          capabilityDelegation,
+          services
+      );
+      this.context = context.getValue()
+          .stream()
+          .map(v -> v.getValue())
+          .collect(Collectors.toList());
       this.id = id.getValue();
       this.controller = controller.getValue();
       this.created = created.getValue();
@@ -1285,15 +1989,25 @@ public class OpenDID extends Contract {
       this.versionId = versionId.getValue();
       this.deactivated = deactivated.getValue();
       this.verificationMethod = verificationMethod.getValue();
-      this.assertionsMethod =
-          assertionsMethod.getValue().stream().map(v -> v.getValue()).collect(Collectors.toList());
-      this.authentication =
-          authentication.getValue().stream().map(v -> v.getValue()).collect(Collectors.toList());
-      this.keyAgreement =
-          keyAgreement.getValue().stream().map(v -> v.getValue()).collect(Collectors.toList());
-      this.capabilityInvocation = capabilityInvocation.getValue().stream().map(v -> v.getValue())
+      this.assertionsMethod = assertionsMethod.getValue()
+          .stream()
+          .map(v -> v.getValue())
           .collect(Collectors.toList());
-      this.capabilityDelegation = capabilityDelegation.getValue().stream().map(v -> v.getValue())
+      this.authentication = authentication.getValue()
+          .stream()
+          .map(v -> v.getValue())
+          .collect(Collectors.toList());
+      this.keyAgreement = keyAgreement.getValue()
+          .stream()
+          .map(v -> v.getValue())
+          .collect(Collectors.toList());
+      this.capabilityInvocation = capabilityInvocation.getValue()
+          .stream()
+          .map(v -> v.getValue())
+          .collect(Collectors.toList());
+      this.capabilityDelegation = capabilityDelegation.getValue()
+          .stream()
+          .map(v -> v.getValue())
           .collect(Collectors.toList());
       this.services = services.getValue();
     }
@@ -1306,16 +2020,25 @@ public class OpenDID extends Contract {
     public ClaimNamespace namespace;
 
     public VCSchemaClaim(List<SchemaClaimItem> items, ClaimNamespace namespace) {
-      super(new org.web3j.abi.datatypes.DynamicArray<SchemaClaimItem>(SchemaClaimItem.class, items),
-          namespace);
+      super(
+          new org.web3j.abi.datatypes.DynamicArray<SchemaClaimItem>(
+              SchemaClaimItem.class,
+              items
+          ),
+          namespace
+      );
       this.items = items;
       this.namespace = namespace;
     }
 
     public VCSchemaClaim(
         @Parameterized(type = SchemaClaimItem.class) DynamicArray<SchemaClaimItem> items,
-        ClaimNamespace namespace) {
-      super(items, namespace);
+        ClaimNamespace namespace
+    ) {
+      super(
+          items,
+          namespace
+      );
       this.items = items.getValue();
       this.namespace = namespace;
     }
@@ -1344,17 +2067,22 @@ public class OpenDID extends Contract {
     public String language;
 
     public VcMeta(String id, Provider issuer, String subject,
-        CredentialSchemaLibrary_CredentialSchema credentialSchema, String status,
-        String issuanceDate, String validFrom, String validUntil, String formatVersion,
-        String language) {
-      super(new org.web3j.abi.datatypes.Utf8String(id), issuer,
-          new org.web3j.abi.datatypes.Utf8String(subject), credentialSchema,
+                  CredentialSchemaLibrary_CredentialSchema credentialSchema, String status,
+                  String issuanceDate, String validFrom, String validUntil, String formatVersion,
+                  String language
+    ) {
+      super(
+          new org.web3j.abi.datatypes.Utf8String(id),
+          issuer,
+          new org.web3j.abi.datatypes.Utf8String(subject),
+          credentialSchema,
           new org.web3j.abi.datatypes.Utf8String(status),
           new org.web3j.abi.datatypes.Utf8String(issuanceDate),
           new org.web3j.abi.datatypes.Utf8String(validFrom),
           new org.web3j.abi.datatypes.Utf8String(validUntil),
           new org.web3j.abi.datatypes.Utf8String(formatVersion),
-          new org.web3j.abi.datatypes.Utf8String(language));
+          new org.web3j.abi.datatypes.Utf8String(language)
+      );
       this.id = id;
       this.issuer = issuer;
       this.subject = subject;
@@ -1368,11 +2096,22 @@ public class OpenDID extends Contract {
     }
 
     public VcMeta(Utf8String id, Provider issuer, Utf8String subject,
-        CredentialSchemaLibrary_CredentialSchema credentialSchema, Utf8String status,
-        Utf8String issuanceDate, Utf8String validFrom, Utf8String validUntil,
-        Utf8String formatVersion, Utf8String language) {
-      super(id, issuer, subject, credentialSchema, status, issuanceDate, validFrom, validUntil,
-          formatVersion, language);
+                  CredentialSchemaLibrary_CredentialSchema credentialSchema, Utf8String status,
+                  Utf8String issuanceDate, Utf8String validFrom, Utf8String validUntil,
+                  Utf8String formatVersion, Utf8String language
+    ) {
+      super(
+          id,
+          issuer,
+          subject,
+          credentialSchema,
+          status,
+          issuanceDate,
+          validFrom,
+          validUntil,
+          formatVersion,
+          language
+      );
       this.id = id.getValue();
       this.issuer = issuer;
       this.subject = subject.getValue();
@@ -1397,12 +2136,17 @@ public class OpenDID extends Contract {
     public List<Internationalization> i18n;
 
     public AttributeItem(String label, String caption, String _type,
-        List<Internationalization> i18n) {
-      super(new org.web3j.abi.datatypes.Utf8String(label),
+                         List<Internationalization> i18n
+    ) {
+      super(
+          new org.web3j.abi.datatypes.Utf8String(label),
           new org.web3j.abi.datatypes.Utf8String(caption),
           new org.web3j.abi.datatypes.Utf8String(_type),
-          new org.web3j.abi.datatypes.DynamicArray<Internationalization>(Internationalization.class,
-              i18n));
+          new org.web3j.abi.datatypes.DynamicArray<Internationalization>(
+              Internationalization.class,
+              i18n
+          )
+      );
       this.label = label;
       this.caption = caption;
       this._type = _type;
@@ -1410,8 +2154,15 @@ public class OpenDID extends Contract {
     }
 
     public AttributeItem(Utf8String label, Utf8String caption, Utf8String _type,
-        @Parameterized(type = Internationalization.class) DynamicArray<Internationalization> i18n) {
-      super(label, caption, _type, i18n);
+                         @Parameterized(type = Internationalization.class)
+                         DynamicArray<Internationalization> i18n
+    ) {
+      super(
+          label,
+          caption,
+          _type,
+          i18n
+      );
       this.label = label.getValue();
       this.caption = caption.getValue();
       this._type = _type.getValue();
@@ -1426,13 +2177,19 @@ public class OpenDID extends Contract {
     public BigInteger status;
 
     public DocumentAndStatus(Document diddoc, BigInteger status) {
-      super(diddoc, new org.web3j.abi.datatypes.generated.Uint8(status));
+      super(
+          diddoc,
+          new org.web3j.abi.datatypes.generated.Uint8(status)
+      );
       this.diddoc = diddoc;
       this.status = status;
     }
 
     public DocumentAndStatus(Document diddoc, Uint8 status) {
-      super(diddoc, status);
+      super(
+          diddoc,
+          status
+      );
       this.diddoc = diddoc;
       this.status = status.getValue();
     }
@@ -1443,12 +2200,16 @@ public class OpenDID extends Contract {
     public List<VCSchemaClaim> claims;
 
     public CredentialSubject(List<VCSchemaClaim> claims) {
-      super(new org.web3j.abi.datatypes.DynamicArray<VCSchemaClaim>(VCSchemaClaim.class, claims));
+      super(new org.web3j.abi.datatypes.DynamicArray<VCSchemaClaim>(
+          VCSchemaClaim.class,
+          claims
+      ));
       this.claims = claims;
     }
 
     public CredentialSubject(
-        @Parameterized(type = VCSchemaClaim.class) DynamicArray<VCSchemaClaim> claims) {
+        @Parameterized(type = VCSchemaClaim.class) DynamicArray<VCSchemaClaim> claims
+    ) {
       super(claims);
       this.claims = claims.getValue();
     }
@@ -1461,15 +2222,24 @@ public class OpenDID extends Contract {
     public List<AttributeItem> items;
 
     public AttributeType(AttributeNamespace namespace, List<AttributeItem> items) {
-      super(namespace,
-          new org.web3j.abi.datatypes.DynamicArray<AttributeItem>(AttributeItem.class, items));
+      super(
+          namespace,
+          new org.web3j.abi.datatypes.DynamicArray<AttributeItem>(
+              AttributeItem.class,
+              items
+          )
+      );
       this.namespace = namespace;
       this.items = items;
     }
 
-    public AttributeType(AttributeNamespace namespace,
-        @Parameterized(type = AttributeItem.class) DynamicArray<AttributeItem> items) {
-      super(namespace, items);
+    public AttributeType(AttributeNamespace namespace, @Parameterized(type = AttributeItem.class)
+                         DynamicArray<AttributeItem> items
+    ) {
+      super(
+          namespace,
+          items
+      );
       this.namespace = namespace;
       this.items = items.getValue();
     }
@@ -1490,11 +2260,16 @@ public class OpenDID extends Contract {
     public CredentialSubject credentialSubject;
 
     public VcSchema(String id, String schema, String title, String description, MetaData metadata,
-        CredentialSubject credentialSubject) {
-      super(new org.web3j.abi.datatypes.Utf8String(id),
+                    CredentialSubject credentialSubject
+    ) {
+      super(
+          new org.web3j.abi.datatypes.Utf8String(id),
           new org.web3j.abi.datatypes.Utf8String(schema),
           new org.web3j.abi.datatypes.Utf8String(title),
-          new org.web3j.abi.datatypes.Utf8String(description), metadata, credentialSubject);
+          new org.web3j.abi.datatypes.Utf8String(description),
+          metadata,
+          credentialSubject
+      );
       this.id = id;
       this.schema = schema;
       this.title = title;
@@ -1504,8 +2279,16 @@ public class OpenDID extends Contract {
     }
 
     public VcSchema(Utf8String id, Utf8String schema, Utf8String title, Utf8String description,
-        MetaData metadata, CredentialSubject credentialSubject) {
-      super(id, schema, title, description, metadata, credentialSubject);
+                    MetaData metadata, CredentialSubject credentialSubject
+    ) {
+      super(
+          id,
+          schema,
+          title,
+          description,
+          metadata,
+          credentialSubject
+      );
       this.id = id.getValue();
       this.schema = schema.getValue();
       this.title = title.getValue();
@@ -1530,15 +2313,26 @@ public class OpenDID extends Contract {
     public String tag;
 
     public ZKPLibrary_CredentialSchema(String id, String name, String version,
-        List<String> attrNames, List<AttributeType> attrTypes, String tag) {
-      super(new org.web3j.abi.datatypes.Utf8String(id),
+                                       List<String> attrNames, List<AttributeType> attrTypes,
+                                       String tag
+    ) {
+      super(
+          new org.web3j.abi.datatypes.Utf8String(id),
           new org.web3j.abi.datatypes.Utf8String(name),
           new org.web3j.abi.datatypes.Utf8String(version),
           new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Utf8String>(
               org.web3j.abi.datatypes.Utf8String.class,
-              org.web3j.abi.Utils.typeMap(attrNames, org.web3j.abi.datatypes.Utf8String.class)),
-          new org.web3j.abi.datatypes.DynamicArray<AttributeType>(AttributeType.class, attrTypes),
-          new org.web3j.abi.datatypes.Utf8String(tag));
+              org.web3j.abi.Utils.typeMap(
+                  attrNames,
+                  org.web3j.abi.datatypes.Utf8String.class
+              )
+          ),
+          new org.web3j.abi.datatypes.DynamicArray<AttributeType>(
+              AttributeType.class,
+              attrTypes
+          ),
+          new org.web3j.abi.datatypes.Utf8String(tag)
+      );
       this.id = id;
       this.name = name;
       this.version = version;
@@ -1548,15 +2342,26 @@ public class OpenDID extends Contract {
     }
 
     public ZKPLibrary_CredentialSchema(Utf8String id, Utf8String name, Utf8String version,
-        @Parameterized(type = Utf8String.class) DynamicArray<Utf8String> attrNames,
-        @Parameterized(type = AttributeType.class) DynamicArray<AttributeType> attrTypes,
-        Utf8String tag) {
-      super(id, name, version, attrNames, attrTypes, tag);
+                                       @Parameterized(type = Utf8String.class)
+                                       DynamicArray<Utf8String> attrNames,
+                                       @Parameterized(type = AttributeType.class)
+                                       DynamicArray<AttributeType> attrTypes, Utf8String tag
+    ) {
+      super(
+          id,
+          name,
+          version,
+          attrNames,
+          attrTypes,
+          tag
+      );
       this.id = id.getValue();
       this.name = name.getValue();
       this.version = version.getValue();
-      this.attrNames =
-          attrNames.getValue().stream().map(v -> v.getValue()).collect(Collectors.toList());
+      this.attrNames = attrNames.getValue()
+          .stream()
+          .map(v -> v.getValue())
+          .collect(Collectors.toList());
       this.attrTypes = attrTypes.getValue();
       this.tag = tag.getValue();
     }
