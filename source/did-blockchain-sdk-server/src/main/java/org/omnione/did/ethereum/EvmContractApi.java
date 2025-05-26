@@ -7,9 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.logging.log4j.util.Strings;
 import org.omnione.did.ContractApi;
 import org.omnione.did.data.model.did.DidDocument;
 import org.omnione.did.data.model.did.InvokedDidDoc;
@@ -33,6 +30,8 @@ import org.omnione.response.EvmResponse;
 import org.omnione.sender.ethereum.EvmContractData;
 import org.omnione.sender.ethereum.EvmServerInformation;
 import org.omnione.util.DidKeyUrlParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
@@ -42,9 +41,9 @@ import org.web3j.tx.gas.StaticGasProvider;
 
 public class EvmContractApi implements ContractApi {
 
-  private final Log logger = LogFactory.getLog(EvmContractApi.class);
+  private final Logger logger = LoggerFactory.getLogger(EvmContractApi.class);
   private final EvmServerInformation serverInformation;
-  private EvmContractData contractData;
+  private final EvmContractData contractData;
 
   /**
    * Constructor to initialize server and contract information.
@@ -53,7 +52,10 @@ public class EvmContractApi implements ContractApi {
    * @throws IOException If there is an error reading the resource file.
    */
   public EvmContractApi(String resourcePath) throws IOException {
-    logger.info("Initializing EvmContractApi with resource path: " + resourcePath);
+    logger.info(
+        "Initializing EvmContractApi with resource path: {}",
+        resourcePath
+    );
 
     this.serverInformation = new EvmServerInformation(resourcePath);
     this.contractData = new EvmContractData(resourcePath);
@@ -65,7 +67,10 @@ public class EvmContractApi implements ContractApi {
    * @return Web3j instance.
    */
   private Web3j createWeb3j() {
-    logger.debug("Creating Web3j instance for network URL: " + serverInformation.getNetworkURL());
+    logger.debug(
+        "Creating Web3j instance for network URL: {}",
+        serverInformation.getNetworkURL()
+    );
 
     return Web3j.build(new HttpService(serverInformation.getNetworkURL()));
   }
@@ -85,7 +90,11 @@ public class EvmContractApi implements ContractApi {
         .getGasPrice();
     BigInteger limit = BigInteger.valueOf(10000000L);
 
-    logger.debug("Gas price: " + price + ", Gas limit: " + limit);
+    logger.debug(
+        "Gas price: {}, Gas limit: {}",
+        price,
+        limit
+    );
     return new StaticGasProvider(
         price,
         limit
@@ -101,9 +110,11 @@ public class EvmContractApi implements ContractApi {
    * @return OpenDID contract instance.
    * @throws IOException If there is an error loading the contract.
    */
-  private OpenDID loadContract(Web3j web3j, StaticGasProvider gasProvider, boolean isReadOnly)
-      throws IOException {
-    logger.debug("Loading OpenDID contract. Read-only: " + isReadOnly);
+  private OpenDID loadContract(Web3j web3j, StaticGasProvider gasProvider, boolean isReadOnly) {
+    logger.debug(
+        "Loading OpenDID contract. Read-only: {}",
+        isReadOnly
+    );
 
     if (isReadOnly) {
       return OpenDID.load(
@@ -116,7 +127,7 @@ public class EvmContractApi implements ContractApi {
           gasProvider
       );
     } else {
-      Credentials credentials = Credentials.create(contractData.getContractAddress());
+      Credentials credentials = Credentials.create(contractData.getPrivateKey());
       return OpenDID.load(
           contractData.getContractAddress(),
           web3j,
@@ -137,7 +148,10 @@ public class EvmContractApi implements ContractApi {
    */
   private <T> T executeContract(Function<OpenDID, T> contractFunction, boolean isReadOnly)
       throws BlockChainException {
-    logger.debug("Executing contract function. Read-only: " + isReadOnly);
+    logger.debug(
+        "Executing contract function. Read-only: {}",
+        isReadOnly
+    );
 
     try (Web3j web3j = createWeb3j()) {
       StaticGasProvider gasProvider = createGasProvider(web3j);
@@ -150,7 +164,8 @@ public class EvmContractApi implements ContractApi {
       return contractFunction.apply(contract);
     } catch (ContractCallException e) {
       logger.error(
-          "Error executing contract function: " + e.getMessage(),
+          "Error executing contract function: {}",
+          e.getMessage(),
           e
       );
 
@@ -161,7 +176,8 @@ public class EvmContractApi implements ContractApi {
 
     } catch (Exception e) {
       logger.error(
-          "Error executing contract function: " + e.getMessage(),
+          "Error executing contract function: {}",
+          e.getMessage(),
           e
       );
       throw new BlockChainException(
@@ -171,11 +187,38 @@ public class EvmContractApi implements ContractApi {
     }
   }
 
-  @Override
-  public void registDidDoc(InvokedDidDoc invokedDidDoc, RoleType roleType)
-      throws BlockChainException {
+  public void registRole(String address, RoleType roleType) throws BlockChainException {
 
-    logger.info("Registering DID Document with role type: " + roleType);
+    logger.info(
+        "Registering role: {} for address: {}",
+        roleType,
+        address
+    );
+
+    executeContract(
+        contract -> {
+          try {
+            var receipt = contract.registRole(
+                    address,
+                    roleType.getRawValue()
+                )
+                .send();
+            logger.debug("Transaction receipt: " + receipt.getTransactionHash());
+            logger.debug("Transaction receipt status: " + receipt.getStatus());
+            return null;
+          } catch (Exception e) {
+            logger.error(
+                "Error registering role: " + e.getMessage(),
+                e
+            );
+            throw new RuntimeException(e);
+          }
+        },
+        false
+    );
+  }
+
+  public void registDidDoc(InvokedDidDoc invokedDidDoc) throws BlockChainException {
     executeContract(
         contract -> {
           try {
@@ -183,10 +226,7 @@ public class EvmContractApi implements ContractApi {
             didDocument.fromJson(invokedDidDoc.getDidDoc());
             var document = EvmDataConverter.convertToContractObject(didDocument);
             logger.debug("Converted DID Document: " + document.id);
-            contract.registDidDoc(
-                    document,
-                    roleType.getRawValue()
-                )
+            contract.registDidDoc(document)
                 .send();
             logger.info("DID Document registered successfully.");
             return null;
@@ -204,8 +244,46 @@ public class EvmContractApi implements ContractApi {
   }
 
   @Override
+  public void registDidDoc(InvokedDidDoc invokedDidDoc, RoleType roleType)
+      throws BlockChainException {
+
+    executeContract(
+        contract -> {
+          try {
+            DidDocument didDocument = new DidDocument();
+            didDocument.fromJson(invokedDidDoc.getDidDoc());
+            var document = EvmDataConverter.convertToContractObject(didDocument);
+            logger.debug("Converted DID Document: " + document.id);
+            contract.registDidDoc(document)
+                .send();
+            logger.info("DID Document registered successfully.");
+
+            Credentials credentials = Credentials.create(contractData.getPrivateKey());
+            contract.registRole(
+                    credentials.getAddress(),
+                    roleType.getRawValue()
+                )
+                .send();
+            return null;
+          } catch (Exception e) {
+            logger.error(
+                "Error registering DID Document: " + e.getMessage(),
+                e
+            );
+
+            throw new RuntimeException(e);
+          }
+        },
+        false
+    );
+  }
+
+  @Override
   public Object getDidDoc(String didKeyUrl) throws BlockChainException {
-    logger.info("Retrieving DID Document for key URL: " + didKeyUrl);
+    logger.info(
+        "Retrieving DID Document for key URL: {}",
+        didKeyUrl
+    );
 
     return executeContract(
         contract -> {
@@ -241,8 +319,7 @@ public class EvmContractApi implements ContractApi {
         contract -> {
           try {
             DidKeyUrlParser parser = new DidKeyUrlParser(didKeyUrl);
-            var versionId =
-                didDocStatus == DidDocStatus.REVOKED ? Strings.EMPTY : parser.getVersionId();
+            var versionId = didDocStatus == DidDocStatus.REVOKED ? "" : parser.getVersionId();
 
             return contract.updateDidDocStatusInService(
                     parser.getDid(),
@@ -253,7 +330,8 @@ public class EvmContractApi implements ContractApi {
                 .getStatus();
           } catch (Exception e) {
             logger.error(
-                "Error update document status: " + e.getMessage(),
+                "Error update document status: {}",
+                e.getMessage(),
                 e
             );
 
@@ -499,7 +577,6 @@ public class EvmContractApi implements ContractApi {
             OpenDID.CredentialSubject credentialSubject =
                 new OpenDID.CredentialSubject(vcSchemaClaimList);
 
-
             var contractVcSchema = new OpenDID.VcSchema(
                 vcSchema.getId(),
                 vcSchema.getSchema(),
@@ -575,7 +652,6 @@ public class EvmContractApi implements ContractApi {
           new Error("Network error: " + e.getMessage())
       );
     }
-
   }
 
   @Override

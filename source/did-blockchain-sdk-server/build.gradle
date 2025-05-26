@@ -1,15 +1,15 @@
 plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.8.0'
-    id 'org.web3j' version '4.13.0'
+    id 'org.web3j' version '4.14.0'
 }
 
 group = 'org.omnione.did'
-version = '1.0.0'
+version = '2.0.0'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 repositories {
@@ -24,8 +24,8 @@ repositories {
 }
 
 ext {
-    set('web3jCoreVersion', '4.13.0')
-    set('fabricGatewayVersion', '2.2.9')
+    set('web3jCoreVersion', '4.14.0')
+    set('fabricGatewayVersion', '1.7.1')
     set('besuVersion', '24.5.4')
 }
 
@@ -33,7 +33,8 @@ dependencies {
     implementation files("libs/did-datamodel-sdk-server-1.0.0.jar")
     implementation files("libs/did-zkp-sdk-server-1.0.0.jar")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.hyperledger.fabric:fabric-gateway-java:${fabricGatewayVersion}")
+    implementation("org.hyperledger.fabric:fabric-gateway:${fabricGatewayVersion}")
+    implementation platform('com.google.protobuf:protobuf-bom:4.29.2')
     implementation("org.web3j:core:${web3jCoreVersion}")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
     implementation("org.apache.commons:commons-pool2:2.12.0")
@@ -46,8 +47,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.0")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.0")
     annotationProcessor("com.fasterxml.jackson.core:jackson-databind:2.15.2")
-    annotationProcessor("org.projectlombok:lombok:1.18.28")
-    compileOnly("org.projectlombok:lombok:1.18.28")
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
+    compileOnly("org.projectlombok:lombok:1.18.30")
 }
 
 test {

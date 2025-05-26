@@ -91,6 +91,8 @@ final class EvmDataConverter {
         attributeType.getNamespace()
             .getId(),
         attributeType.getNamespace()
+            .getName(),
+        attributeType.getNamespace()
             .getRef()
     );
     List<OpenDID.AttributeItem> attributeItems = new ArrayList<>();
