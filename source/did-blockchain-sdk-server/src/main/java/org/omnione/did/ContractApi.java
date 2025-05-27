@@ -74,7 +74,7 @@ public interface ContractApi {
    * @throws BlockChainException if an error occurs during the update process
    */
   Object updateDidDocStatus(String didKeyUrl, DidDocStatus didDocStatus,
-                            LocalDateTime terminatedTime
+      LocalDateTime terminatedTime
   ) throws BlockChainException;
 
   /**
@@ -103,16 +103,55 @@ public interface ContractApi {
    */
   void updateVcStatus(String vcId, VcStatus vcStatus) throws BlockChainException;
 
+  /**
+   * Registers a Verifiable Credential schema on the blockchain.
+   *
+   * @param vcSchema the VC schema to be registered
+   * @throws BlockChainException if an error occurs during the registration process
+   */
   void registVcSchema(VcSchema vcSchema) throws BlockChainException;
 
+  /**
+   * Retrieves a Verifiable Credential schema from the blockchain.
+   *
+   * @param schemaId the schema ID
+   * @return the VC schema
+   * @throws BlockChainException if an error occurs during the retrieval process
+   */
   Object getVcSchema(String schemaId) throws BlockChainException;
 
+  /**
+   * Registers a ZKP (Zero-Knowledge Proof) credential schema on the blockchain.
+   *
+   * @param credentialSchema the ZKP credential schema to be registered
+   * @throws BlockChainException if an error occurs during the registration process
+   */
   void registZKPCredential(CredentialSchema credentialSchema) throws BlockChainException;
 
+  /**
+   * Retrieves a ZKP (Zero-Knowledge Proof) credential schema from the blockchain.
+   *
+   * @param schemaId the schema ID
+   * @return the ZKP credential schema
+   * @throws BlockChainException if an error occurs during the retrieval process
+   */
   Object getZKPCredential(String schemaId) throws BlockChainException;
 
+  /**
+   * Registers a ZKP (Zero-Knowledge Proof) credential definition on the blockchain.
+   *
+   * @param credentialDefinition the ZKP credential definition to be registered
+   * @throws BlockChainException if an error occurs during the registration process
+   */
   void registZKPCredentialDefinition(CredentialDefinition credentialDefinition)
       throws BlockChainException;
 
+  /**
+   * Retrieves a ZKP (Zero-Knowledge Proof) credential definition from the blockchain.
+   *
+   * @param definitionId the definition ID
+   * @return the ZKP credential definition
+   * @throws BlockChainException if an error occurs during the retrieval process
+   */
   Object getZKPCredentialDefinition(String definitionId) throws BlockChainException;
 }
