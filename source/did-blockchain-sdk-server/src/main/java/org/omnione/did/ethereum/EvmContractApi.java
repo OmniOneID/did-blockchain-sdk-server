@@ -4,28 +4,21 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 import org.omnione.did.ContractApi;
+import org.omnione.did.crypto.util.MultiBaseUtils;
 import org.omnione.did.data.model.did.DidDocument;
 import org.omnione.did.data.model.did.InvokedDidDoc;
 import org.omnione.did.data.model.enums.did.DidDocStatus;
 import org.omnione.did.data.model.enums.vc.RoleType;
 import org.omnione.did.data.model.enums.vc.VcStatus;
-import org.omnione.did.data.model.schema.ClaimDef;
-import org.omnione.did.data.model.schema.Namespace;
-import org.omnione.did.data.model.schema.SchemaClaims;
 import org.omnione.did.data.model.schema.VcSchema;
 import org.omnione.did.data.model.vc.VcMeta;
 import org.omnione.did.zkp.datamodel.schema.CredentialSchema;
 import org.omnione.exception.BlockChainException;
 import org.omnione.exception.BlockchainErrorCode;
 import org.omnione.generated.OpenDID;
-import org.omnione.generated.OpenDID.ClaimNamespace;
 import org.omnione.generated.OpenDID.CredentialDefinition;
-import org.omnione.generated.OpenDID.CredentialSubject;
-import org.omnione.generated.OpenDID.SchemaClaimItem;
 import org.omnione.response.EvmResponse;
 import org.omnione.sender.ethereum.EvmContractData;
 import org.omnione.sender.ethereum.EvmServerInformation;
@@ -35,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
+import org.web3j.tx.RawTransactionManager;
 import org.web3j.tx.ReadonlyTransactionManager;
 import org.web3j.tx.exceptions.ContractCallException;
 import org.web3j.tx.gas.StaticGasProvider;
@@ -131,7 +125,12 @@ public class EvmContractApi implements ContractApi {
       return OpenDID.load(
           contractData.getContractAddress(),
           web3j,
-          credentials,
+          new RawTransactionManager(
+              web3j,
+              credentials,
+              5,
+              1000
+          ),
           gasProvider
       );
     }
@@ -187,6 +186,13 @@ public class EvmContractApi implements ContractApi {
     }
   }
 
+  /**
+   * Registers a role for a specific address.
+   *
+   * @param address  The address to register the role for.
+   * @param roleType The type of role to register.
+   * @throws BlockChainException If there is an error during role registration.
+   */
   public void registRole(String address, RoleType roleType) throws BlockChainException {
 
     logger.info(
@@ -218,31 +224,13 @@ public class EvmContractApi implements ContractApi {
     );
   }
 
-  public void registDidDoc(InvokedDidDoc invokedDidDoc) throws BlockChainException {
-    executeContract(
-        contract -> {
-          try {
-            DidDocument didDocument = new DidDocument();
-            didDocument.fromJson(invokedDidDoc.getDidDoc());
-            var document = EvmDataConverter.convertToContractObject(didDocument);
-            logger.debug("Converted DID Document: " + document.id);
-            contract.registDidDoc(document)
-                .send();
-            logger.info("DID Document registered successfully.");
-            return null;
-          } catch (Exception e) {
-            logger.error(
-                "Error registering DID Document: " + e.getMessage(),
-                e
-            );
-
-            throw new RuntimeException(e);
-          }
-        },
-        false
-    );
-  }
-
+  /**
+   * Registers a DID Document on the blockchain and assigns a role to the registrant.
+   *
+   * @param invokedDidDoc The DID Document to be registered.
+   * @param roleType      The role type to assign to the registrant.
+   * @throws BlockChainException If there is an error during registration.
+   */
   @Override
   public void registDidDoc(InvokedDidDoc invokedDidDoc, RoleType roleType)
       throws BlockChainException {
@@ -250,8 +238,10 @@ public class EvmContractApi implements ContractApi {
     executeContract(
         contract -> {
           try {
+            String decodedDidDoc = new String(MultiBaseUtils.decode(invokedDidDoc.getDidDoc()));
+
             DidDocument didDocument = new DidDocument();
-            didDocument.fromJson(invokedDidDoc.getDidDoc());
+            didDocument.fromJson(decodedDidDoc);
             var document = EvmDataConverter.convertToContractObject(didDocument);
             logger.debug("Converted DID Document: " + document.id);
             contract.registDidDoc(document)
@@ -278,6 +268,13 @@ public class EvmContractApi implements ContractApi {
     );
   }
 
+  /**
+   * Retrieves a DID Document from the blockchain.
+   *
+   * @param didKeyUrl The DID key URL to retrieve the document for.
+   * @return The retrieved DID Document object.
+   * @throws BlockChainException If there is an error during retrieval.
+   */
   @Override
   public Object getDidDoc(String didKeyUrl) throws BlockChainException {
     logger.info(
@@ -293,7 +290,7 @@ public class EvmContractApi implements ContractApi {
                 .send();
             logger.info("Retrieved DID Document successfully.");
 
-            return result;
+            return EvmDataConverter.convertToJavaObject(result);
           } catch (Exception e) {
             logger.error(
                 "Error retrieving DID Document: " + e.getMessage(),
@@ -307,6 +304,14 @@ public class EvmContractApi implements ContractApi {
     );
   }
 
+  /**
+   * Updates the status of a DID Document on the blockchain.
+   *
+   * @param didKeyUrl    The DID key URL of the document to update.
+   * @param didDocStatus The new status to set for the document.
+   * @return The status of the transaction or null.
+   * @throws BlockChainException If there is an error during status update.
+   */
   @Override
   public Object updateDidDocStatus(String didKeyUrl, DidDocStatus didDocStatus)
       throws BlockChainException {
@@ -343,9 +348,18 @@ public class EvmContractApi implements ContractApi {
     return null;
   }
 
+  /**
+   * Updates the status of a DID Document with a termination time.
+   *
+   * @param didKeyUrl       The DID key URL of the document to update.
+   * @param didDocStatus    The new status to set for the document.
+   * @param terminatedTime  The termination time for the document.
+   * @return An EvmResponse containing the transaction details.
+   * @throws BlockChainException If there is an error during status update.
+   */
   @Override
   public Object updateDidDocStatus(String didKeyUrl, DidDocStatus didDocStatus,
-                                   LocalDateTime terminatedTime
+      LocalDateTime terminatedTime
   ) throws BlockChainException {
 
     DidKeyUrlParser parser = new DidKeyUrlParser(didKeyUrl);
@@ -363,7 +377,12 @@ public class EvmContractApi implements ContractApi {
       var contract = OpenDID.load(
           contractData.getContractAddress(),
           web3j,
-          credentials,
+          new RawTransactionManager(
+              web3j,
+              credentials,
+              5,
+              1000
+          ),
           gasProvider
       );
 
@@ -394,10 +413,16 @@ public class EvmContractApi implements ContractApi {
     }
   }
 
+  /**
+   * Registers Verifiable Credential metadata on the blockchain.
+   *
+   * @param vcMeta The VC metadata to register.
+   * @throws BlockChainException If there is an error during registration.
+   */
   @Override
   public void registVcMetadata(VcMeta vcMeta) throws BlockChainException {
 
-    var vcMetaData = convertVcMetaToVcMetaData(vcMeta);
+    var vcMetaData = EvmDataConverter.convertToContractObject(vcMeta);
 
     try (Web3j web3j = Web3j.build(new HttpService(serverInformation.getNetworkURL()))) {
       Credentials credentials = Credentials.create(contractData.getPrivateKey());
@@ -413,7 +438,12 @@ public class EvmContractApi implements ContractApi {
       var contract = OpenDID.load(
           contractData.getContractAddress(),
           web3j,
-          credentials,
+          new RawTransactionManager(
+              web3j,
+              credentials,
+              5,
+              1000
+          ),
           gasProvider
       );
 
@@ -432,31 +462,13 @@ public class EvmContractApi implements ContractApi {
     }
   }
 
-  private OpenDID.VcMeta convertVcMetaToVcMetaData(VcMeta vcMeta) {
-    return new OpenDID.VcMeta(
-        vcMeta.getId(),
-        new OpenDID.Provider(
-            vcMeta.getIssuer()
-                .getDid(),
-            vcMeta.getIssuer()
-                .getCertVcRef()
-        ),
-        vcMeta.getSubject(),
-        new OpenDID.CredentialSchemaLibrary_CredentialSchema(
-            vcMeta.getCredentialSchema()
-                .getId(),
-            vcMeta.getCredentialSchema()
-                .getType()
-        ),
-        vcMeta.getStatus(),
-        vcMeta.getIssuanceDate(),
-        vcMeta.getValidFrom(),
-        vcMeta.getValidUntil(),
-        vcMeta.getFormatVersion(),
-        vcMeta.getLanguage()
-    );
-  }
-
+  /**
+   * Retrieves Verifiable Credential metadata from the blockchain.
+   *
+   * @param vcId The ID of the VC to retrieve metadata for.
+   * @return The retrieved VC metadata object.
+   * @throws BlockChainException If there is an error during retrieval.
+   */
   @Override
   public Object getVcMetadata(String vcId) throws BlockChainException {
     try (Web3j web3j = Web3j.build(new HttpService(serverInformation.getNetworkURL()))) {
@@ -478,8 +490,10 @@ public class EvmContractApi implements ContractApi {
           )
       );
 
-      return contract.getVcmetaData(vcId)
+      var vcMeta = contract.getVcmetaData(vcId)
           .send();
+
+      return EvmDataConverter.convertToJavaObject(vcMeta);
     } catch (ContractCallException e) {
       throw new BlockChainException(
           BlockchainErrorCode.TRANSACTION_ERROR,
@@ -493,6 +507,13 @@ public class EvmContractApi implements ContractApi {
     }
   }
 
+  /**
+   * Updates the status of a Verifiable Credential.
+   *
+   * @param vcId     The ID of the Verifiable Credential to update.
+   * @param vcStatus The new status to set for the credential.
+   * @throws BlockChainException If there is an error during the status update.
+   */
   @Override
   public void updateVcStatus(String vcId, VcStatus vcStatus) throws BlockChainException {
     try (Web3j web3j = Web3j.build(new HttpService(serverInformation.getNetworkURL()))) {
@@ -509,7 +530,12 @@ public class EvmContractApi implements ContractApi {
       var contract = OpenDID.load(
           contractData.getContractAddress(),
           web3j,
-          credentials,
+          new RawTransactionManager(
+              web3j,
+              credentials,
+              5,
+              1000
+          ),
           gasProvider
       );
 
@@ -530,62 +556,20 @@ public class EvmContractApi implements ContractApi {
     }
   }
 
+  /**
+   * Registers a Verifiable Credential schema on the blockchain.
+   *
+   * @param vcSchema The VC schema to register.
+   * @throws BlockChainException If there is an error during registration.
+   */
   @Override
   public void registVcSchema(VcSchema vcSchema) throws BlockChainException {
     executeContract(
         contract -> {
           try {
+            var schema = EvmDataConverter.convertToContractObject(vcSchema);
 
-            var contractMetaData = new OpenDID.MetaData(
-                vcSchema.getMetadata()
-                    .getFormatVersion(),
-                vcSchema.getMetadata()
-                    .getLanguage()
-            );
-            var claimsList = vcSchema.getCredentialSubject()
-                .getClaims();
-
-            List<CredentialSubject> contractCredentialSubjectList = new ArrayList<>();
-            List<OpenDID.VCSchemaClaim> vcSchemaClaimList = new ArrayList<>();
-            for (SchemaClaims claims : claimsList) {
-
-              List<SchemaClaimItem> contractClaimItems = new ArrayList<>();
-              for (ClaimDef claimDef : claims.getItems()) {
-                var item = new OpenDID.SchemaClaimItem(
-                    claimDef.getCaption(),
-                    claimDef.getFormat(),
-                    claimDef.isHideValue(),
-                    claimDef.getId(),
-                    claimDef.getType()
-                );
-                contractClaimItems.add(item);
-              }
-
-              Namespace namespace = claims.getNamespace();
-              OpenDID.ClaimNamespace contractNameSpace = new ClaimNamespace(
-                  namespace.getId(),
-                  namespace.getName(),
-                  namespace.getRef()
-              );
-              OpenDID.VCSchemaClaim vcSchemaClaim = new OpenDID.VCSchemaClaim(
-                  contractClaimItems,
-                  contractNameSpace
-              );
-
-              vcSchemaClaimList.add(vcSchemaClaim);
-            }
-            OpenDID.CredentialSubject credentialSubject =
-                new OpenDID.CredentialSubject(vcSchemaClaimList);
-
-            var contractVcSchema = new OpenDID.VcSchema(
-                vcSchema.getId(),
-                vcSchema.getSchema(),
-                vcSchema.getTitle(),
-                vcSchema.getDescription(),
-                contractMetaData,
-                credentialSubject
-            );
-            var receipt = contract.registVcSchema(contractVcSchema)
+            var receipt = contract.registVcSchema(schema)
                 .send();
 
             logger.debug("Transaction receipt: " + receipt.getTransactionHash());
@@ -600,13 +584,22 @@ public class EvmContractApi implements ContractApi {
     );
   }
 
+  /**
+   * Retrieves a Verifiable Credential schema from the blockchain.
+   *
+   * @param schemaId The ID of the schema to retrieve.
+   * @return The retrieved VC schema object.
+   * @throws BlockChainException If there is an error during retrieval.
+   */
   @Override
   public Object getVcSchema(String schemaId) throws BlockChainException {
     return executeContract(
         contract -> {
           try {
-            return contract.getVcSchema(schemaId)
+            var result = contract.getVcSchema(schemaId)
                 .send();
+
+            return EvmDataConverter.convertToJavaObject(result);
           } catch (Exception e) {
             throw new RuntimeException(e);
           }
@@ -615,6 +608,12 @@ public class EvmContractApi implements ContractApi {
     );
   }
 
+  /**
+   * Registers a ZKP (Zero-Knowledge Proof) credential schema on the blockchain.
+   *
+   * @param credentialSchema The ZKP credential schema to register.
+   * @throws BlockChainException If there is an error during registration.
+   */
   @Override
   public void registZKPCredential(CredentialSchema credentialSchema) throws BlockChainException {
 
@@ -632,7 +631,12 @@ public class EvmContractApi implements ContractApi {
       OpenDID contract = OpenDID.load(
           contractData.getContractAddress(),
           web3j,
-          credentials,
+          new RawTransactionManager(
+              web3j,
+              credentials,
+              5,
+              1000
+          ),
           gasProvider
       );
 
@@ -654,6 +658,13 @@ public class EvmContractApi implements ContractApi {
     }
   }
 
+  /**
+   * Retrieves a ZKP (Zero-Knowledge Proof) credential schema from the blockchain.
+   *
+   * @param schemaId The ID of the credential schema to retrieve.
+   * @return The retrieved ZKP credential schema object.
+   * @throws BlockChainException If there is an error during retrieval.
+   */
   @Override
   public Object getZKPCredential(String schemaId) throws BlockChainException {
     try (Web3j web3j = Web3j.build(new HttpService(serverInformation.getNetworkURL()))) {
@@ -692,6 +703,12 @@ public class EvmContractApi implements ContractApi {
     }
   }
 
+  /**
+   * Registers a ZKP (Zero-Knowledge Proof) credential definition on the blockchain.
+   *
+   * @param zkpCredentialDefinition The ZKP credential definition to register.
+   * @throws BlockChainException If there is an error during registration.
+   */
   @Override
   public void registZKPCredentialDefinition(
       org.omnione.did.zkp.datamodel.definition.CredentialDefinition zkpCredentialDefinition
@@ -721,6 +738,13 @@ public class EvmContractApi implements ContractApi {
     );
   }
 
+  /**
+   * Retrieves a ZKP (Zero-Knowledge Proof) credential definition from the blockchain.
+   *
+   * @param definitionId The ID of the credential definition to retrieve.
+   * @return The retrieved ZKP credential definition object.
+   * @throws BlockChainException If there is an error during retrieval.
+   */
   @Override
   public Object getZKPCredentialDefinition(String definitionId) throws BlockChainException {
 
