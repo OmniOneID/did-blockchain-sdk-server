@@ -38,8 +38,8 @@ did-blockchain-sdk-server
         └── did-blockchain-sdk-server-1.0.0.jar
 ```
 
-| Name                    |              Description                        |
-|-------------------------| ------------------------------------------------|
+| Name                    | Description                                     |
+| ----------------------- | ----------------------------------------------- |
 | CHANGELOG.md            | Version-specific changes in the project         |
 | CLA.md                  | Contributor License Agreement                   |
 | CODE_OF_CONDUCT.md      | Code of conduct for contributors                |
@@ -49,7 +49,7 @@ did-blockchain-sdk-server
 | MAINTAINERS.md          | General guidelines for maintaining              |
 | README.md               | Overview and description of the project         |
 | RELEASE-PROCESS.md      | Release process                                 |
-| SECURITY.md             | Security policy and vulnerability reporting     | 
+| SECURITY.md             | Security policy and vulnerability reporting     |
 | docs                    | Documentation                                   |
 | ┖ api                   | API guide documentation                         |
 | source                  | SDK source code project                         |
@@ -62,21 +62,21 @@ Libraries can be found in the [Releases](https://github.com/OmniOneID/did-blockc
 
 ## Blockchain SDK
 
-1. Copy the `did-datamodel-sdk-server-1.0.1.jar` file into the project's `libs` directory.
+1. Copy the `did-datamodel-sdk-server-2.0.0.jar`, `did-zkp-sdk-server-2.0.0`, `did-crypto-sdk-server-2.0.0.jar` files into the project's `libs` directory.
 
 2. Add the following dependencies to the project's `build.gradle` file:
 
 ```groovy
-    implementation files('libs/did-datamodel-sdk-server-1.0.0.jar')
-    implementation('org.hyperledger.fabric:fabric-gateway-java:2.2.9')
-    implementation("org.web3j:core:4.13.0")
-    implementation('com.fasterxml.jackson.core:jackson-databind:2.15.2')
-    implementation('org.apache.commons:commons-pool2:2.12.0')
-    implementation ('org.hibernate.validator:hibernate-validator:8.0.0.Final')
-    implementation ('jakarta.validation:jakarta.validation-api:3.1.1')
-    annotationProcessor('com.fasterxml.jackson.core:jackson-databind:2.15.2')
-    annotationProcessor('org.projectlombok:lombok:1.18.28')
-    compileOnly('org.projectlombok:lombok:1.18.28')
+    implementation files("libs/did-datamodel-sdk-server-2.0.0.jar")
+    implementation files("libs/did-zkp-sdk-server-2.0.0.jar")
+    implementation files("libs/did-crypto-sdk-server-2.0.0.jar")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.hyperledger.fabric:fabric-gateway:${fabricGatewayVersion}")
+    implementation platform('com.google.protobuf:protobuf-bom:4.29.2')
+    implementation("org.web3j:core:${web3jCoreVersion}")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+    implementation("org.apache.commons:commons-pool2:2.12.0")
+    implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
 ```
 
 1. Synchronize `Gradle` to ensure that the dependencies are correctly added.

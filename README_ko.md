@@ -58,16 +58,19 @@ did-blockchain-sdk-server
 라이브러리는 [Releases](https://github.com/OmniOneID/did-blockchain-sdk-server/releases)에서 찾을 수 있습니다.
 
 ## Blockchain SDK
-1. 프로젝트의 `libs`에 `did-datamodel-sdk-server-1.0.0.jar` 파일을 복사합니다.
+1. 프로젝트의 `libs`에 `did-datamodel-sdk-server-2.0.0.jar`, `did-zkp-sdk-server-2.0.0`, `did-crypto-sdk-server-2.0.0.jar` 파일들을 복사합니다.
 2. 프로젝트의 `build.gradle`에 아래 의존성을 추가합니다.
 ```groovy
-    implementation files('libs/did-datamodel-sdk-server-1.0.0.jar')
-    implementation('org.hyperledger.fabric:fabric-gateway-java:2.2.9')
-    implementation('com.fasterxml.jackson.core:jackson-databind:2.15.2')
-    implementation('org.apache.commons:commons-pool2:2.12.0')
-    annotationProcessor('com.fasterxml.jackson.core:jackson-databind:2.15.2')
-    annotationProcessor('org.projectlombok:lombok:1.18.28')
-    compileOnly('org.projectlombok:lombok:1.18.28')
+    implementation files("libs/did-datamodel-sdk-server-2.0.0.jar")
+    implementation files("libs/did-zkp-sdk-server-2.0.0.jar")
+    implementation files("libs/did-crypto-sdk-server-2.0.0.jar")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.hyperledger.fabric:fabric-gateway:${fabricGatewayVersion}")
+    implementation platform('com.google.protobuf:protobuf-bom:4.29.2')
+    implementation("org.web3j:core:${web3jCoreVersion}")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+    implementation("org.apache.commons:commons-pool2:2.12.0")
+    implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
 ```
 3. `Gradle`을 동기화하여 의존성이 제대로 추가되었는지 확인합니다.
 
