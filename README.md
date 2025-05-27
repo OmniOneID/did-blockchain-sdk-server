@@ -35,7 +35,7 @@ did-blockchain-sdk-server
     │   ├── setting.gradle
     │   └── src
     └── release
-        └── did-blockchain-sdk-server-1.0.0.jar
+        └── did-blockchain-sdk-server-2.0.0.jar
 ```
 
 | Name                    | Description                                     |
