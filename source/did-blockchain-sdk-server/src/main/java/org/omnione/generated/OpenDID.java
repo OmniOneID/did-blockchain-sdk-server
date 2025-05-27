@@ -1334,6 +1334,18 @@ public class OpenDID extends Contract {
     return executeRemoteCallTransaction(function);
   }
 
+  public RemoteFunctionCall<TransactionReceipt> registDidDoc(Document _invokedDidDoc, String roleType) {
+    final Function function = new Function(
+        FUNC_REGISTDIDDOC,
+        Arrays.<Type>asList(
+            _invokedDidDoc,
+            new org.web3j.abi.datatypes.Utf8String(roleType)
+        ),
+        Collections.<TypeReference<?>>emptyList()
+    );
+    return executeRemoteCallTransaction(function);
+  }
+
   public RemoteFunctionCall<TransactionReceipt> registRole(String target, String roleType) {
     final Function function = new Function(
         FUNC_REGISTROLE,
@@ -1602,8 +1614,8 @@ public class OpenDID extends Contract {
           )
       );
       this.id = id;
-      this.serviceType = serviceType;
       this.serviceEndpoint = serviceEndpoint;
+      this.serviceType = serviceType;
     }
 
     public Service(Utf8String id, Utf8String serviceType,
