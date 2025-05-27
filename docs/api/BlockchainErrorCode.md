@@ -73,6 +73,6 @@ public enum BlockchainErrorCode {
 
 | Error Code   | Error Message                                  | Description                       | Action Required                   |
 |--------------|------------------------------------------------|-----------------------------------|-----------------------------------|
-| SSDKBCS00001 | Failed to connect to fabric network            | -                                 | Check fabric network configuration |
+| SSDKBCS00001 | Failed to connect to contract network            | -                                 | Check contract network configuration |
 | SSDKBCS00002 | Failed to execute smart contract transaction   | -                                 | Verify the provided parameters     |
 | SSDKBCS00003 | Invalid did key url                            | Unable to parse did key url       | Check the format of the did key url |

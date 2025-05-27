@@ -1,10 +1,8 @@
 # Server Blockchain SDK
-
 Welcome to the Server Blockchain SDK Repository.
 This repository provides an SDK for interacting with Blockchain networks and invoking Smart Contracts.
 
 ## Folder Structure
-
 ```plaintext
 did-blockchain-sdk-server
 ├── CHANGELOG.md
@@ -20,8 +18,10 @@ did-blockchain-sdk-server
 ├── SECURITY.md
 ├── docs
 │   └── api
-│       ├── Blockchain_API.md 
-│       ├── Blockchain_API_ko.md 
+│       ├── Blockchain_API.md
+│       ├── Blockchain_API_ko.md
+│       ├── Blockchain_EVM_API.md
+│       ├── Blockchain_EVM_API_ko.md
 │       └── BlockchainErrorCode.md 
 └── source
     ├── did-blockchain-sdk-server
@@ -35,7 +35,7 @@ did-blockchain-sdk-server
     │   ├── setting.gradle
     │   └── src
     └── release
-        └── did-blockchain-sdk-server-1.0.0.jar
+        └── did-blockchain-sdk-server-2.0.0.jar
 ```
 
 | Name                    |              Description                        |
@@ -57,49 +57,38 @@ did-blockchain-sdk-server
 <br>
 
 ## Libraries
-
 Libraries can be found in the [Releases](https://github.com/OmniOneID/did-blockchain-sdk-server/releases).
 
 ## Blockchain SDK
-
-1. Copy the `did-datamodel-sdk-server-1.0.1.jar` file into the project's `libs` directory.
-
+1. Copy the `did-datamodel-sdk-server-2.0.0.jar`, `did-zdp-sdk-server-2.0.0.jar`, `did-crypto-sdk-server-2.0.0.jar` file into the project's `libs` directory.
 2. Add the following dependencies to the project's `build.gradle` file:
-
 ```groovy
-    implementation files('libs/did-datamodel-sdk-server-1.0.0.jar')
-    implementation('org.hyperledger.fabric:fabric-gateway-java:2.2.9')
-    implementation("org.web3j:core:4.13.0")
+    implementation files("libs/did-datamodel-sdk-server-2.0.0.jar")
+    implementation files("libs/did-zkp-sdk-server-2.0.0.jar")
+    implementation files("libs/did-crypto-sdk-server-2.0.0.jar")
+    implementation("org.web3j:core:4.14.0")
+    implementation('org.hyperledger.fabric:fabric-gateway-java:1.7.1')
     implementation('com.fasterxml.jackson.core:jackson-databind:2.15.2')
     implementation('org.apache.commons:commons-pool2:2.12.0')
-    implementation ('org.hibernate.validator:hibernate-validator:8.0.0.Final')
-    implementation ('jakarta.validation:jakarta.validation-api:3.1.1')
     annotationProcessor('com.fasterxml.jackson.core:jackson-databind:2.15.2')
-    annotationProcessor('org.projectlombok:lombok:1.18.28')
-    compileOnly('org.projectlombok:lombok:1.18.28')
+    annotationProcessor('org.projectlombok:lombok:1.18.30')
+    compileOnly('org.projectlombok:lombok:1.18.30')
 ```
-
-1. Synchronize `Gradle` to ensure that the dependencies are correctly added.
+3. Synchronize `Gradle` to ensure that the dependencies are correctly added.
 
 ## API Reference
-
-You can find the API reference [here](docs/api/Blockchain_API.md).
+API 참조는 [Reference1](docs/api/Blockchain_API.md), [Reference2](docs/api/Blockchain_EVM_API.md)에서 확인할 수 있습니다.
 
 ## Change Log
-
 The Change Log provides a detailed record of version-specific changes and updates. You can find it here:
-
 - [Change Log](./CHANGELOG.md)
 
 ## OpenDID Demonstration Videos <br>
-
 To watch our demonstration videos of the OpenDID system in action, please visit our [Demo Repository](https://github.com/OmniOneID/did-demo-server). <br>
 These videos showcase key features including user registration, VC issuance, and VP submission processes.
 
 ## Contributing
-
 For detailed information on contributing and submitting pull requests, please refer to [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## License
-
 [Apache 2.0](LICENSE)

@@ -4,8 +4,12 @@
 
 <br>
 
+**Web3j: Web3 Java Ethereum Dapp API: Apache License 2.0**  
+`org.web3j:core:4.14.0`  
+(https://github.com/LFDT-web3j/web3j/blob/main/LICENSE)
+
 **Fabric Gateway Java: Apache License 2.0**  
-`org.hyperledger.fabric:fabric-gateway-java:2.2.9`  
+`org.hyperledger.fabric:fabric-gateway-java:1.7.1`  
 (https://github.com/hyperledger/fabric-gateway-java/blob/main/LICENSE)
 
 <br>
@@ -23,5 +27,5 @@
 <br>
 
 **Project Lombok: Apache License 2.0**  
-`org.projectlombok:lombok:1.18.28`  
+`org.projectlombok:lombok:1.18.30`  
 (https://github.com/projectlombok/lombok/blob/master/LICENSE)
