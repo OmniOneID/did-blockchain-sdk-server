@@ -6,7 +6,7 @@ This document serves as a guide for using the OpenDID Server Blockchain SDK. It 
 
 | Category     | Details    |
 | ------------ | ---------- |
-| Language     | Java 17    |
+| Language     | Java 21    |
 | Build System | Gradle 8.8 |
 
 <br>
@@ -16,26 +16,26 @@ This document serves as a guide for using the OpenDID Server Blockchain SDK. It 
 : Since this SDK is a Gradle project, Gradle must be installed
 
 1. Open a terminal and navigate to the project root directory, then run `./gradlew clean build`.
-2. Once the build is complete, the `did-blockchain-sdk-server-1.0.0.jar` file will be generated in the `{projectPath}/build/libs` directory.
+2. Once the build is complete, the `did-blockchain-sdk-server-2.0.0.jar` file will be generated in the `{projectPath}/build/libs` directory.
 
 <br>
 
 ## SDK Application Method
 
-1. Copy the `did-datamodel-server-1.0.1.jar` file into the project's `{projectPath}/libs` directory.
+1. Copy the `did-datamodel-sdk-server-2.0.0.jar`, `did-zkp-sdk-server-2.0.0`, `did-crypto-sdk-server-2.0.0.jar` files into the project's `{projectPath}/libs` directory.
 2. Add the following dependencies to the project's `build.gradle` file:
 
 ```groovy
-    implementation files('libs/did-datamodel-sdk-server-1.0.1.jar')
-    implementation('org.hyperledger.fabric:fabric-gateway-java:2.2.9')
-    implementation("org.web3j:core:4.13.0")
-    implementation('com.fasterxml.jackson.core:jackson-databind:2.15.2')
-    implementation('org.apache.commons:commons-pool2:2.12.0')
-    implementation ('org.hibernate.validator:hibernate-validator:8.0.0.Final')
-    implementation ('jakarta.validation:jakarta.validation-api:3.1.1')
-    annotationProcessor('com.fasterxml.jackson.core:jackson-databind:2.15.2')
-    annotationProcessor('org.projectlombok:lombok:1.18.28')
-    compileOnly('org.projectlombok:lombok:1.18.28')
+    implementation files("libs/did-datamodel-sdk-server-2.0.0.jar")
+    implementation files("libs/did-zkp-sdk-server-2.0.0.jar")
+    implementation files("libs/did-crypto-sdk-server-2.0.0.jar")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.hyperledger.fabric:fabric-gateway:${fabricGatewayVersion}")
+    implementation platform('com.google.protobuf:protobuf-bom:4.29.2')
+    implementation("org.web3j:core:${web3jCoreVersion}")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+    implementation("org.apache.commons:commons-pool2:2.12.0")
+    implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
 ```
 
 3. Synchronize `Gradle` to ensure that the dependencies are correctly added.
