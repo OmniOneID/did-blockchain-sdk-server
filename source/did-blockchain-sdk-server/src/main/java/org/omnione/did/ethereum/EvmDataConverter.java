@@ -593,8 +593,7 @@ final class EvmDataConverter {
         credentialDefinition.getId(),
         credentialDefinition.getSchemaId(),
         credentialDefinition.getVer(),
-        Integer.toString(credentialDefinition.getType()
-            .getValue()),
+        credentialDefinition.getType().name(),
         value,
         credentialDefinition.getTag()
     );
