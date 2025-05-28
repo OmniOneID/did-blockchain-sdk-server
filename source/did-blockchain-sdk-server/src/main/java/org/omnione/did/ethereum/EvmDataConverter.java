@@ -537,6 +537,7 @@ final class EvmDataConverter {
       for (var attributeType : attributeTypes) {
         var namespace = new Namespace();
         namespace.setId(attributeType.namespace.id);
+        namespace.setName(attributeType.namespace.name);
         namespace.setRef(attributeType.namespace.ref);
         var attributeTypeObj = new org.omnione.did.zkp.datamodel.schema.AttributeType();
         attributeTypeObj.setNamespace(namespace);
