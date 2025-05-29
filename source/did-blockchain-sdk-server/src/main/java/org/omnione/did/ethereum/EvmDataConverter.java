@@ -78,7 +78,7 @@ final class EvmDataConverter {
     List<OpenDID.VerificationMethod> verificationMethods = new ArrayList<>();
     if (didDocument.getVerificationMethod() != null) {
       for (VerificationMethod originalMethod : didDocument.getVerificationMethod()) {
-        Integer keyType = 0;
+        int keyType = 0;
         String type = originalMethod.getType();
 
         if (type != null) {
@@ -91,12 +91,23 @@ final class EvmDataConverter {
           }
         }
 
+        int authType = 0;
+        int originalType = originalMethod.getAuthType();
+
+        if (originalType == 1) {
+          authType = 0; // Free
+        } else if (originalType == 2) {
+          authType = 1; // PIN
+        } else if (originalType == 4) {
+          authType = 2; // BIO
+        }
+
         OpenDID.VerificationMethod newMethod = new OpenDID.VerificationMethod(
             originalMethod.getId(),
             BigInteger.valueOf(keyType),
             originalMethod.getController(),
             originalMethod.getPublicKeyMultibase(),
-            BigInteger.valueOf(originalMethod.getAuthType())
+            BigInteger.valueOf(authType)
         );
 
         verificationMethods.add(newMethod);
@@ -162,7 +173,15 @@ final class EvmDataConverter {
         newVm.setId(vm.id);
         newVm.setController(vm.controller);
         newVm.setPublicKeyMultibase(vm.publicKeyMultibase);
-        newVm.setAuthType(vm.authType.intValue());
+        if (vm.authType != null) {
+          if (vm.authType.intValue() == 0) {
+            newVm.setAuthType(1); // Free
+          } else if (vm.authType.intValue() == 1) {
+            newVm.setAuthType(2); // PIN
+          } else if (vm.authType.intValue() == 2) {
+            newVm.setAuthType(4); // BIO
+          }
+        }
         if (vm.keyType != null) {
           if (vm.keyType.intValue() == 0) {
             newVm.setType("RsaVerificationKey2018");
