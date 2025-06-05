@@ -32,6 +32,7 @@ import org.web3j.tx.RawTransactionManager;
 import org.web3j.tx.ReadonlyTransactionManager;
 import org.web3j.tx.exceptions.ContractCallException;
 import org.web3j.tx.gas.StaticGasProvider;
+import okhttp3.OkHttpClient;
 
 public class EvmContractApi implements ContractApi {
 
@@ -60,13 +61,13 @@ public class EvmContractApi implements ContractApi {
    *
    * @return Web3j instance.
    */
-  private Web3j createWeb3j() {
+  private Web3j createWeb3j(OkHttpClient httpClient) {
     logger.debug(
         "Creating Web3j instance for network URL: {}",
         serverInformation.getNetworkURL()
     );
 
-    return Web3j.build(new HttpService(serverInformation.getNetworkURL()));
+    return Web3j.build(new HttpService(serverInformation.getNetworkURL(), httpClient));
   }
 
   /**
@@ -152,7 +153,8 @@ public class EvmContractApi implements ContractApi {
         isReadOnly
     );
 
-    try (Web3j web3j = createWeb3j()) {
+    OkHttpClient httpClient = new OkHttpClient();
+    try (Web3j web3j = createWeb3j(httpClient)) {
       StaticGasProvider gasProvider = createGasProvider(web3j);
       OpenDID contract = loadContract(
           web3j,
@@ -183,6 +185,8 @@ public class EvmContractApi implements ContractApi {
           BlockchainErrorCode.CONNECTION_ERROR,
           e
       );
+    } finally {
+      httpClient.connectionPool().evictAll();
     }
   }
 
@@ -248,12 +252,6 @@ public class EvmContractApi implements ContractApi {
                 .send();
             logger.info("DID Document registered successfully.");
 
-            Credentials credentials = Credentials.create(contractData.getPrivateKey());
-            contract.registRole(
-                    credentials.getAddress(),
-                    roleType.getRawValue()
-                )
-                .send();
             return null;
           } catch (Exception e) {
             logger.error(
@@ -362,55 +360,36 @@ public class EvmContractApi implements ContractApi {
       LocalDateTime terminatedTime
   ) throws BlockChainException {
 
-    DidKeyUrlParser parser = new DidKeyUrlParser(didKeyUrl);
-    try (Web3j web3j = Web3j.build(new HttpService(serverInformation.getNetworkURL()))) {
-      Credentials credentials = Credentials.create(contractData.getPrivateKey());
-      BigInteger gasPrice = web3j.ethGasPrice()
-          .send()
-          .getGasPrice();
-      BigInteger gasLimit = BigInteger.valueOf(10000000L);
-      StaticGasProvider gasProvider = new StaticGasProvider(
-          gasPrice,
-          gasLimit
-      );
+    return executeContract(
+        contract -> {
+          try {
+            DidKeyUrlParser parser = new DidKeyUrlParser(didKeyUrl);
 
-      var contract = OpenDID.load(
-          contractData.getContractAddress(),
-          web3j,
-          new RawTransactionManager(
-              web3j,
-              credentials,
-              5,
-              1000
-          ),
-          gasProvider
-      );
+            var result = contract.updateDidDocStatusRevocation(
+                    parser.getDid(),
+                    didDocStatus.getRawValue(),
+                    terminatedTime.format(DateTimeFormatter.ISO_DATE_TIME)
+                )
+                .send();
 
-      var result = contract.updateDidDocStatusRevocation(
-              parser.getDid(),
-              didDocStatus.getRawValue(),
-              terminatedTime.format(DateTimeFormatter.ISO_DATE_TIME)
-          )
-          .send();
+            logger.info("Update document status is successful.");
 
-      logger.info("Update document status is successful.");
-
-      return new EvmResponse(
-          200,
-          result.getStatus(),
-          result.getTransactionHash()
-      );
-    } catch (ContractCallException e) {
-      throw new BlockChainException(
-          BlockchainErrorCode.TRANSACTION_ERROR,
-          new Error("Contract call error: " + e.getMessage())
-      );
-    } catch (Exception e) {
-      throw new BlockChainException(
-          BlockchainErrorCode.CONNECTION_ERROR,
-          new Error("Network error: " + e.getMessage())
-      );
-    }
+            return new EvmResponse(
+                200,
+                result.getStatus(),
+                result.getTransactionHash()
+            );
+          } catch (Exception e) {
+            logger.error(
+                "Error update document status with termination time: {}",
+                e.getMessage(),
+                e
+            );
+            throw new RuntimeException(e);
+          }
+        },
+        false
+    );
   }
 
   /**
@@ -422,44 +401,26 @@ public class EvmContractApi implements ContractApi {
   @Override
   public void registVcMetadata(VcMeta vcMeta) throws BlockChainException {
 
-    var vcMetaData = EvmDataConverter.convertToContractObject(vcMeta);
+    executeContract(
+        contract -> {
+          try {
+            var vcMetaData = EvmDataConverter.convertToContractObject(vcMeta);
 
-    try (Web3j web3j = Web3j.build(new HttpService(serverInformation.getNetworkURL()))) {
-      Credentials credentials = Credentials.create(contractData.getPrivateKey());
-      BigInteger gasPrice = web3j.ethGasPrice()
-          .send()
-          .getGasPrice();
-      BigInteger gasLimit = BigInteger.valueOf(10000000L);
-      StaticGasProvider gasProvider = new StaticGasProvider(
-          gasPrice,
-          gasLimit
-      );
+            contract.registVcMetaData(vcMetaData)
+                .send();
 
-      var contract = OpenDID.load(
-          contractData.getContractAddress(),
-          web3j,
-          new RawTransactionManager(
-              web3j,
-              credentials,
-              5,
-              1000
-          ),
-          gasProvider
-      );
-
-      contract.registVcMetaData(vcMetaData)
-          .send();
-    } catch (ContractCallException e) {
-      throw new BlockChainException(
-          BlockchainErrorCode.TRANSACTION_ERROR,
-          new Error("Contract call error: " + e.getMessage())
-      );
-    } catch (Exception e) {
-      throw new BlockChainException(
-          BlockchainErrorCode.CONNECTION_ERROR,
-          new Error("Network error: " + e.getMessage())
-      );
-    }
+            return null;
+          } catch (Exception e) {
+            logger.error(
+                "Error registering VC metadata: {}",
+                e.getMessage(),
+                e
+            );
+            throw new RuntimeException(e);
+          }
+        },
+        false
+    );
   }
 
   /**
@@ -471,40 +432,24 @@ public class EvmContractApi implements ContractApi {
    */
   @Override
   public Object getVcMetadata(String vcId) throws BlockChainException {
-    try (Web3j web3j = Web3j.build(new HttpService(serverInformation.getNetworkURL()))) {
-      BigInteger gasPrice = web3j.ethGasPrice()
-          .send()
-          .getGasPrice();
-      BigInteger gasLimit = BigInteger.valueOf(10000000L);
-      ReadonlyTransactionManager readonlyTransactionManager = new ReadonlyTransactionManager(
-          web3j,
-          contractData.getContractAddress()
-      );
-      var contract = OpenDID.load(
-          contractData.getContractAddress(),
-          web3j,
-          readonlyTransactionManager,
-          new StaticGasProvider(
-              gasPrice,
-              gasLimit
-          )
-      );
+    return executeContract(
+        contract -> {
+          try {
+            var vcMeta = contract.getVcmetaData(vcId)
+                .send();
 
-      var vcMeta = contract.getVcmetaData(vcId)
-          .send();
-
-      return EvmDataConverter.convertToJavaObject(vcMeta);
-    } catch (ContractCallException e) {
-      throw new BlockChainException(
-          BlockchainErrorCode.TRANSACTION_ERROR,
-          new Error("Contract call error: " + e.getMessage())
-      );
-    } catch (Exception e) {
-      throw new BlockChainException(
-          BlockchainErrorCode.CONNECTION_ERROR,
-          new Error("Network error: " + e.getMessage())
-      );
-    }
+            return EvmDataConverter.convertToJavaObject(vcMeta);
+          } catch (Exception e) {
+            logger.error(
+                "Error retrieving VC metadata: {}",
+                e.getMessage(),
+                e
+            );
+            throw new RuntimeException(e);
+          }
+        },
+        true
+    );
   }
 
   /**
@@ -516,44 +461,26 @@ public class EvmContractApi implements ContractApi {
    */
   @Override
   public void updateVcStatus(String vcId, VcStatus vcStatus) throws BlockChainException {
-    try (Web3j web3j = Web3j.build(new HttpService(serverInformation.getNetworkURL()))) {
-      Credentials credentials = Credentials.create(contractData.getPrivateKey());
-      BigInteger gasPrice = web3j.ethGasPrice()
-          .send()
-          .getGasPrice();
-      BigInteger gasLimit = BigInteger.valueOf(10000000L);
-      StaticGasProvider gasProvider = new StaticGasProvider(
-          gasPrice,
-          gasLimit
-      );
+    executeContract(
+        contract -> {
+          try {
+            contract.updateVcStats(
+                vcId,
+                vcStatus.getRawValue()
+            ).send();
 
-      var contract = OpenDID.load(
-          contractData.getContractAddress(),
-          web3j,
-          new RawTransactionManager(
-              web3j,
-              credentials,
-              5,
-              1000
-          ),
-          gasProvider
-      );
-
-      contract.updateVcStats(
-          vcId,
-          vcStatus.getRawValue()
-      );
-    } catch (ContractCallException e) {
-      throw new BlockChainException(
-          BlockchainErrorCode.TRANSACTION_ERROR,
-          new Error("Contract call error: " + e.getMessage())
-      );
-    } catch (Exception e) {
-      throw new BlockChainException(
-          BlockchainErrorCode.CONNECTION_ERROR,
-          new Error("Network error: " + e.getMessage())
-      );
-    }
+            return null;
+          } catch (Exception e) {
+            logger.error(
+                "Error updating VC status: {}",
+                e.getMessage(),
+                e
+            );
+            throw new RuntimeException(e);
+          }
+        },
+        false
+    );
   }
 
   /**
@@ -577,6 +504,7 @@ public class EvmContractApi implements ContractApi {
 
           } catch (Exception e) {
             logger.error("Error while registering VC schema: " + e.getMessage());
+            throw new RuntimeException(e);
           }
           return null;
         },
@@ -617,45 +545,26 @@ public class EvmContractApi implements ContractApi {
   @Override
   public void registZKPCredential(CredentialSchema credentialSchema) throws BlockChainException {
 
-    try (Web3j web3j = Web3j.build(new HttpService(serverInformation.getNetworkURL()))) {
-      Credentials credentials = Credentials.create(contractData.getPrivateKey());
-      BigInteger gasPrice = web3j.ethGasPrice()
-          .send()
-          .getGasPrice();
-      BigInteger gasLimit = BigInteger.valueOf(10000000L);
-      StaticGasProvider gasProvider = new StaticGasProvider(
-          gasPrice,
-          gasLimit
-      );
+    executeContract(
+        contract -> {
+          try {
+            var zkpCredentialSchema = EvmDataConverter.convertToContractObject(credentialSchema);
+            var transactionReceipt = contract.registZKPCredential(zkpCredentialSchema)
+                .send();
 
-      OpenDID contract = OpenDID.load(
-          contractData.getContractAddress(),
-          web3j,
-          new RawTransactionManager(
-              web3j,
-              credentials,
-              5,
-              1000
-          ),
-          gasProvider
-      );
-
-      var zkpCredentialSchema = EvmDataConverter.convertToContractObject(credentialSchema);
-      var transactionReceipt = contract.registZKPCredential(zkpCredentialSchema)
-          .send();
-
-      logger.info("Transaction receipt: " + transactionReceipt.getTransactionHash());
-    } catch (ContractCallException e) {
-      throw new BlockChainException(
-          BlockchainErrorCode.TRANSACTION_ERROR,
-          new Error("Contract call error: " + e.getMessage())
-      );
-    } catch (Exception e) {
-      throw new BlockChainException(
-          BlockchainErrorCode.CONNECTION_ERROR,
-          new Error("Network error: " + e.getMessage())
-      );
-    }
+            logger.info("Transaction receipt: " + transactionReceipt.getTransactionHash());
+            return null;
+          } catch (Exception e) {
+            logger.error(
+                "Error registering ZKP credential: {}",
+                e.getMessage(),
+                e
+            );
+            throw new RuntimeException(e);
+          }
+        },
+        false
+    );
   }
 
   /**
@@ -667,40 +576,24 @@ public class EvmContractApi implements ContractApi {
    */
   @Override
   public Object getZKPCredential(String schemaId) throws BlockChainException {
-    try (Web3j web3j = Web3j.build(new HttpService(serverInformation.getNetworkURL()))) {
-      BigInteger gasPrice = web3j.ethGasPrice()
-          .send()
-          .getGasPrice();
-      BigInteger gasLimit = BigInteger.valueOf(10000000L);
-      ReadonlyTransactionManager readonlyTransactionManager = new ReadonlyTransactionManager(
-          web3j,
-          contractData.getContractAddress()
-      );
-      var contract = OpenDID.load(
-          contractData.getContractAddress(),
-          web3j,
-          readonlyTransactionManager,
-          new StaticGasProvider(
-              gasPrice,
-              gasLimit
-          )
-      );
+    return executeContract(
+        contract -> {
+          try {
+            OpenDID.ZKPLibrary_CredentialSchema credentialSchema = contract.getZKPCredential(schemaId)
+                .send();
 
-      OpenDID.ZKPLibrary_CredentialSchema credentialSchema = contract.getZKPCredential(schemaId)
-          .send();
-
-      return EvmDataConverter.convertToJavaObject(credentialSchema);
-    } catch (ContractCallException e) {
-      throw new BlockChainException(
-          BlockchainErrorCode.TRANSACTION_ERROR,
-          new Error("Contract call error: " + e.getMessage())
-      );
-    } catch (Exception e) {
-      throw new BlockChainException(
-          BlockchainErrorCode.CONNECTION_ERROR,
-          new Error("Network error: " + e.getMessage())
-      );
-    }
+            return EvmDataConverter.convertToJavaObject(credentialSchema);
+          } catch (Exception e) {
+            logger.error(
+                "Error retrieving ZKP credential: {}",
+                e.getMessage(),
+                e
+            );
+            throw new RuntimeException(e);
+          }
+        },
+        true
+    );
   }
 
   /**
