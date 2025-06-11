@@ -342,7 +342,7 @@ final class EvmDataConverter {
       OpenDID.ClaimNamespace contractNameSpace = new ClaimNamespace(
           namespace.getId(),
           namespace.getName(),
-          namespace.getRef()
+          namespace.getRef() != null ? namespace.getRef() : ""
       );
       OpenDID.VCSchemaClaim vcSchemaClaim = new OpenDID.VCSchemaClaim(
           contractClaimItems,
