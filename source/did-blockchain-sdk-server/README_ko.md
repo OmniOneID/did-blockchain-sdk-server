@@ -6,7 +6,7 @@ Open DID에 필요한 DID Document(DID 문서), Verifiable Credential Meta(이�
 ## S/W 사양
 | 구분 | 내용         |
 |------|------------|
-| Language      | Java 17    |
+| Language      | Java 21    |
 | Build System  | Gradle 8.8 |
 
 <br>
@@ -14,21 +14,24 @@ Open DID에 필요한 DID Document(DID 문서), Verifiable Credential Meta(이�
 ## 빌드 방법
 : 본 SDK 그래들 프로젝트이므로 그래들이 설치 되어 있어야 한다.
 1. 터미널을 열고 프로젝트 루트 디렉터리에서 `./gradlew clean build`를 실행합니다.
-2. 빌드가 완료되면 `build/libs` 디렉터리에 `did-blockchain-sdk-server-1.0.0.jar` 파일이 생성됩니다.
+2. 빌드가 완료되면 `build/libs` 디렉터리에 `did-blockchain-sdk-server-2.0.0.jar` 파일이 생성됩니다.
 
 <br>
 
 ## SDK 적용 방법
-1. 프로젝트의 `libs`에 `did-datamodel-server-1.0.0.jar` 파일을 복사합니다.
+1. 프로젝트의 `libs`에 `did-datamodel-sdk-server-2.0.0.jar`, `did-zkp-sdk-server-2.0.0`, `did-crypto-sdk-server-2.0.0.jar` 파일들을 복사합니다.
 2. 프로젝트의 `build.gradle`에 아래 의존성을 추가합니다.
 ```groovy
-    implementation files('libs/did-datamodel-server-1.0.0.jar')
-    implementation('org.hyperledger.fabric:fabric-gateway-java:2.2.9')
-    implementation('com.fasterxml.jackson.core:jackson-databind:2.15.2')
-    implementation('org.apache.commons:commons-pool2:2.12.0')
-    annotationProcessor('com.fasterxml.jackson.core:jackson-databind:2.15.2')
-    annotationProcessor('org.projectlombok:lombok:1.18.28')
-    compileOnly('org.projectlombok:lombok:1.18.28')
+    implementation files("libs/did-datamodel-sdk-server-2.0.0.jar")
+    implementation files("libs/did-zkp-sdk-server-2.0.0.jar")
+    implementation files("libs/did-crypto-sdk-server-2.0.0.jar")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.hyperledger.fabric:fabric-gateway:${fabricGatewayVersion}")
+    implementation platform('com.google.protobuf:protobuf-bom:4.29.2')
+    implementation("org.web3j:core:${web3jCoreVersion}")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+    implementation("org.apache.commons:commons-pool2:2.12.0")
+    implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
 ```
 3. `Gradle`을 동기화하여 의존성이 제대로 추가되었는지 확인합니다.
 

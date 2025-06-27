@@ -13,6 +13,49 @@ puppeteer:
     image:
         quality: 100
         fullPage: false
+
+
+marp: false
+theme: default
+paginate: false
+style: |
+  section {
+    @import url('https://cdn.jsdelivr.net/gh/sunn-us/SUITE/fonts/static/woff2/SUITE.css');
+
+    font-family: 'SUITE', sans-serif;
+    font-size: 20px;
+    padding: 40px;
+    padding-right: 200px;
+    border: 4px solid orange;
+    box-sizing: border-box;
+    border-radius: 16px;
+  }
+
+  h1, h2, h3, h4 {
+    color: #FF8C00;
+    border-bottom: 2px solid #e6e6e6;
+    padding-bottom: 5px;
+  }
+
+  section::before {
+    content: "";
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 200px;
+    height: 200px;
+    background-image: url('https://omnioneid.github.io/assets/images/logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top right;
+    z-index: 10;
+  }
+
+  a {
+    color: #FF9E1B;
+    text-decoration: none;
+  }
+
 ---
 
 Blockchain SDK API
@@ -23,9 +66,9 @@ Blockchain SDK API
 - 일자: 2024-08-29
 - 버전: v1.0.0
 
-| 버전   | 일자       | 변경 내용                 |
-| ------ | ---------- | --------------------------|
-| v1.0.0 | 2024-08-29 | 초기 작성                 |
+| 버전   | 일자       | 변경 내용 |
+| ------ | ---------- | --------- |
+| v1.0.0 | 2024-08-29 | 초기 작성 |
 
 
 <div style="page-break-after: always;"></div>
@@ -55,10 +98,10 @@ Blockchain SDK API
 
 ### Input Parameters
 
-| Parameter | Type   | Description                | **M/O** | **비고** |
-|-----------|--------|----------------------------|---------|---------|
-| invokedDocument    | InvokedDocument    | DidDoc 등록 및 업데이트 요청 문서 |M||
-| roleType    | RoleType | 사업자 종류 Enum |M| |
+| Parameter       | Type            | Description                       | **M/O** | **비고** |
+| --------------- | --------------- | --------------------------------- | ------- | -------- |
+| invokedDocument | InvokedDocument | DidDoc 등록 및 업데이트 요청 문서 | M       |          |
+| roleType        | RoleType        | 사업자 종류 Enum                  | M       |          |
 
 ### Output Parameters
 
@@ -72,6 +115,7 @@ void registDidDoc(InvokedDocument invokedDocument, RoleType roleType) throws Blo
 ```
 
 ### Function Usage
+
 ```java
 void registDidDocTest() throws Exception {
     // encoding did document
@@ -94,6 +138,29 @@ void registDidDocTest() throws Exception {
 }
 ```
 
+```java
+void registDidDocTest() throws Exception {
+    // encoding did document
+    String document = "z29KbMzaxCukd5iyCozP3CQEHiR...CkRAC8usDbDrsvxPc5";
+    Provider controller = Provider.builder()...build();
+    Proof proof = Proof.builder()...build();
+
+    InvokedDocument invokedDocument = InvokedDocument.builder()
+                                        .didDoc(document)
+                                        .controller(controller)
+                                        .proof(proof)
+                                        .nonce("12345")
+                                        .build();
+    
+    // blockchain network 정보 설정 및 api 객체 생성
+    EvmContractApi contractApi = (EvmContractApi) ContractFactory.EVM
+        .create("junit-platform.properties");
+
+    // call
+    contractApi.registDidDoc(invokedDocument, RoleType.TAS);
+}
+```
+
 <br>
 
 ## 2. DID document 조회
@@ -109,15 +176,15 @@ void registDidDocTest() throws Exception {
 
 ### Input Parameters
 
-| Parameter | Type   | Description                | **M/O** | **비고** |
-|-----------|--------|----------------------------|---------|---------|
-| didKeyUrl    | string    | DID 키 식별 주소 |M||
+| Parameter | Type   | Description      | **M/O** | **비고** |
+| --------- | ------ | ---------------- | ------- | -------- |
+| didKeyUrl | string | DID 키 식별 주소 | M       |          |
 
 ### Output Parameters
 
-| Type | Description                |**M/O** | **비고** |
-|------|----------------------------|---------|---------|
-| DidDocAndStatus  | DidDocAndStatus 객체 |M| | 
+| Type            | Description          | **M/O** | **비고** |
+| --------------- | -------------------- | ------- | -------- |
+| DidDocAndStatus | DidDocAndStatus 객체 | M       |          |
 
 ### Function Declaration
 
@@ -127,6 +194,7 @@ DidDocAndStatus getDidDoc(String didKeyUrl) throws BlockChainException;
 ```
 
 ### Function Usage
+
 ```java
 void getDidDocTest() throws Exception {
     
@@ -134,6 +202,20 @@ void getDidDocTest() throws Exception {
 
     // blockchain network 정보 설정 및 api 객체 생성
     FabricContractApi contractApi = (FabricContractApi) ContractFactory.FABRIC.create("junit-platform.properties");
+
+    // call
+    DidDocAndStatus didDocAndStatus = contractApi.getDidDoc(didKeyUrl);
+}
+```
+
+```java
+void getDidDocTest() throws Exception {
+    
+    String didKeyUrl = "did:odi:tas?versionId=1";
+
+    // blockchain network 정보 설정 및 api 객체 생성
+    EvmContractApi contractApi = (EvmContractApi) ContractFactory.EVM
+        .create("junit-platform.properties");
 
     // call
     DidDocAndStatus didDocAndStatus = contractApi.getDidDoc(didKeyUrl);
@@ -154,25 +236,25 @@ void getDidDocTest() throws Exception {
 `DID document 상태 변경`<br>
 `DID document 생애주기에 대한 상세 내용은 아래 표 참고 ('TERMINATED'로 상태 변경 시에는 terminatedTime 인자 필요)`
 
-| Status Value | Name   | Description |
-|--------------|--------|-------------|
-| ACTIVATED   | 활성   | &bull; DEACTIVATED, REVOKED 상태로 전이 가능 |
-| DEACTIVATED | 비활성 | &bull; ACTIVATED, REVOEKD 상태로 전이 가능   |
-| REVOKED     | 폐기   | &bull; TERMINATED 상태로 전이 가능 |
-| TERMINATED  | 말소   | &bull; 다른 상태로 전이 불가능 </br> &bull; 말소 시작일자 필요 |
+| Status Value | Name   | Description                                                    |
+| ------------ | ------ | -------------------------------------------------------------- |
+| ACTIVATED    | 활성   | &bull; DEACTIVATED, REVOKED 상태로 전이 가능                   |
+| DEACTIVATED  | 비활성 | &bull; ACTIVATED, REVOEKD 상태로 전이 가능                     |
+| REVOKED      | 폐기   | &bull; TERMINATED 상태로 전이 가능                             |
+| TERMINATED   | 말소   | &bull; 다른 상태로 전이 불가능 </br> &bull; 말소 시작일자 필요 |
 
 ### 3.1. ACTIVATED, DEACTIVATED, REVOKED
 ### Input Parameters
-| Parameter | Type   | Description                | **M/O** | **비고** |
-|-----------|--------|----------------------------|---------|---------|
-| didKeyUrl    | string    | DID 키 식별 주소 |M||
-| didDocStatus | DidDocStatus | DID 문서 상태 Enum |M||
+| Parameter    | Type         | Description        | **M/O** | **비고** |
+| ------------ | ------------ | ------------------ | ------- | -------- |
+| didKeyUrl    | string       | DID 키 식별 주소   | M       |          |
+| didDocStatus | DidDocStatus | DID 문서 상태 Enum | M       |          |
 
 ### Output Parameters
 
-| Type | Description                |**M/O** | **비고** |
-|------|----------------------------|---------|---------|
-| DidDocument | DidDoc 객체 |M| 
+| Type        | Description | **M/O** | **비고** |
+| ----------- | ----------- | ------- | -------- |
+| DidDocument | DidDoc 객체 | M       |
 
 ### Function Declaration
 
@@ -182,6 +264,7 @@ DidDocument updateDidDocStatus(String didUrl, DidDocStatus didDocStatus) throws 
 ```
 
 ### Function Usage
+
 ```java
 void updateDidDocStatusTest() throws Exception {
     
@@ -195,21 +278,35 @@ void updateDidDocStatusTest() throws Exception {
 }
 ```
 
+```java
+void updateDidDocStatusTest() throws Exception {
+    
+    String didKeyUrl = "did:odi:tas?versionId=1";
+
+    // blockchain network 정보 설정 및 api 객체 생성
+    EvmContractApi contractApi = (EvmContractApi) ContractFactory.EVM
+        .create("junit-platform.properties");
+
+    // call
+    DidDoc didDoc = contractApi.updateDidDoc(didKeyUrl, DidDocStatus.DEACTIVATED);
+}
+```
+
 <br>
 
 ### 3.2. TERMINATED
 ### Input Parameters
-| Parameter | Type   | Description                | **M/O** | **비고** |
-|-----------|--------|----------------------------|---------|---------|
-| didKeyUrl    | string    | DID 키 식별 주소 |M||
-| didDocStatus | DidDocStatus | DID 문서 상태 Enum |M||
-| terminatedTime | LocalDateTime | 말소 시작 시간 |M||
+| Parameter      | Type          | Description        | **M/O** | **비고** |
+| -------------- | ------------- | ------------------ | ------- | -------- |
+| didKeyUrl      | string        | DID 키 식별 주소   | M       |          |
+| didDocStatus   | DidDocStatus  | DID 문서 상태 Enum | M       |          |
+| terminatedTime | LocalDateTime | 말소 시작 시간     | M       |          |
 
 ### Output Parameters
 
-| Type | Description                |**M/O** | **비고** |
-|------|----------------------------|---------|---------|
-| DidDocument | DidDoc 객체 |M||
+| Type        | Description | **M/O** | **비고** |
+| ----------- | ----------- | ------- | -------- |
+| DidDocument | DidDoc 객체 | M       |          |
 
 ### Function Declaration
 
@@ -219,6 +316,7 @@ DidDocument updateDidDocStatus(String didUrl, DidDocStatus didDocStatus, LocalDa
 ```
 
 ### Function Usage
+
 ```java
 void updateDidDocStatusTest() throws Exception {
     
@@ -229,6 +327,21 @@ void updateDidDocStatusTest() throws Exception {
 
     // call
     DidDoc didDoc = contractApi.updateDidDoc(didKeyUrl, DidDocStatus.TERMINATED, LocalDateTime.now());
+}
+```
+
+```java
+void updateDidDocStatusTest() throws Exception {
+    
+    String didKeyUrl = "did:odi:tas?versionId=1";
+
+    // blockchain network 정보 설정 및 api 객체 생성
+    EvmContractApi contractApi = (EvmContractApi) ContractFactory.EVM
+        .create("junit-platform.properties");
+
+    // call
+    DidDoc didDoc = contractApi.updateDidDoc(didKeyUrl, 
+        DidDocStatus.TERMINATED, LocalDateTime.now());
 }
 ```
 
@@ -247,9 +360,9 @@ void updateDidDocStatusTest() throws Exception {
 
 ### Input Parameters
 
-| Parameter | Type   | Description                | **M/O** | **비고** |
-|-----------|--------|----------------------------|---------|---------|
-| vcMeta    | VcMeta    | VC 메타데이터 |M||
+| Parameter | Type   | Description   | **M/O** | **비고** |
+| --------- | ------ | ------------- | ------- | -------- |
+| vcMeta    | VcMeta | VC 메타데이터 | M       |          |
 
 
 ### Output Parameters
@@ -263,6 +376,7 @@ void registVcMetadata(VcMeta vcMeta) throws BlockChainException;
 ```
 
 ### Function Usage
+
 ```java
 void registVcMetadataTest() throws Exception {
 
@@ -284,6 +398,28 @@ void registVcMetadataTest() throws Exception {
 }
 ```
 
+```java
+void registVcMetadataTest() throws Exception {
+
+    ProviderDetail issuer = ProviderDetail.builder()...build();
+    Credential credentialSchema = CredentialSchema.builder()...build();
+
+    VcMeta vcMeta = VcMeta.builder()
+                        .id("vcId")
+                        .status(VcStatus.ACTIVE.getRawValue())
+                        .issuer(issuer)
+                        .credentialSchema(credentialSchema)...build();
+
+
+    // blockchain network 정보 설정 및 api 객체 생성
+    EvmContractApi contractApi = (EvmContractApi) ContractFactory.EVM
+        .create("application.properties");
+
+    // call
+    contractApi.registVcMetadata(vcMeta);
+}
+```
+
 <br>
 
 ## 5. VC metadata 조회
@@ -299,16 +435,16 @@ void registVcMetadataTest() throws Exception {
 
 ### Input Parameters
 
-| Parameter | Type   | Description                | **M/O** | **비고** |
-|-----------|--------|----------------------------|---------|---------|
-| vcId    | string    | VC 아이디 |M||
+| Parameter | Type   | Description | **M/O** | **비고** |
+| --------- | ------ | ----------- | ------- | -------- |
+| vcId      | string | VC 아이디   | M       |          |
 
 
 ### Output Parameters
 
-| Type | Description                |**M/O** | **비고** |
-|------|----------------------------|---------|---------|
-| VcMeta  | VcMeta 객체 |M| |
+| Type   | Description | **M/O** | **비고** |
+| ------ | ----------- | ------- | -------- |
+| VcMeta | VcMeta 객체 | M       |          |
 
 
 ### Function Declaration
@@ -319,6 +455,7 @@ VcMeta getVcMetadata(String vcId) throws BlockChainException;
 ```
 
 ### Function Usage
+
 ```java
 void getVcMetadataTest() throws Exception {
 
@@ -326,6 +463,20 @@ void getVcMetadataTest() throws Exception {
 
     // blockchain network 정보 설정 및 api 객체 생성
     FabricContractApi contractApi = (FabricContractApi) ContractFactory.FABRIC.create("junit-platform.properties");
+
+    // call
+    VcMeta vcMeta = contractApi.getVcMetadata(vcId);
+}
+```
+
+```java
+void getVcMetadataTest() throws Exception {
+
+    String vcId = "vcId";
+
+    // blockchain network 정보 설정 및 api 객체 생성
+    EvmContractApi contractApi = (EvmContractApi) ContractFactory.EVM
+        .create("junit-platform.properties");
 
     // call
     VcMeta vcMeta = contractApi.getVcMetadata(vcId);
@@ -347,10 +498,10 @@ void getVcMetadataTest() throws Exception {
 
 ### Input Parameters
 
-| Parameter | Type   | Description                | **M/O** | **비고** |
-|-----------|--------|----------------------------|---------|---------|
-| vcId    | string    | VC 아이디 |M||
-| vcStatus    | VcStatus | VC 상태 Enum |M| |
+| Parameter | Type     | Description  | **M/O** | **비고** |
+| --------- | -------- | ------------ | ------- | -------- |
+| vcId      | string   | VC 아이디    | M       |          |
+| vcStatus  | VcStatus | VC 상태 Enum | M       |          |
 
 > VC 상태 Enum
 >
@@ -371,6 +522,7 @@ void updateVcStatus(String vcId, VcStatus vcStatus) throws BlockChainException;
 ```
 
 ### Function Usage
+
 ```java
 void updateVcStatusTest() throws Exception {
 
@@ -378,6 +530,20 @@ void updateVcStatusTest() throws Exception {
 
     // blockchain network 정보 설정 및 api 객체 생성
     FabricContractApi contractApi = (FabricContractApi) ContractFactory.FABRIC.create("junit-platform.properties");
+
+    // call
+    contractApi.updateVcStatus(vcId, VcStatus.INACTIVE);
+}
+```
+
+```java
+void updateVcStatusTest() throws Exception {
+
+    String vcId = "vcId";
+
+    // blockchain network 정보 설정 및 api 객체 생성
+    EvmContractApi contractApi = (EvmContractApi) ContractFactory.EVM
+        .create("junit-platform.properties");
 
     // call
     contractApi.updateVcStatus(vcId, VcStatus.INACTIVE);

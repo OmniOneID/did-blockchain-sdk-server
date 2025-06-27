@@ -16,11 +16,7 @@
 
 package org.omnione.sender.fabric;
 
-import org.omnione.exception.BlockChainException;
-import org.omnione.exception.BlockchainErrorCode;
-import org.omnione.sender.ServerInformation;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.InvalidKeyException;
@@ -29,25 +25,30 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Properties;
 import java.util.stream.Stream;
+
+import io.grpc.ChannelCredentials;
+import io.grpc.Grpc;
+import io.grpc.ManagedChannel;
+import io.grpc.TlsChannelCredentials;
 import lombok.Getter;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-import org.hyperledger.fabric.gateway.Gateway;
-import org.hyperledger.fabric.gateway.Identities;
-import org.hyperledger.fabric.gateway.X509Identity;
+import org.hyperledger.fabric.client.Gateway;
+import org.hyperledger.fabric.client.identity.Identities;
+import org.hyperledger.fabric.client.identity.X509Identity;
+import org.omnione.exception.BlockChainException;
+import org.omnione.exception.BlockchainErrorCode;
+import org.omnione.sender.ServerInformation;
 
 /**
- * The {@code FabricServerInformation} class extends {@link ServerInformation} and manages the configuration
- * and gateway pool for connecting to a Hyperledger Fabric network.
+ * The {@code FabricServerInformation} class extends {@link ServerInformation} and manages the
+ * configuration and gateway pool for connecting to a Hyperledger Fabric network.
  *
- * <p>This class is responsible for loading server configuration from a properties file, initializing
- * the identity and gateway pool, and managing the lifecycle of gateway connections.</p>
+ * <p>This class is responsible for loading server configuration from a properties file,
+ * initializing the identity and gateway pool, and managing the lifecycle of gateway connections.
  */
 @Getter
 public class FabricServerInformation extends ServerInformation {
-
-  private GenericObjectPool<Gateway> gatewayPool;
-  private X509Identity identity;
 
   private final String mspId;
   private final String configFilePath;
@@ -55,17 +56,22 @@ public class FabricServerInformation extends ServerInformation {
   private final String certificateFilePath;
   private final String networkName;
   private final String chaincodeName;
+  private final String tlsFilePath;
+  private final String serverEndpoint;
+  private GenericObjectPool<Gateway> gatewayPool;
+  private X509Identity identity;
 
   /**
-   * Constructs a {@code FabricServerInformation} object by loading configuration properties from the specified
-   * resource file and initializing the identity and gateway pool.
+   * Constructs a {@code FabricServerInformation} object by loading configuration properties from
+   * the specified resource file and initializing the identity and gateway pool.
    *
    * @param resource the name of the properties file to load the configuration from
    * @throws CertificateException if there is an error reading the X.509 certificate
    * @throws InvalidKeyException if there is an error reading the private key
    * @throws IOException if there is an error loading the properties file
    */
-  public FabricServerInformation(String resource) throws CertificateException, InvalidKeyException, IOException {
+  public FabricServerInformation(String resource)
+      throws CertificateException, InvalidKeyException, IOException {
     super();
 
     Properties properties = loadProperties(resource);
@@ -76,7 +82,8 @@ public class FabricServerInformation extends ServerInformation {
     this.certificateFilePath = properties.getProperty("fabric.certificateFilePath");
     this.networkName = properties.getProperty("fabric.networkName");
     this.chaincodeName = properties.getProperty("fabric.chaincodeName");
-
+    this.tlsFilePath = properties.getProperty("fabric.tlsFilePath");
+    this.serverEndpoint = properties.getProperty("fabric.serverEndpoint");
 
     initializeIdentity();
     initializeGatewayPool();
@@ -99,23 +106,8 @@ public class FabricServerInformation extends ServerInformation {
   }
 
   /**
-   * Loads properties from the specified resource file.
-   *
-   * @param resource the name of the properties file to load
-   * @return a {@code Properties} object containing the configuration
-   * @throws IOException if there is an error loading the properties file
-   */
-  private Properties loadProperties(String resource) throws IOException {
-    Properties properties = new Properties();
-    try (InputStream inputStream = FabricServerInformation.class.getClassLoader().getResourceAsStream(resource)) {
-      properties.load(inputStream);
-    }
-    return properties;
-  }
-
-
-  /**
-   * Initializes the X.509 identity using the certificate and private key files specified in the properties.
+   * Initializes the X.509 identity using the certificate and private key files specified in the
+   * properties.
    *
    * @throws CertificateException if there is an error reading the X.509 certificate
    * @throws InvalidKeyException if there is an error reading the private key
@@ -127,20 +119,28 @@ public class FabricServerInformation extends ServerInformation {
     String privateFile = getFileContent(privateKeyFilePath);
     PrivateKey privateKey = Identities.readPrivateKey(privateFile);
 
-    this.identity = Identities.newX509Identity(mspId, certificate, privateKey);
+    this.identity = new X509Identity(mspId, certificate);
   }
 
-  /**
-   * Initializes the gateway connection pool for interacting with the Fabric network.
-   */
-  private void initializeGatewayPool() {
-    GatewayFactory gatewayFactory = new GatewayFactory(identity, configFilePath);
+  /** Initializes the gateway connection pool for interacting with the Fabric network. */
+  private void initializeGatewayPool() throws IOException {
+    ManagedChannel channle = newGrpcChannel();
+    GatewayFactory gatewayFactory = new GatewayFactory(identity, configFilePath, channle);
     GenericObjectPoolConfig<Gateway> poolConfig = new GenericObjectPoolConfig<>();
     poolConfig.setMaxTotal(10);
     poolConfig.setMinIdle(2);
     poolConfig.setMaxIdle(5);
 
     this.gatewayPool = new GenericObjectPool<>(gatewayFactory, poolConfig);
+  }
+
+  private ManagedChannel newGrpcChannel() throws IOException {
+    ChannelCredentials credentials =
+        TlsChannelCredentials.newBuilder().trustManager(Paths.get(tlsFilePath).toFile()).build();
+
+    return Grpc.newChannelBuilder(this.serverEndpoint, credentials)
+        .overrideAuthority("peer0.org1.example.com")
+        .build();
   }
 
   /**
@@ -166,9 +166,7 @@ public class FabricServerInformation extends ServerInformation {
     gatewayPool.returnObject(gateway);
   }
 
-  /**
-   * Closes the gateway connection pool and releases all resources.
-   */
+  /** Closes the gateway connection pool and releases all resources. */
   public void closePool() {
     gatewayPool.close();
   }
